@@ -48,9 +48,6 @@ def SignupPage(request):
         return render(request, 'auth-login-basic.html')
     return render(request, 'auth-register-basic.html')
 
-    
-        
-
 
 
 def LoginPage(request):
@@ -64,7 +61,8 @@ def LoginPage(request):
             # print(user,'GOIT')
             return redirect('index')  # Redirect to the 'home' URL name on successful login
         else:
-            return HttpResponse("Username or Password is incorrect!!!")
+            # return HttpResponse("Username or Password is incorrect!!!")
+            return HttpResponse('<script>alert("Username or Password is incorrect!!!"); window.location.href=" ";</script>')
 
     return render(request, 'auth-login-basic.html')
 
