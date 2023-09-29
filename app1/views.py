@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
+from .forms import *
 
 # Create your views here.
 @login_required(login_url='login')
@@ -11,7 +12,8 @@ def HomePage(request):
     return render (request,'home.html')
 
 def IndexPage(request):
-    return render(request,'index.html')
+    print(request.user, 'okoko')
+    return render(request,'index.html', {'user':request.user})
 
 
 
@@ -37,16 +39,23 @@ def IndexPage(request):
 
 def SignupPage(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        email = request.POST.get('email')
-        user=User.objects.create(username=username, email=email, password=password)
-        # user = authenticate(request, username=username, password=password)
-        print(username, password, "OOOO")
-        user.set_password(password )
-        user.save()
-        return render(request, 'auth-login-basic.html')
-    return render(request, 'auth-register-basic.html')
+        UserRegister = SignupUser(request.POST)
+        print("user is validating")
+
+        if UserRegister.is_valid():
+            
+            # print(username)
+            
+            user = UserRegister.save()
+            login(request, user)
+            messages.success(request, "Registration successful." )
+            return redirect("login")
+            
+            
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    else:
+        UserRegister = SignupUser()
+    return render(request, 'auth-register-basic.html',{'UserRegister':UserRegister})
 
 
 
@@ -55,7 +64,7 @@ def LoginPage(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        print(user, username, password, "OOOO")
+        # print(user, username, password, "OOOO")
         if user is not None:
             login(request, user)
             # print(user,'GOIT')
