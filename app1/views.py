@@ -8,33 +8,14 @@ from .forms import *
 
 # Create your views here.
 @login_required(login_url='login')
-def HomePage(request):
-    return render (request,'home.html')
+def profile(request):
+    return render (request,'profile.html')
 
+
+@login_required(login_url='login')
 def IndexPage(request):
     print(request.user, 'okoko')
     return render(request,'index.html', {'user':request.user})
-
-
-
-# def SignupPage(request):
-#     print(request.method, "CHECK")
-#     print(request.POST)
-#     data=request.POST
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             print('VALID')
-#             form.save()
-#             return render(request, 'auth-login-basic.html')
-#         else:
-#             # Form validation failed, show error messages
-#             messages.error(request, 'Please correct the errors below.')
-
-#     else:
-#         form = UserCreationForm()
-
-#     return render(request, 'auth-register-basic.html', {'form': form})
 
 
 def SignupPage(request):
@@ -75,9 +56,11 @@ def LoginPage(request):
 
     return render(request, 'auth-login-basic.html')
 
+
 def LogoutPage(request):
     logout(request)
     return redirect('login')
+
 
 def ForgotPasswordPage(request):
     

@@ -20,9 +20,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth-register-basic/',views.SignupPage,name='signup'),
     path('',views.LoginPage,name='login'),
-    path('home/',views.HomePage,name='home'),
+    
     path('logout/',views.LogoutPage,name='logout'),
     path('index/', views.IndexPage, name='index'),
+    path('profile/', views.profile, name='profile'),
     path('auth-forgot-password-basic.html/', views.ForgotPasswordPage, name='forgot_password'),
 
 
