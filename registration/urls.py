@@ -24,6 +24,7 @@ urlpatterns = [
     path('logout/',views.LogoutPage,name='logout'),
     path('index/', views.IndexPage, name='index'),
     path('profile/', views.profile, name='profile'),
+    path('home-admin/', views.adminhome, name='admin_home'),
     path('auth-forgot-password-basic.html/', views.ForgotPasswordPage, name='forgot_password'),
 
 

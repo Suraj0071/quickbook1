@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponse
 from django.contrib import messages
 from .forms import *
 
@@ -48,13 +48,20 @@ def LoginPage(request):
         # print(user, username, password, "OOOO")
         if user is not None:
             login(request, user)
-            # print(user,'GOIT')
-            return redirect('index')  # Redirect to the 'home' URL name on successful login
+            if user.is_staff:
+                return redirect('admin_home')  # Redirect to staff-specific page
+            else:
+                # return redirect('doctorDashboard')  # Redirect to regular home page
+                return redirect('index')  # Redirect to the 'home' URL name on successful login
         else:
             # return HttpResponse("Username or Password is incorrect!!!")
             return HttpResponse('<script>alert("Username or Password is incorrect!!!"); window.location.href=" ";</script>')
 
     return render(request, 'auth-login-basic.html')
+
+
+def adminhome(request):
+    return render(request, 'admin/admin_screen.html')
 
 
 def LogoutPage(request):

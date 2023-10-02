@@ -10,4 +10,5 @@ class profile(models.Model):
     Email = models.TextField()
 
     def __str__(self):
-        return self.user.Name
+        staff_status = "-(staff user)" if self.is_staff else " "
+        return f"{self.username}  {staff_status}"
