@@ -4,7 +4,6 @@ from datetime import date
 
 class profile(models.Model):
     '''a model for a blog post'''
-
     Name = models.OneToOneField(User, on_delete=models.CASCADE)
     Phone_no = models.CharField(max_length=100)
     Email = models.TextField()
@@ -12,3 +11,26 @@ class profile(models.Model):
     def __str__(self):
         staff_status = "-(staff user)" if self.is_staff else " "
         return f"{self.username}  {staff_status}"
+    
+
+
+
+
+class  File(models.Model):
+    journal = models.CharField(max_length=100,null=True,blank=True)
+    date  =models.CharField(max_length=100,null=True,blank=True)
+    reference =models.CharField(max_length=100,null=True,blank=True)
+    description  = models.CharField(max_length=100,null=True,blank=True)
+    account  = models.CharField(max_length=100,null=True,blank=True)
+    account_name = models.CharField(max_length=100,null=True,blank=True)
+    debit_amount = models.CharField(max_length=100,null=True,blank=True)
+    credit_amount=models.CharField(max_length=100,null=True,blank=True)
+
+    offset_account =models.CharField(max_length=100,null=True,blank=True)
+    memo          =models.CharField(max_length=100,null=True,blank=True)
+    department =models.CharField(max_length=100,null=True,blank=True)
+     
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)
+
+
+

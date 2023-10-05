@@ -5,8 +5,7 @@ from django.contrib.auth import authenticate
 
 
 class SignupUser(UserCreationForm):
-	email = forms.EmailField(max_length=250)
-
+	
 	class Meta:
 		model = User
 		fields = ('username','password1','password2',)

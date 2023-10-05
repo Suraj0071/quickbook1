@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+
+
+ 
+{% block content %}
+{% load static %}
+
 
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -3898,35 +3903,41 @@
               <div class="card">
                 <h5 class="card-header">Responsive Table</h5>
                 <div class="table-responsive text-nowrap">
+                  
                   <table class="table">
+
                     <thead>
                       <tr class="text-nowrap">
-                        <th>#</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
+                       
+                        <th>Journal</th>
+                        <th>Date</th>
+                        <th>Reference</th>
+                        <th>Description</th>
+                        <th>Account</th>
+                        <th>Account Name</th>
+                        <th>Debit Amount</th>
+                        <th>Credit Amount</th>
+                        <th>Offset Account</th>
+                        <th>Memo</th>
+                        <th>Department</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {% for i  in files %}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
+                           
+                      <td>{{i.journal}}</td>
+                        <td>{{i.date}}</td>
+                        <td>{{i.reference}}</td>
+                        <td>{{i.description}}</td>
+                        <td>{{i.account}}</td>
+                        <td>{{i.account_name}}</td>
+                        <td>{{i.Debit_amount}}</td>
+                        <td>{{i.credit_amount}}</td>
+                        <td>{{i.memo}}</td>
+                        <td>{{i.department}}</td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <th scope="row">2</th>
                         <td>Table cell</td>
                         <td>Table cell</td>
@@ -3949,8 +3960,9 @@
                         <td>Table cell</td>
                         <td>Table cell</td>
                         <td>Table cell</td>
-                      </tr>
+                      </tr> -->
                     </tbody>
+                  {% endfor %}
                   </table>
                 </div>
               </div>
@@ -4033,3 +4045,4 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
+{% endblock %}
