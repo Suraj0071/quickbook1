@@ -17,6 +17,7 @@ class profile(models.Model):
 
 
 class  File(models.Model):
+    file  = models.FileField(null=True,blank=True)
     journal = models.CharField(max_length=100,null=True,blank=True)
     date  =models.CharField(max_length=100,null=True,blank=True)
     reference =models.CharField(max_length=100,null=True,blank=True)
@@ -25,7 +26,6 @@ class  File(models.Model):
     account_name = models.CharField(max_length=100,null=True,blank=True)
     debit_amount = models.CharField(max_length=100,null=True,blank=True)
     credit_amount=models.CharField(max_length=100,null=True,blank=True)
-
     offset_account =models.CharField(max_length=100,null=True,blank=True)
     memo          =models.CharField(max_length=100,null=True,blank=True)
     department =models.CharField(max_length=100,null=True,blank=True)

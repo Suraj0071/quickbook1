@@ -10,7 +10,7 @@ urlpatterns = [path('',views.LoginPage,name='login'),
     path('profile/', views.profile, name='profile'),
     path('home-admin/', views.adminhome, name='admin_home'),
     path("uploadfile/",views.uploadfile , name="uploadfile"),
-    path("show-files-data/",views.showfilesdata , name="showfilesdate"),
+    path("show-files-data/",views.showfilesdata , name="showfilesdata"),
 
     path('auth-forgot-password-basic.html/', views.ForgotPasswordPage, name='forgot_password')
 

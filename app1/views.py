@@ -7,7 +7,9 @@ from django.contrib import messages
 from .forms import *
 from. models import File
 import pandas as pd
-
+from django.contrib import messages
+import os
+from django.core.paginator import Paginator
 # Create your views here.
 @login_required(login_url='login')
 def profile(request):
@@ -61,11 +63,18 @@ def LoginPage(request):
 
 @login_required(login_url='login')
 def uploadfile(request):
-   
     if request.method == 'POST':
         file = request.FILES.get('file')
+    
+        if not file :
+            messages.error(request, "No file uploaded. Please select a file to upload.")   
+            return render(request, 'uploadfile.html')     
+        filename, file_extension = os.path.splitext(file.name)
+        if file_extension  not in [".xlsx",".csv",]:
+            messages.error(request, "Please upload in one of these vaild file formats -  xlsx or csv ")
+            return render(request, 'uploadfile.html')
+    
         data = pd.read_excel(file)
-        column_names = data.columns.tolist()
         # Iterate through the rows of the DataFrame
         for index, row in data.iterrows():
             # Access data from each column for the current row
@@ -80,14 +89,8 @@ def uploadfile(request):
             offset_account = row['Offset Account']
             memo = row['Memo']
             department = row['Department']
-            
-            # Now you can print or use the data as needed
-       
-            # ... Print other values similarly ...
-            
-            # Create a File object with the extracted data
             File.objects.create(
-                user=request.user,
+               
                 journal=journal,
                 date=date,
                 reference=reference,
@@ -98,15 +101,21 @@ def uploadfile(request):
                 credit_amount=credit_amount,
                 offset_account=offset_account,
                 memo=memo,
-                department=department
+                department=department,
+                user = request.user
             )
-        return redirect("showfilesdate")
+        return redirect("showfilesdata")
     return render(request,"uploadfile.html",)
 
 
 def showfilesdata(request):
-    files = File.objects.all()
-    return render(request, "tables-basic.html",{"files":files})
+    obj = File.objects.filter(user=request.user)
+
+    paginator = Paginator(obj,12)
+
+    pagenumber =request.GET.get('page')
+    files = paginator.get_page(pagenumber)
+    return render(request, "userfiledata.html",{"files":files})
 
 
 def adminhome(request):
@@ -117,6 +126,9 @@ def LogoutPage(request):
     logout(request)
     return redirect('login')
 
-
 def ForgotPasswordPage(request):
     return render(request, 'auth-forgot-password-basic.html')
+
+
+
+

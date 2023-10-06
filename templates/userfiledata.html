@@ -1,0 +1,112 @@
+{% extends "base_dashboard.html" %}
+ 
+{% block content %}
+{% load static %}
+
+
+<style>
+    .pagination {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .pagination ul {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+    }
+    .pagination ul li {
+        background-color: #696cff;
+        border-color: #696cff;
+        color: white;
+        list-style: none;
+        padding: 10px 16px;
+        border-radius: 5px;
+
+    }
+    .pagination ul li a {
+        color: white;
+    }
+</style>
+<div class="card">
+    <h5 class="card-header">Files Data</h5>
+    <div class="table-responsive text-nowrap">
+      
+      <table class="table">
+
+        <thead>
+          <tr class="text-nowrap">
+           
+            <th>Journal</th>
+            <th>Date</th>
+            <th>Reference</th>
+            <th>Description</th>
+            <th>Account</th>
+            <th>Account Name</th>
+            <th>Debit Amount</th>
+            <th>Credit Amount</th>
+            <th>Offset Account</th>
+            <th>Memo</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i  in files %}
+          <tr>
+               
+          <td>{{i.journal}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.reference}}</td>
+            <td>{{i.description}}</td>
+            <td>{{i.account}}</td>
+            <td>{{i.account_name}}</td>
+            <td>{{i.Debit_amount}}</td>
+            <td>{{i.credit_amount}}</td>
+            <td>{{i.memo}}</td>
+            <td>{{i.department}}</td>
+          </tr>
+        
+        </tbody>
+      {% endfor %}
+      </table>
+
+    
+    </div>
+  </div>
+
+
+
+
+  <center>
+    <div class="pagination">
+        <ul>
+            {% if files.has_previous %}
+                <li><a href="?page={{ files.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+            <li><a href="?page=1">1</a></li>
+            <li><a href="?page=2">2</a></li>
+            <li><a href="?page=3">3</a></li>
+            
+
+            {% if files.has_next %}
+                <li><a href="page={{ files.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</center>
+
+
+
+{% endblock%}
+
+
+
+
+
+
+
+
+
+
