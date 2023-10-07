@@ -151,7 +151,9 @@
                     placeholder="Enter your email or username"
                     autofocus
                   />
+
                 </div>
+                {{form.errors.username}}
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
@@ -159,6 +161,7 @@
                       <small>Forgot Password?</small>
                     </a>
                   </div>
+
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
@@ -170,6 +173,7 @@
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
+                  {{form.errors.password}}
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
@@ -227,3 +231,15 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
+
+
+
+<style>
+  .errorlist{
+    color: red;
+    list-style-type:none;
+  }
+  .success{
+    color:green;
+  }
+  </style>

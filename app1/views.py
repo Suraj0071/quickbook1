@@ -24,22 +24,20 @@ def IndexPage(request):
 
 def SignupPage(request):
     if request.method == 'POST':
-        UserRegister = SignupUser(request.POST)
-        print("user is validating")
-        if UserRegister.is_valid():
-            user = UserRegister.save()
+        form = SignupUser(request.POST)
+        if form.is_valid():
+            user = form.save()
             login(request, user)
-            messages.success(request, "Registration successful." )
+            messages.success(request, "Registration successful.")
             return redirect("login")
-        
-        messages.error(request, "Unsuccessful registration. Invalid information.")
+        else:
+            print("Form is not valid:", form.errors)
     else:
-        UserRegister = SignupUser()
-        
-    return render(request, 'auth-register-basic.html',{'UserRegister':UserRegister})
+        form = SignupUser()
 
-
+    return render(request, 'auth-register-basic.html', {"form": form})
 def LoginPage(request):
+  
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -53,8 +51,12 @@ def LoginPage(request):
                 # return redirect('doctorDashboard')  # Redirect to regular home page
                 return redirect('index')  
         else:
+            form = UserLoginForm(request.POST)
+            print("---------------",form.errors)
+            return render(request, 'auth-login-basic.html' ,{"form":form})
+            
             # return HttpResponse("Username or Password is incorrect!!!")
-            return HttpResponse('<script>alert("Username or Password is incorrect!!!"); window.location.href=" ";</script>')
+            # return HttpResponse('<script>alert("Username or Password is incorrect!!!"); window.location.href=" ";</script>')
 
     return render(request, 'auth-login-basic.html')
     

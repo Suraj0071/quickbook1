@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 {% load static %}
+
+<script>
+  
+</script>
 <html
   lang="en"
   class="light-style customizer-hide"
@@ -81,33 +85,54 @@
               <!-- /Logo -->
               <h4 class="mb-2">Adventure starts here 🚀</h4>
               <p class="mb-4">Make your app management easy and fun!</p>
+              <!-- {% if form.errors %}
+              <div class="alert alert-danger" role="alert">
+                  <ul>
+                      {% for error in form.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              </div> -->
+              <!-- {% endif %} -->
 
               <form method="post">
                 {% csrf_token %}
+
                 <!-- Username -->
                 <div class="mb-3">
                   <label for="username" class="form-label">Username</label>
                   <input type="text" class="form-control" id="username" name="username" required>
                 </div>
+                {{form.errors.username}}
                 <!-- Email -->
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
                   <input type="email" class="form-control" id="email" name="email" required>
                 </div>
+                {{form.errors.email}}
+
+ 
                 <!-- Password -->
                 <div class="mb-3">
                   <label for="password" class="form-label">Password (Enter your password)</label>
                   <input type="password" class="form-control" id="password1" name="password1" required>
                 </div>
+                {{form.errors.password}}
+
                 <div class="mb-3">
                   <label for="password" class="form-label">Password (Enter your password again)</label>
                   <input type="password" class="form-control" id="password2" name="password2" required>
                 </div>
+                {{form.errors.password2}}
                 <!-- Checkbox for Terms and Conditions -->
                 <div class="mb-3 form-check">
                   <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
                   <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
                 </div>
+
+
+               
+            
 
                 <button type="submit" class="btn btn-primary">Register</button>
               </form>
@@ -124,6 +149,8 @@
         </div>
       </div>
     </div>
+
+    
 
     <!-- / Content -->
 
@@ -149,3 +176,14 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
+
+
+<style>
+  .errorlist{
+    color: red;
+    list-style-type:none;
+  }
+  .success{
+    color:green;
+  }
+  </style>
