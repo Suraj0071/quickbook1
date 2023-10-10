@@ -34,3 +34,23 @@ class  File(models.Model):
 
 
 
+
+
+
+
+
+
+
+
+
+
+class EmailToken(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="email_user",
+        blank=True,
+        null=True,
+    )
+    email_token = models.CharField(max_length=50)

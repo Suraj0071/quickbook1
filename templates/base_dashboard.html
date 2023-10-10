@@ -211,6 +211,135 @@
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>
+
+
+
+
+            <!--Sales & Payments-->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+               
+                <div data-i18n="Account Settings">Sales & Payments</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{% url 'invoices' %}" class="menu-link">
+                    <div data-i18n="Account">Invoices</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'customer-statements' %}" class="menu-link">
+                    <div data-i18n="Notifications">Customer Statements</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'customers' %}" class="menu-link">
+                    <div data-i18n="Connections">Customers</div>
+                  </a>
+                </li>
+
+                <li class="menu-item">
+                  <a href="{% url 'products-services' %}" class="menu-link">
+                    <div data-i18n="Connections">Products & Services</div>
+                  </a>
+                </li>
+                
+              </ul>
+            </li>
+
+            <!--Purchases-->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Purchases</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{% url 'bills' %}" class="menu-link">
+                    <div data-i18n="Account">Bills</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'vendors' %}" class="menu-link">
+                    <div data-i18n="Notifications">Vendors</div>
+                  </a>
+                </li>
+        
+              </ul>
+            </li>
+
+
+
+            
+                
+            <!--Accounting-->
+
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+
+             
+                <div data-i18n="Account Settings">Accounting</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{% url 'transactions' %}" class="menu-link">
+                    <div data-i18n="Account">Transactions</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'reconciliation' %}"  class="menu-link">
+                    <div data-i18n="Notifications">Reconciliation</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'chart-of-accounts' %}"  class="menu-link">
+                    <div data-i18n="Notifications">Chart of Accounts</div>
+                  </a>
+                </li>
+        
+              </ul>
+            </li>
+
+            <!-- Reports-->
+
+
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Reports</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{% url 'financial-statements' %}"  class="menu-link">
+                    <div data-i18n="Account">Financial Statements [P&L, B/S & Cash Flow]</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'taxex' %}"  class="menu-link">
+                    <div data-i18n="Notifications">Taxes [Sales Tax Report]</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 'repport-customers' %}"  class="menu-link">
+                    <div data-i18n="Notifications">Customers [Income by Customer, Aged Receivables]</div>
+                  </a>
+                </li>
+
+                <li class="menu-item">
+                  <a href="{% url 'account-transactions' %}"  class="menu-link">
+                    <div data-i18n="Notifications">Account Transactions [General Ledger]</div>
+                  </a>
+                </li>
+        
+              </ul>
+            </li>
+
+
+
+
+
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
