@@ -29,15 +29,7 @@ class  File(models.Model):
     offset_account =models.CharField(max_length=100,null=True,blank=True)
     memo          =models.CharField(max_length=100,null=True,blank=True)
     department =models.CharField(max_length=100,null=True,blank=True)
-     
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)
-
-
-
-
-
-
-
 
 
 

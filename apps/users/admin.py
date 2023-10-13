@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import profile,File,EmailToken
+from .models import *
 
 admin.site.register(profile)
 
@@ -10,7 +10,3 @@ class FileAdmin(admin.ModelAdmin):
 
 
 
-
-@admin.register(EmailToken)
-class EmailTokenadmin(admin.ModelAdmin):
-    list_display=['id',"user","email_token"]
