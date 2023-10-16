@@ -1,15 +1,503 @@
-{% extends "base_dashboard.html" %}
- 
-{% block content %}
-{% load static %}
+{% extends "base_dashboard.html" %} {% block content %} {% load static %}
+<style>
+  p {
+    margin: 0;
+  }
+  span {
+    margin: 0;
+    padding: 0;
+  }
+  input {
+    margin: 0;
+    padding: 0;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  ol {
+    margin: 0;
+    padding: 0;
+  }
+  .sec1_main {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "Nunito";
+  }
+  .sec1_main button {
+    padding: 7px 14px;
+    background-color: #696cff;
+    /* background-color: #2046cf; */
+    color: #fff;
+    font-weight: 600;
+    font-size: 19px;
+    border-radius: 35px;
+    border: 0;
+    font-family: "Nunito";
+  }
+  .sec2_main {
+    width: 100%;
+    border: 1px solid rgba(128, 128, 128, 0.588);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .sec2_child1 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .sec2_child1 p {
+    font-size: 14px;
+    color: #68757d;
+    font-weight: 800;
+  }
+  .varient {
+    /* color: #68757d; */
+    color: rgba(128, 128, 128, 0.681);
+    font-family: "Nunito";
+    font-size: 14px;
+  }
+  .sec2_child2 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sec2_child2 div:nth-child(1) p {
+    color: #68757d;
+    font-size: 14px;
+  }
+  .cards_turn {
+    background-color: #d5f3fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 20px;
+    border-radius: 40px;
+    font-size: 13px;
+  }
+  .american_ex {
+    width: 35px;
+    height: 25px;
+    background-image: url("https://dmrokfxvkn5v8.cloudfront.net/branches/main/images/icons-payment-methods/cc-amex.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* background-color: #fff; */
+    margin-right: 5px;
+    border-radius: 4px;
+  }
+  .master_card {
+    width: 35px;
+    height: 25px;
+    background-image: url("https://dmrokfxvkn5v8.cloudfront.net/branches/main/images/icons-payment-methods/cc-mastercard.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* background-color: #fff; */
+    margin-right: 5px;
+    border-radius: 4px;
+  }
+  .visa_card {
+    width: 35px;
+    height: 25px;
+    background-image: url("https://dmrokfxvkn5v8.cloudfront.net/branches/main/images/icons-payment-methods/cc-visa.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* background-color: #fff; */
+    margin-right: 10px;
+    border-radius: 4px;
+  }
+  .cards_turn span {
+    margin: 0 5px;
+  }
+  .cards_turn a {
+    color: #024d69;
+    font-weight: 800;
+  }
+  .cards_turn a:hover {
+    text-decoration: underline;
+  }
+  .sec3_main {
+    margin: 40px 0;
+  }
+  .sec3_child1 {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  .filter_no {
+    background-color: #e7e7ff;
+    padding: 2px 7px;
+    border-radius: 11px;
+    border: 1px solid rgba(128, 128, 128, 0.63);
+    color: #68757d;
+    font-size: 13px;
+    font-weight: 700;
+    margin-right: 5px;
+  }
+  .sec3_child2 {
+    display: flex;
+    justify-content: space-between;
+  }
+  .clickable_wraper {
+    border: 1px solid #b8b8ff;
+    border-radius: 8px;
+    cursor: pointer;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  }
+  .clickable_wraper:nth-child(1) {
+    width: 31%;
+  }
+  .clickable_wraper:nth-child(2) {
+    width: 15%;
+  }
+  .clickable_wraper:nth-child(3) {
+    width: 30%;
+  }
+  .clickable_wraper:nth-child(3) .clickable {
+    justify-content: space-around;
+  }
+  .clickable_wraper:nth-child(4) {
+    width: 20%;
+  }
+  .clickable {
+    padding: 7px 10px;
+    display: flex;
+    position: relative;
+    font-style: italic;
+  }
+  .clickable:hover {
+    border-color: #7d7dc7;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  .clickable input {
+    color: #68757d;
+    outline: none;
+    border: 0;
+    background: transparent;
+    font-style: italic;
+  }
+  .ini_none {
+    display: none;
+    position: absolute;
+    padding-top: 10px;
+    width: 12%;
+    transition: 0.3s ease-in-out;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  #cusRes {
+    padding-top: 18px;
+    width: 380px;
+  }
+  .srchInp_wraper {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 10px;
+  }
+  .srchInp {
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: #68757d;
+    outline: none;
+    border: 0;
+    border: 1px solid #7d7dc7;
+    box-shadow: rgba(61, 46, 101, 0.2) 0px 7px 29px 0px;
+  }
+  .srchInp:hover {
+    border-color: #696cff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .dateInp_line {
+    border-right: 1px solid #6ec4e3;
+    margin: 0 10px;
+  }
+  ul li {
+    list-style: none;
+    padding: 5px 10px;
+    font-size: 17px;
+  }
+  ul li:nth-last-child() {
+    border-bottom-left-radius: 20px;
+  }
+  ul li:hover {
+    background-color: #696cff;
+    color: #ffffff;
+  }
+  .sec4_main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sec4_main .line {
+    width: 36%;
+    height: 1px;
+    background-color: #b8b8ff;
+  }
+  .sec4_center {
+    width: 28%;
+    padding: 5px;
+    border-radius: 20px;
+    background-color: #c7c7fcd8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sec4_center button {
+    padding: 7px 12px;
+    border-radius: 16px;
+    color: #000;
+    font-weight: 600;
+    font-size: 17px;
+    border: 0;
+    background: transparent;
+    transition: 0.4s ease-in-out;
+  }
+  .sec4_center button:hover {
+    background-color: #a0a0ebcd;
+  }
+  .sec4_center button span {
+    margin-left: 3px;
+    margin-right: 0;
+  }
+  .sec5_main {
+    width: 100%;
+    margin-top: 35px;
+  }
+  table {
+    width: 100%;
+    table-layout: auto;
+  }
+  th,
+  td {
+    padding: 5px 15px;
+  }
+  .overdue {
+    background-color: rgba(246, 127, 127, 0.784);
+    width: 70px;
+    color: red;
+    font-size: 12px;
+    border: 0;
+    border-radius: 6px;
+    padding: 3px;
+  }
+</style>
+<main>
+  <section>
+    <div class="sec1_main sec_main">
+      <div>
+        <h2>Invoices</h2>
+      </div>
+      <div>
+        <button>Create an invoice</button>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="sec2_main sec_main">
+      <div class="sec2_child1">
+        <div class="sec2_child1_ch1">
+          <p>Overdue</p>
+          <div>
+            <span id="due_amount"> </span>
+            <span class="varient">USD</span>
+          </div>
+        </div>
+        <div class="sec2_child1_ch2">
+          <p>Due within next 30 days</p>
+          <div>
+            <span id="nxt_due"> </span>
+            <span class="varient">USD</span>
+          </div>
+        </div>
+        <div class="sec2_child1_ch3">
+          <p>Average time to get paid</p>
+          <div>
+            <span id="avg_time_paid"> </span>
+            <span class="varient">days</span>
+          </div>
+        </div>
+      </div>
+      <div class="sec2_child2">
+        <div>
+          <p>Last Updated <span>just a moment ago</span></p>
+        </div>
+        <div class="cards_turn">
+          <div class="american_ex"></div>
+          <div class="master_card"></div>
+          <div class="visa_card"></div>
+          <span>Invoices get paid 3x faster with online payments.</span>
+          <a href="#">Turn On Payments</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="sec3_main">
+      <div class="sec3_child1">
+        <span class="filter_no">0</span>
+        <span>active filters</span>
+      </div>
+      <div class="sec3_child2">
+        <div class="clickable_wraper">
+          <div class="clickable" id="cusSrch">
+            <span>All customers</span>
+          </div>
+          <div class="ini_none" id="cusRes">
+            <div class="srchInp_wraper">
+              <input
+                type="text"
+                class="srchInp"
+                placeholder="Type a customer name"
+              />
+            </div>
+            <ul class="srchRes" id="allCus">
+              <li>test</li>
+            </ul>
+          </div>
+        </div>
+        <div class="clickable_wraper">
+          <div class="clickable" id="status_opener">
+            <span>All statuses</span>
+          </div>
+          <div class="ini_none" id="status">
+            <ul id="allStatus">
+              <li>Draft</li>
+              <li>Unsent</li>
+              <li>Sent</li>
+              <li>Viewed</li>
+              <li>Partial</li>
+              <li>Paid</li>
+              <li>Overdue</li>
+            </ul>
+          </div>
+        </div>
+        <div class="clickable_wraper">
+          <div class="clickable">
+            <input type="date" />
+            <div class="dateInp_line"></div>
+            <input type="date" />
+          </div>
+        </div>
+        <div class="clickable_wraper">
+          <div class="clickable">
+            <input type="text" placeholder="Enter Invoice #" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="sec4_main">
+      <div class="line"></div>
+      <div class="sec4_center">
+        <div>
+          <button>Unpaid <span class="filter_no">1</span></button>
+        </div>
+        <div>
+          <button>Draft <span class="filter_no">1</span></button>
+        </div>
+        <div>
+          <button>All invoices</button>
+        </div>
+      </div>
+      <div class="line"></div>
+    </div>
+  </section>
+  <section>
+    <div class="sec5_main">
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Number</th>
+            <th>Customer</th>
+            <th>Total</th>
+            <th>Amount Due</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><button class="overdue">Overdue</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+  let cusSrch = document.getElementById("cusSrch");
+  let cusRes = document.getElementById("cusRes");
+  let status_opener = document.getElementById("status_opener");
+  let status = document.getElementById("status");
+  let srchInp = document.querySelector(".srchInp");
 
+  srchInp.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
 
+  //   let liElements1 = document.querySelectorAll("#allCus li");
+  //   let liElements2 = document.querySelectorAll("#allStatus li");
+  //   liElements1.forEach((li) => {
+  //     li.addEventListener("click", (event) => {
+  //       event.stopPropagation();
+  //     });
+  //   });
+  //   liElements2.forEach((li) => {
+  //     li.addEventListener("click", (event) => {
+  //       event.stopPropagation();
+  //     });
+  //   });
 
-<div class="uu">
- 
-</div>
+  cusRes.style.display = "none";
+  status.style.display = "none";
 
+  function closeing() {
+    if (cusRes.style.display === "flex") {
+      cusRes.style.display = "none";
+    }
+    if (status.style.display === "flex") {
+      status.style.display = "none";
+    }
+  }
 
+  document.body.addEventListener("click", () => {
+    closeing();
+  });
 
+  cusSrch.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (cusRes.style.display === "none") {
+      cusRes.style.display = "flex";
+      cusRes.style.flexDirection = "column";
+    } else {
+      cusRes.style.display = "none";
+    }
+  });
+  status_opener.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (status.style.display === "none") {
+      status.style.display = "flex";
+      status.style.flexDirection = "column";
+    } else {
+      status.style.display = "none";
+    }
+  });
+</script>
 
 {% endblock %}
