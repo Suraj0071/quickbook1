@@ -55,6 +55,11 @@ class Chart_of_AccountsView(View):
     
 
 
+class create_invoice(View):
+    def get(self, request):
+        return render(request, "create_invoice.html")
+
+
 
 
 class  Financial_Statements_View(View):

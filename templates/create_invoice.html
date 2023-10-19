@@ -1,0 +1,469 @@
+{% extends "base_dashboard.html" %} {% block content %} {% load static %}
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  p {
+    margin: 0;
+  }
+  span {
+    margin: 0;
+    padding: 0;
+  }
+  /* input {
+        margin: 0;
+        padding: 0;
+      } */
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  ol {
+    margin: 0;
+    padding: 0;
+  }
+  /* .invoice-add-info__section-button.is-open
+        .invoice-add-info__section-button__expand-icon {
+        transform: rotate(180deg);
+        transition: all 0.3s;
+      } */
+  main {
+    font-family: "Nunito";
+  }
+  .sec1_main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+  .prev_edit_btn {
+    border: 2px solid #8f8fde;
+    color: #6464ba;
+    background: transparent;
+    width: 150px;
+    height: 40px;
+    margin: auto;
+    font-weight: 600;
+    font-size: 19px;
+    border-radius: 35px;
+    transition: 0.1s ease-in-out;
+  }
+  .prev_edit_btn:hover {
+    background-color: #dcdcfaa6;
+  }
+  .sec2_main_btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 18px;
+    background-color: #dcdcfaa6;
+    font-size: 18px;
+    border: 1px solid #8f8fde;
+    width: 100%;
+    border-radius: 10px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .sec2_main_btn i {
+    font-size: 32px;
+    transition: all 0.4s;
+  }
+  .sec2_main_btn.on_open i {
+    transform: rotate(180deg);
+  }
+  .sec2_main_ch2 {
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.4s;
+    background-color: #ffffff;
+  }
+  .sec2_main_ch2_main {
+    width: 95%;
+    margin: 25px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .three_sec {
+    width: 33.3%;
+  }
+  .postPic {
+    width: 100%;
+    margin: auto;
+    height: 180px;
+  }
+  #drop-area {
+    width: 300px;
+    height: 150px;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .img_view {
+    width: 100%;
+    height: 100%;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    border: 2px dashed #bbb5ff;
+    background: #f7f8ff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .img_view:hover .fr_click {
+    text-decoration: underline;
+  }
+  .img_view img {
+    width: 26%;
+    margin-bottom: 5px;
+  }
+  .img_view p {
+    font-size: 13px;
+  }
+  .img_view span {
+    font-size: 10px;
+    color: #777;
+  }
+  .srchInp_wraper {
+    margin-bottom: 15px;
+  }
+  .srchInp {
+    width: 75%;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: #68757d;
+    outline: none;
+    border: 0;
+    border: 1px solid #7d7dc7;
+    box-shadow: rgba(61, 46, 101, 0.2) 0px 7px 29px 0px;
+  }
+  .bs_dtl_wrap {
+    margin-bottom: 5px;
+  }
+  .bs_dtl {
+    font-weight: 700;
+  }
+  .bs_dtl h5 {
+    text-align: center;
+  }
+  .bs_dtl_wrap span:nth-child(2) {
+    margin-left: 2px;
+    text-wrap: wrap;
+  }
+  .buisness_frm_opener {
+    color: #4e4ea4;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .buisness_frm_opener:hover {
+    text-decoration: underline;
+  }
+  .sec3_main {
+    width: 85%;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 30px 0;
+  }
+  .sec3_1 {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .sec3_1_sub {
+    width: 25%;
+  }
+  .sec3_1_left {
+    width: 280px;
+  }
+  .sec3_1_left_in {
+    width: 100%;
+    height: 130px;
+    border: 1px dashed #4e4ea4;
+    border-radius: 10px;
+    position: relative;
+  }
+  .sec3_1_left_in button {
+    border: 0;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    font-weight: 600;
+  }
+  .user_list {
+    width: 100%;
+    position: absolute;
+    max-height: 0px;
+    overflow: hidden;
+    background-color: blue;
+    margin-left: 1px;
+    width: 18%;
+    transition: all 0.4s;
+  }
+  /* .user_list.on_open {
+  } */
+  .sec3_1_sub .srchInp_wraper {
+    margin-bottom: 5px;
+  }
+  .sec3_1_sub .srchInp {
+    padding: 5px 8px;
+  }
+  .sec3_1_right div {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+<main>
+  <section>
+    <div class="sec1_main">
+      <div class="sec1_ch1">
+        <h2>Create new Invoice</h2>
+      </div>
+      <div class="sec1_ch2">
+        <button class="prev_edit_btn">Preview</button>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="sec2_main">
+      <div>
+        <button id="sec2MainBtn" class="sec2_main_btn">
+          <span>
+            Business details (e.g. address contact details, title, summary, and
+            logo)
+          </span>
+          <i class="fa-solid fa-angle-down"></i>
+          <!-- <span class="material-symbols-outlined"> arrow_drop_down </span> -->
+        </button>
+      </div>
+      <div id="sec2MainCh2" class="sec2_main_ch2">
+        <div class="sec2_main_ch2_main">
+          <div class="three_sec">
+            <div class="postPic">
+              <div class="postPic_hero">
+                <div class="dropArea_div">
+                  <label for="input-file" id="drop-area">
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      name="input-file"
+                      id="input-file"
+                      hidden
+                    />
+                    <div id="img-view" class="img_view">
+                      <img
+                        src="https://scontent.fccu13-1.fna.fbcdn.net/v/t39.30808-6/386744634_6960900540689671_131644099770296562_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=49d041&_nc_ohc=sndwip-nV6gAX9HCJEG&_nc_ht=scontent.fccu13-1.fna&oh=00_AfCPN7BfTaXpU5tPLc7a9gbUyY0LyCZ503qk5462H5GmjQ&oe=65244E71"
+                        alt=""
+                      />
+                      <p>
+                        Drag and drop or <b class="fr_click">click here</b>
+                        <br />
+                        to upload logo
+                      </p>
+                      <span>Upload any image from desktop</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="invoice_inputs three_sec">
+            <div class="srchInp_wraper">
+              <p class="inp_txt_p">Invoice Title :</p>
+              <input
+                type="text"
+                class="srchInp"
+                placeholder="Invoice Title"
+                id="inv_inp"
+              />
+              <p id="shw"></p>
+            </div>
+            <div class="srchInp_wraper">
+              <p class="inp_txt_p">Invoice Summary :</p>
+              <input
+                type="text"
+                class="srchInp"
+                placeholder="Invoice Summary (Optional)"
+                id="inv_sumry"
+              />
+            </div>
+          </div>
+          <div class="buisness_dtls three_sec">
+            <div class="bs_dtl">
+              <h5>Tristan Taylor Inc.</h5>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Address line 1 :</span>
+                <span
+                  >Test address asbah ho oh hoh oih t8d dtr k[l [l[ kpk[ lpji
+                  guf ydrs rdu bij k ljo hgyf
+                </span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Address line 2 :</span>
+                <span> test</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">City :</span>
+                <span> test city, Alberta</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Postal/ZIP code :</span>
+                <span> 1232</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Country :</span>
+                <span>Canada</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Phone :</span>
+                <span>9090909090</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Fax :</span>
+                <span>90</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Mobile :</span>
+                <span>8080808080</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Toll free :</span>
+                <span>0808</span>
+              </p>
+            </div>
+            <div class="bs_dtl_wrap">
+              <p>
+                <span class="bs_dtl">Website :</span>
+                <span>www.example.com</span>
+              </p>
+            </div>
+            <div class="buisness_frm_opener">
+              <span>Edit your business address and contact details</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="sec3_main">
+      <div class="sec3_1">
+        <div class="sec3_1_left sec3_1_sub">
+          <div class="sec3_1_left_in">
+            <button class="add_user_btn" id="addUserBtn">
+              <img
+                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2Utd2lkdGg9IjIiPjxjaXJjbGUgc3Ryb2tlPSIjQjJDMkNEIiBjeD0iMjYuNjIiIGN5PSIyMCIgcj0iMTIiLz48cGF0aCBkPSJNNDIuMTcgNDYuNzVjLS45My4yNS0zLjgxOSAxLjQ3OC0xNS42IDEuMy0xMS43ODEtLjE3OC0xNC4zMy0xLjA1LTE1LjUxLTEuM0EyLjYwMiAyLjYwMiAwIDAgMSA5IDQ0LjI0di0xLjE4YzAtMi4yNzQgMy42MzgtNC43MiA5LTUuOTUyIDIuNTM4LS41ODMgNS43OS0uNzY4IDguNjItLjc2OCAyLjc3NiAwIDUuMzguMTggNy4zOC43NjgiIHN0cm9rZT0iI0IyQzJDRCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTM5IDM4aDhtLTQtNHY4IiBzdHJva2U9IiMxNjczREUiIGZpbGw9IiNEOEQ4RDgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvZz48L3N2Zz4="
+                alt=""
+              />
+              Add a customer
+            </button>
+          </div>
+          <div class="user_list" id="userList">
+            <div class="srchInp_wraper">
+              <input
+                type="text"
+                class="srchInp"
+                placeholder="Type a customer name"
+              />
+            </div>
+            <div>
+              <ul>
+                <li>Test</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="sec3_1_mdl sec3_1_sub">
+          <div class="srchInp_wraper">
+            <label for="inv_num">Invoice Number</label>
+            <input class="srchInp" type="text" id="inv_num" />
+          </div>
+          <div class="srchInp_wraper">
+            <label for="po_so_num">P.O./S.O. number</label>
+            <input class="srchInp" type="text" id="po_so_num" />
+          </div>
+        </div>
+        <div class="sec3_1_right sec3_1_sub">
+          <div class="srchInp_wraper">
+            <label for="inv_date">Invoice Date</label>
+            <input class="srchInp" type="date" name="inv_date" id="inv_date" />
+          </div>
+          <div>
+            <label for="pmnt_due">Payment Due</label>
+            <input class="srchInp" type="date" name="pmnt_due" id="pmnt_due" />
+          </div>
+        </div>
+      </div>
+      <div class="sec3_2"></div>
+      <div class="sec3_3"></div>
+      <div class="sec3_4"></div>
+      <div class="sec3_5"></div>
+    </div>
+  </section>
+</main>
+<script>
+  let sec2MainCh2 = document.getElementById("sec2MainCh2");
+  sec2MainCh2.style.minHeight = "0px";
+  sec2MainCh2.style.maxHeight = "0px";
+  let sec2MainBtn = document.getElementById("sec2MainBtn");
+  sec2MainBtn.addEventListener("click", () => {
+    if (sec2MainCh2.style.minHeight === "0px") {
+      sec2MainBtn.style.borderBottomLeftRadius = "0";
+      sec2MainBtn.style.borderBottomRightRadius = "0";
+      sec2MainBtn.style.backgroundColor = "#e8e8fa96";
+      sec2MainBtn.classList.add("on_open");
+      sec2MainCh2.style.minHeight = "400px";
+      sec2MainCh2.style.maxHeight = "500px";
+      sec2MainCh2.style.overflow = "scroll";
+    } else {
+      sec2MainBtn.style.borderBottomLeftRadius = "10px";
+      sec2MainBtn.style.borderBottomRightRadius = "10px";
+      sec2MainBtn.style.backgroundColor = "";
+      sec2MainCh2.style.minHeight = "0px";
+      sec2MainCh2.style.maxHeight = "0px";
+      sec2MainCh2.style.overflow = "hidden";
+      sec2MainBtn.classList.remove("on_open");
+    }
+  });
+
+  let addUserList = document.getElementById("addUserList");
+  let userList = document.getElementById("userList");
+  userList.style.minHeight = "0px";
+  userList.style.maxHeight = "0px";
+  addUserList.addEventListener("click", () => {
+    if (userList.style.minHeight === "0px") {
+      userList.style.minHeight = "150px";
+      userList.style.maxHeight = "200px";
+      userList.style.overflow = "scroll";
+    }
+  });
+</script>
+{% endblock %}

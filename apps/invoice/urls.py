@@ -18,6 +18,7 @@ urlpatterns = [
     path("taxex/", views.TaxexView.as_view(), name="taxex"),
     path("repport-customers/", views.Repport_CustomersView.as_view(), name="repport-customers"),
     path("account-transactions/", views.Account_TransactionsView.as_view(), name="account-transactions"),
+    path("create_invoice/", views.create_invoice.as_view(), name="create_invoice"),
 
 
 ]
