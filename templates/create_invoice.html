@@ -5,6 +5,12 @@
     margin: 0;
     padding: 0;
   }
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
   p {
     margin: 0;
   }
@@ -36,8 +42,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
-    margin-bottom: 20px;
+    height: 50px;
+    margin-bottom: 10px;
   }
   .prev_edit_btn {
     border: 2px solid #8f8fde;
@@ -58,14 +64,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 9px 18px;
     background-color: #dcdcfaa6;
     font-size: 18px;
     border: 1px solid #8f8fde;
     width: 100%;
+    padding: 9px 18px;
     border-radius: 10px;
     transition: all 0.2s;
     position: relative;
+    text-align: left;
   }
   .sec2_main_btn i {
     font-size: 32px;
@@ -158,17 +165,18 @@
     margin-left: 2px;
     text-wrap: wrap;
   }
-  .buisness_frm_opener {
+  .opener_link {
     color: #4e4ea4;
     font-weight: 800;
     cursor: pointer;
   }
-  .buisness_frm_opener:hover {
+  .opener_link:hover {
     text-decoration: underline;
   }
   .sec3_main {
     width: 85%;
     margin: auto;
+    margin-top: 30px;
     background-color: #ffffff;
     padding: 30px 0;
   }
@@ -181,8 +189,32 @@
   .sec3_1_sub {
     width: 25%;
   }
+  .sec3_1_sub .srchInp_wraper {
+    margin-bottom: 5px;
+  }
+  .sec3_1_sub label {
+    font-weight: 800;
+  }
+  .sec3_1_sub .srchInp {
+    padding: 5px 8px;
+  }
+  .sec3_1_left_changer {
+    width: 280px;
+    height: 130px;
+    display: none;
+  }
+  .changeWrap .us_name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .changeWrap .us_name span:nth-child(1) {
+    font-weight: 800;
+    margin-right: 5px;
+  }
   .sec3_1_left {
     width: 280px;
+    display: block;
   }
   .sec3_1_left_in {
     width: 100%;
@@ -200,29 +232,411 @@
     font-weight: 600;
   }
   .user_list {
-    width: 100%;
     position: absolute;
     max-height: 0px;
     overflow: hidden;
-    background-color: blue;
-    margin-left: 1px;
-    width: 18%;
-    transition: all 0.4s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    box-shadow: rgba(61, 46, 101, 0.2) 0px 7px 29px 0px;
+    width: 18.2%;
+    transition: all 0.3s;
+    margin-top: -90px;
+    border-radius: 10px;
+    padding: 0 !important;
   }
-  /* .user_list.on_open {
-  } */
-  .sec3_1_sub .srchInp_wraper {
-    margin-bottom: 5px;
+  .user_list .srchInp_wraper {
+    width: 90%;
+    margin-top: 10px;
   }
-  .sec3_1_sub .srchInp {
-    padding: 5px 8px;
+  .user_list_ul_wrap {
+    width: 100%;
+    margin-top: 5px;
+  }
+  .user_list_ul_wrap li {
+    width: 100%;
+    min-height: 35px;
+    text-align: center;
+    font-size: 17px;
+    color: #393a3a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .user_list_ul_wrap li:hover {
+    background-color: #eff1ff;
+  }
+  .user_list .create_nw_cus_div {
+    width: 100%;
+    border-top: 1px solid #68757d95;
+  }
+  .create_nw_cus_btn {
+    border: 0;
+    background: transparent;
+    width: 100%;
+    font-weight: 800;
+    font-size: 15px;
+    min-height: 35px;
+    color: #393a3a;
+  }
+  .create_nw_cus_btn:hover {
+    background-color: #6464ba;
+    color: #ffffff;
+  }
+  .user_list .srchInp {
+    width: 100%;
   }
   .sec3_1_right div {
     display: flex;
     flex-direction: column;
   }
+  .sec3_2 .opener_link {
+    background-color: #e5e5fa;
+    width: 15%;
+    padding: 5px 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .sec3_2 .opener_link i {
+    margin-right: 3px;
+  }
+  .sec3_2_mdl {
+    width: 100%;
+    background-color: #e5e5fa;
+    height: 50px;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #393a3a;
+    padding-right: 30px;
+  }
+  .sec3_2_mdl div {
+    font-size: 16px;
+    font-weight: 800;
+    flex: 1;
+  }
+  .sec3_2_mdl div:first-child {
+    flex: 0 0 50%;
+  }
+  .sec3_2_add_item_wrap {
+    width: 100%;
+  }
+  .add_item {
+    height: 50px;
+    width: 100%;
+    border: 0;
+    text-align: left;
+    padding: 10px 40px;
+    background: transparent;
+    font-weight: 800;
+    font-size: 18px;
+    border-bottom: 1px solid #68757d95;
+    color: #4e4ea4;
+    position: relative;
+  }
+  .add_item:hover {
+    background-color: #e5e5fa;
+  }
+  .add_item i {
+    margin-right: 10px;
+  }
+  .add_item_pop {
+    max-height: 0px;
+    overflow: hidden;
+    width: 45%;
+    left: 24.7%;
+    position: absolute;
+    margin-top: -50px;
+    transition: all 0.3s;
+    background-color: #ffffff;
+    box-shadow: rgba(61, 46, 101, 0.2) 0px 7px 29px 0px;
+  }
+  .add_item_pop .srchInp_wraper {
+    width: 90%;
+    margin: 10px auto;
+  }
+  .add_item_pop .srchInp {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+      rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  }
+  .srch_item_ul_wrap {
+    width: 100%;
+  }
+  .srch_item_ul_wrap li {
+    width: 100%;
+    min-height: 35px;
+    text-align: center;
+    font-size: 17px;
+    color: #393a3a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 20px;
+  }
+  .srch_item_ul_wrap li:hover {
+    background-color: #eff1ff;
+  }
+  .add_item_pop .create_nw_itm_div {
+    width: 100%;
+    border-top: 1px solid #68757d95;
+  }
+  .create_nw_itm_btn {
+    border: 0;
+    background: transparent;
+    width: 100%;
+    font-weight: 800;
+    font-size: 15px;
+    min-height: 35px;
+    color: #393a3a;
+  }
+  .create_nw_itm_btn:hover {
+    background-color: #6464ba;
+    color: #ffffff;
+  }
+
+  /* Extra */
+  .added_items_li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #dcdcfaa6;
+  }
+  .added_items_li input,
+  span {
+    flex: 1; /* This makes the children share the available space equally */
+  }
+  .added_items_li input:first-child {
+    flex: 0 0 47%;
+  }
+  .added_items_li .total_amt_wrap {
+    flex: 0 0 10%;
+    font-size: 18px;
+    font-weight: 800;
+    padding-right: 10px;
+    text-align: right;
+    display: flex;
+    align-items: end;
+    margin-right: 10px;
+  }
+  #addedItemUL .added_items_li .srchInp {
+    margin-right: 15px;
+    width: 70%;
+    box-shadow: none;
+  }
+  .del_btn_div {
+    display: flex;
+    align-items: center;
+  }
+  .added_items_li button {
+    border: 0;
+    background-color: rgba(255, 0, 0, 0.714);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  /* End Extra */
+
+  .sec4_main {
+    width: 85%;
+    margin: 25px auto 20px auto;
+  }
+  .footer_btn_wrap {
+    width: 100%;
+  }
+  .footer_open_btn {
+    width: 100%;
+    background-color: #dcdcfaa6;
+    font-size: 18px;
+    border: 1px solid #8f8fde;
+    text-align: left;
+    padding: 9px 20px;
+    border-radius: 10px;
+    transition: all 0.2s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer_open_btn i {
+    font-size: 32px;
+    transition: all 0.4s;
+  }
+  .footer_open_btn.on_open i {
+    transform: rotate(180deg);
+  }
+  .footer_child {
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.3s;
+    background-color: #ffffff;
+  }
+  .footer_child textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px 20px;
+    border: 1px solid #8f8fde;
+    outline: none;
+  }
+  .sec5_main {
+    width: 85%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+  .sec5_main button {
+    color: #ffffff;
+    background-color: #6464ba;
+    padding: 10px 0;
+    width: 200px;
+    border: 0;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 18px;
+  }
+  .sec5_main button:hover {
+    background-color: #4e4ea4;
+  }
+
+  /* Forms */
+  .add_cus_form_full {
+    display: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.351);
+  }
+  .add_cus_form_wrap {
+    background-color: #ffffff;
+    width: 40%;
+    margin: auto;
+    border-radius: 20px;
+  }
+  .add_cus_form_wrap .form_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #dcdcfaa6;
+    padding: 15px 30px;
+  }
+  .form_head h2 {
+    margin: 0;
+    padding: 0;
+  }
+  .form_head i {
+    font-size: 28px;
+    cursor: pointer;
+  }
+  .add_cus_form {
+    padding: 30px 0;
+  }
+  .inp_wraper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto auto 25px auto;
+  }
+  .add_cus_form .inp_wraper .srchInp {
+    width: 100%;
+  }
+  .inp_wraper label {
+    font-weight: 700;
+  }
+  .inp_wraper button {
+    border: 0;
+    border-radius: 10px;
+    background-color: #6464ba;
+    color: #ffffff;
+    font-weight: 800;
+    padding: 8px 0;
+  }
+  .inp_wraper button:hover {
+    background-color: #4e4ea4;
+  }
 </style>
 <main>
+  <div id="addCusFormFull" class="add_cus_form_full">
+    <div id="addCusFormWrap" class="add_cus_form_wrap">
+      <div class="form_head">
+        <h2>New Customer</h2>
+        <i id="addCusFormCLose" class="fa-regular fa-rectangle-xmark"></i>
+      </div>
+      <form id="addCusForm" class="add_cus_form" action="">
+        <div>
+          <div class="inp_wraper">
+            <label for="cusName">Customer Name</label>
+            <input
+              type="text"
+              name="cusName"
+              id="cusName"
+              class="cus_name srchInp"
+              placeholder="Buisness or Person"
+              required
+            />
+          </div>
+          <div class="inp_wraper">
+            <label for="cusEmail">Email</label>
+            <input
+              type="email"
+              name="cusEmail"
+              id="cusEmail"
+              class="cus_email srchInp"
+              placeholder="Enter Email"
+            />
+          </div>
+          <div class="inp_wraper">
+            <label for="cusPh">Phone</label>
+            <input
+              type="number"
+              name="cusPh"
+              id="cusPh"
+              class="cus_ph srchInp"
+              placeholder="Enter Phone"
+            />
+          </div>
+          <div class="inp_wraper">
+            <label for="cusAdd1">Phone</label>
+            <input
+              type="text"
+              name="cusAdd1"
+              id="cusAdd1"
+              class="cus_add1 srchInp"
+              placeholder="Enter address"
+            />
+          </div>
+          <div class="inp_wraper">
+            <label for="cusAdd2">Phone</label>
+            <input
+              type="text"
+              name="cusAdd2"
+              id="cusAdd2"
+              class="cus_add2 srchInp"
+              placeholder="Enter address"
+            />
+          </div>
+          <div class="inp_wraper">
+            <button type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <section>
     <div class="sec1_main">
       <div class="sec1_ch1">
@@ -242,7 +656,6 @@
             logo)
           </span>
           <i class="fa-solid fa-angle-down"></i>
-          <!-- <span class="material-symbols-outlined"> arrow_drop_down </span> -->
         </button>
       </div>
       <div id="sec2MainCh2" class="sec2_main_ch2">
@@ -365,7 +778,7 @@
                 <span>www.example.com</span>
               </p>
             </div>
-            <div class="buisness_frm_opener">
+            <div class="opener_link">
               <span>Edit your business address and contact details</span>
             </div>
           </div>
@@ -376,7 +789,24 @@
   <section>
     <div class="sec3_main">
       <div class="sec3_1">
-        <div class="sec3_1_left sec3_1_sub">
+        <div id="sec3LeftChanger" class="sec3_1_left_changer">
+          <div class="changeWrap">
+            <p style="text-align: center; font-weight: 800">Bill to</p>
+            <div class="us_name">
+              <span>Name :</span>
+              <span id="selUserName"></span>
+            </div>
+            <div>
+              <div class="opener_link">
+                <span>Edit user details</span>
+              </div>
+              <div id="chosDffCus" class="opener_link">
+                <span>Choose a different customer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="sec3Left" class="sec3_1_left sec3_1_sub">
           <div class="sec3_1_left_in">
             <button class="add_user_btn" id="addUserBtn">
               <img
@@ -394,10 +824,16 @@
                 placeholder="Type a customer name"
               />
             </div>
-            <div>
+            <div class="user_list_ul_wrap">
               <ul>
-                <li>Test</li>
+                <li class="srchd_users">Test</li>
               </ul>
+            </div>
+            <div class="create_nw_cus_div">
+              <button id="createNwCusBtn" class="create_nw_cus_btn">
+                <i class="fa-solid fa-plus"></i>
+                Create new customer
+              </button>
             </div>
           </div>
         </div>
@@ -422,47 +858,330 @@
           </div>
         </div>
       </div>
-      <div class="sec3_2"></div>
+      <div class="sec3_2">
+        <div class="opener_link">
+          <i class="fa-solid fa-pen"></i>
+          <span>Edit Columns</span>
+        </div>
+        <div class="sec3_2_mdl">
+          <div><span>Items</span></div>
+          <div><span>Quantity</span></div>
+          <div><span>Price</span></div>
+          <div><span>Tax %</span></div>
+          <div><span>Amount</span></div>
+        </div>
+        <div>
+          <ul id="addedItemUL"></ul>
+        </div>
+        <div class="sec3_2_add_item_wrap">
+          <button id="addItem" class="add_item">
+            <i class="fa-solid fa-plus"></i>
+            Add an Item
+          </button>
+        </div>
+        <div class="add_item_pop" id="addItemPop">
+          <div class="add_item_pop_wrap">
+            <div class="srchInp_wraper">
+              <input
+                type="text"
+                class="srchInp"
+                placeholder="Type a customer name"
+              />
+            </div>
+            <div class="srch_item_ul_wrap">
+              <ul>
+                <li class="srchd_items">
+                  <span class="itm_nam">Test</span>
+                  <span class="itm_priz">10.00</span>
+                  <span class="itm_dis">10.00</span>
+                </li>
+              </ul>
+            </div>
+            <div class="create_nw_itm_div">
+              <button id="createNwItmBtn" class="create_nw_itm_btn">
+                <i class="fa-solid fa-plus"></i>
+                Create new item
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="sec3_3"></div>
       <div class="sec3_4"></div>
       <div class="sec3_5"></div>
     </div>
   </section>
+  <section>
+    <div class="sec4_main">
+      <div class="footer_btn_wrap">
+        <button id="footerOpenBtn" class="footer_open_btn">
+          <span>Footer</span>
+          <i class="fa-solid fa-angle-down"></i>
+        </button>
+      </div>
+      <div id="footerChild" class="footer_child">
+        <textarea
+          name=""
+          id=""
+          rows="10"
+          placeholder="Enter a footer for this invoice (e.g. tax information, thank you note)"
+        ></textarea>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="sec5_main">
+      <button>Save and continue</button>
+    </div>
+  </section>
 </main>
 <script>
   let sec2MainCh2 = document.getElementById("sec2MainCh2");
-  sec2MainCh2.style.minHeight = "0px";
   sec2MainCh2.style.maxHeight = "0px";
   let sec2MainBtn = document.getElementById("sec2MainBtn");
+  let addUserBtn = document.getElementById("addUserBtn");
+  let userList = document.getElementById("userList");
+  userList.style.maxHeight = "0px";
+  let srchInp = document.querySelectorAll(".srchInp");
+  let sec3Left = document.getElementById("sec3Left");
+  let sec3LeftChanger = document.getElementById("sec3LeftChanger");
+  let srchd_users = document.querySelectorAll(".srchd_users");
+  let chosDffCus = document.getElementById("chosDffCus");
+  let addItem = document.getElementById("addItem");
+  let addItemPop = document.getElementById("addItemPop");
+  addItemPop.style.maxHeight = "0px";
+  let srchd_items = document.querySelectorAll(".srchd_items");
+  let addedItemUL = document.getElementById("addedItemUL");
+  let footerOpenBtn = document.getElementById("footerOpenBtn");
+  let footerChild = document.getElementById("footerChild");
+  footerChild.style.maxHeight = "0px";
+  let createNwCusBtn = document.getElementById("createNwCusBtn");
+  let addCusFormCLose = document.getElementById("addCusFormCLose");
+  let addCusFormFull = document.getElementById("addCusFormFull");
+  addCusFormFull.style.display = "none";
+
+  createNwCusBtn.addEventListener("click", () => {
+    addCusFormFull.style.display = "block";
+  });
+
+  addCusFormCLose.addEventListener("click", () => {
+    addCusFormFull.style.display = "none";
+  });
+
+  footerOpenBtn.addEventListener("click", () => {
+    if (footerChild.style.maxHeight === "0px") {
+      footerOpenBtn.style.borderBottomLeftRadius = "0px";
+      footerOpenBtn.style.borderBottomRightRadius = "0px";
+      footerChild.style.maxHeight = "100px";
+      footerChild.style.minHeight = "100px";
+      footerOpenBtn.classList.add("on_open");
+    } else {
+      footerChild.style.maxHeight = "0px";
+      footerChild.style.minHeight = "0px";
+      footerOpenBtn.style.borderBottomLeftRadius = "10px";
+      footerOpenBtn.style.borderBottomRightRadius = "10px";
+      footerOpenBtn.classList.remove("on_open");
+    }
+  });
+
+  // srchd_items.forEach((ele) => {
+  //   ele.addEventListener("click", function () {
+  //     const itemName = this.querySelector(".itm_nam").textContent;
+  //     let itemPrice = this.querySelector(".itm_priz").textContent;
+  //     let itemDiscount = this.querySelector(".itm_dis").textContent;
+  //     let itemQuantity = 1;
+  //     let tax = 18;
+
+  //     console.log(itemPrice, itemName);
+
+  //     let newLi = document.createElement("li");
+  //     newLi.setAttribute("class", "added_items_li");
+
+  //     let itNam = document.createElement("span");
+  //     itNam.textContent = itemName;
+
+  //     let itQty = document.createElement("input");
+  //     itQty.setAttribute("type", "number");
+  //     itQty.setAttribute("value", itemQuantity);
+  //     itQty.setAttribute("class", "srchInp");
+  //     itQty.addEventListener("change", (e) => {
+  //       itemQuantity = Number(e.target.value);
+  //     });
+
+  //     let itPrz = document.createElement("input");
+  //     itPrz.setAttribute("type", "number");
+  //     itPrz.setAttribute("value", itemPrice);
+  //     itPrz.setAttribute("class", "srchInp");
+  //     itPrz.addEventListener("change", (e) => {
+  //       itemPrice = Number(e.target.value);
+  //     });
+
+  //     let amount =
+  //       Number(itemPrice) * itemQuantity +
+  //       ((Number(itemPrice) * itemQuantity) / 100) * 18;
+
+  //     console.log(amount);
+
+  //     newLi.append(itNam, itQty, itPrz);
+  //     addedItemUL.append(newLi);
+  //   });
+  // });
+
+  addItem.addEventListener("click", () => {
+    let itemName = "";
+    let itemQuantity = 1;
+    let itemPrice = 0;
+    let itemTax = 0;
+    let itemAmount = 0;
+
+    let newLi = document.createElement("li");
+    newLi.setAttribute("class", "added_items_li");
+
+    let itAmt = document.createElement("span");
+    let totalAmtWrap = document.createElement("div");
+    totalAmtWrap.setAttribute("class", "total_amt_wrap");
+    totalAmtWrap.append(itAmt);
+
+    let itNam = document.createElement("input");
+    itNam.setAttribute("type", "text");
+    itNam.setAttribute("value", itemName);
+    itNam.setAttribute("class", "srchInp");
+    itNam.setAttribute("placeholder", "Enter item name here");
+    itNam.addEventListener("keyup", (e) => {
+      itemName = e.target.value;
+    });
+
+    let itQty = document.createElement("input");
+    itQty.setAttribute("type", "number");
+    itQty.setAttribute("value", itemQuantity);
+    itQty.setAttribute("class", "srchInp");
+    itQty.setAttribute("placeholder", "Item quantity");
+    itQty.addEventListener("keyup", (e) => {
+      itemQuantity = Number(e.target.value);
+      itemAmount =
+        Number(itemPrice) * itemQuantity +
+        ((Number(itemPrice) * itemQuantity) / 100) * Number(itemTax);
+      itAmt.textContent = itemAmount + " /-";
+    });
+
+    let itPrz = document.createElement("input");
+    itPrz.setAttribute("type", "number");
+    itPrz.setAttribute("value", itemPrice);
+    itPrz.setAttribute("class", "srchInp");
+    itPrz.setAttribute("placeholder", "Item price");
+    itPrz.addEventListener("keyup", (e) => {
+      itemPrice = Number(e.target.value);
+      itemAmount =
+        Number(itemPrice) * itemQuantity +
+        ((Number(itemPrice) * itemQuantity) / 100) * Number(itemTax);
+      itAmt.textContent = itemAmount + " /-";
+    });
+
+    let itTax = document.createElement("input");
+    itTax.setAttribute("type", "number");
+    itTax.setAttribute("value", itemTax);
+    itTax.setAttribute("class", "srchInp");
+    itTax.setAttribute("placeholder", "Tax amount %");
+    itTax.addEventListener("keyup", (e) => {
+      itemTax = Number(e.target.value);
+      itemAmount =
+        Number(itemPrice) * itemQuantity +
+        ((Number(itemPrice) * itemQuantity) / 100) * Number(itemTax);
+      itAmt.textContent = itemAmount + " /-";
+    });
+
+    let delBtnDiv = document.createElement("div");
+    delBtnDiv.setAttribute("class", "del_btn_div");
+    let delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.addEventListener("click", () => {
+      addedItemUL.removeChild(newLi);
+    });
+    delBtnDiv.append(delBtn);
+
+    newLi.append(itNam, itQty, itPrz, itTax, totalAmtWrap, delBtnDiv);
+    addedItemUL.appendChild(newLi);
+  });
+
+  // addItem.addEventListener("click", (e) => {
+  //   e.stopPropagation();
+  //   if (addItemPop.style.maxHeight === "0px") {
+  //     addItemPop.style.maxHeight = "250px";
+  //     addItemPop.style.overflow = "scroll";
+  //   } else {
+  //     addItemPop.style.maxHeight = "0px";
+  //     addItemPop.style.overflow = "hidden";
+  //   }
+  // });
+
+  addItemPop.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  chosDffCus.addEventListener("click", () => {
+    sec3Left.style.display = "block";
+    sec3LeftChanger.style.display = "none";
+  });
+
+  srchd_users.forEach((ele) => {
+    ele.addEventListener("click", () => {
+      sec3Left.style.display = "none";
+      sec3LeftChanger.style.display = "block";
+      document.getElementById("selUserName").textContent = ele.textContent;
+    });
+  });
+
+  srchInp.forEach((ele) => {
+    ele.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  });
+
+  userList.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  document.body.addEventListener("click", () => {
+    closeing();
+  });
+
+  function closeing() {
+    if (userList.style.maxHeight === "200px") {
+      userList.style.maxHeight = "0px";
+      userList.style.overflow = "hidden";
+    }
+    if (addItemPop.style.maxHeight === "250px") {
+      addItemPop.style.maxHeight = "0px";
+      addItemPop.style.overflow = "hidden";
+    }
+  }
+
   sec2MainBtn.addEventListener("click", () => {
-    if (sec2MainCh2.style.minHeight === "0px") {
+    if (sec2MainCh2.style.maxHeight === "0px") {
       sec2MainBtn.style.borderBottomLeftRadius = "0";
       sec2MainBtn.style.borderBottomRightRadius = "0";
       sec2MainBtn.style.backgroundColor = "#e8e8fa96";
       sec2MainBtn.classList.add("on_open");
-      sec2MainCh2.style.minHeight = "400px";
       sec2MainCh2.style.maxHeight = "500px";
       sec2MainCh2.style.overflow = "scroll";
     } else {
       sec2MainBtn.style.borderBottomLeftRadius = "10px";
       sec2MainBtn.style.borderBottomRightRadius = "10px";
       sec2MainBtn.style.backgroundColor = "";
-      sec2MainCh2.style.minHeight = "0px";
       sec2MainCh2.style.maxHeight = "0px";
       sec2MainCh2.style.overflow = "hidden";
       sec2MainBtn.classList.remove("on_open");
     }
   });
 
-  let addUserList = document.getElementById("addUserList");
-  let userList = document.getElementById("userList");
-  userList.style.minHeight = "0px";
-  userList.style.maxHeight = "0px";
-  addUserList.addEventListener("click", () => {
-    if (userList.style.minHeight === "0px") {
-      userList.style.minHeight = "150px";
+  addUserBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (userList.style.maxHeight === "0px") {
       userList.style.maxHeight = "200px";
       userList.style.overflow = "scroll";
+    } else {
+      userList.style.maxHeight = "0px";
+      userList.style.overflow = "hidden";
     }
   });
 </script>
