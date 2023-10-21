@@ -135,8 +135,6 @@ def LogoutPage(request):
 
 
 
-
-
 class Resetpasswordview(View):
     def get(self, request):
         return render(request, "resetemail.html")

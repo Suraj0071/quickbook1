@@ -1,12 +1,46 @@
 from django.shortcuts import render
 from django.views import View
+from apps.invoice.models import *
 # Create your views here.
+
+
+
+
 
 
 class InvoicesView(View):
     def get(self, request):
         return render(request, "Invoices.html")
     
+
+    
+class create_invoice(View):
+    def get(self, request):
+        return render(request, "create_invoice.html")
+    
+    def post(self, request):
+        print(request)
+        name = request.POST.get('cusName')
+        email = request.POST.get('cusEmail')
+        phone = request.POST.get('cusphone')
+        first_name = request.POST.get('firstname')
+        last_name =  request.POST.get("lastname")
+        invoice_num  = request.POST.get("invoice_num")
+        pos_so_num  = request.POST.get("pos_so_num")
+       
+        invoice_date  = request.POST.get("invoice_date")
+        payment_due  = request.POST.get("payment_due")
+        print("===================",invoice_date)
+        
+
+        
+        if name:
+            Customer.objects.create(name = name, email=email , phone=phone , first_name= first_name, last_name = last_name)
+        
+
+
+        return render(request, "create_invoice.html")
+
 
 
 
@@ -55,9 +89,7 @@ class Chart_of_AccountsView(View):
     
 
 
-class create_invoice(View):
-    def get(self, request):
-        return render(request, "create_invoice.html")
+
 
 
 

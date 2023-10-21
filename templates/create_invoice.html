@@ -577,10 +577,11 @@
         <h2>New Customer</h2>
         <i id="addCusFormCLose" class="fa-regular fa-rectangle-xmark"></i>
       </div>
-      <form id="addCusForm" class="add_cus_form" action="">
+      <form id="addCusForm" class="add_cus_form"   method="post"  action="">
+        {% csrf_token %}
         <div>
           <div class="inp_wraper">
-            <label for="cusName">Customer Name</label>
+            <label for="cusName">Customer </label>
             <input
               type="text"
               name="cusName"
@@ -604,27 +605,27 @@
             <label for="cusPh">Phone</label>
             <input
               type="number"
-              name="cusPh"
+              name="cusphone"
               id="cusPh"
               class="cus_ph srchInp"
               placeholder="Enter Phone"
             />
           </div>
           <div class="inp_wraper">
-            <label for="cusAdd1">Phone</label>
+            <label for="cusAdd1">First Name</label>
             <input
               type="text"
-              name="cusAdd1"
+              name="fistname"
               id="cusAdd1"
               class="cus_add1 srchInp"
               placeholder="Enter address"
             />
           </div>
           <div class="inp_wraper">
-            <label for="cusAdd2">Phone</label>
+            <label for="cusAdd2">Last Name</label>
             <input
               type="text"
-              name="cusAdd2"
+              name="lastname"
               id="cusAdd2"
               class="cus_add2 srchInp"
               placeholder="Enter address"
@@ -840,21 +841,21 @@
         <div class="sec3_1_mdl sec3_1_sub">
           <div class="srchInp_wraper">
             <label for="inv_num">Invoice Number</label>
-            <input class="srchInp" type="text" id="inv_num" />
+            <input class="srchInp" type="text" id="inv_num" name = "invoice_num" />
           </div>
           <div class="srchInp_wraper">
             <label for="po_so_num">P.O./S.O. number</label>
-            <input class="srchInp" type="text" id="po_so_num" />
+            <input class="srchInp" type="text" id="po_so_num" name = "pos_so_num" />
           </div>
         </div>
         <div class="sec3_1_right sec3_1_sub">
           <div class="srchInp_wraper">
             <label for="inv_date">Invoice Date</label>
-            <input class="srchInp" type="date" name="inv_date" id="inv_date" />
+            <input class="srchInp" type="date" name="inv_date" id="inv_date" name = "invoice_date" />
           </div>
           <div>
             <label for="pmnt_due">Payment Due</label>
-            <input class="srchInp" type="date" name="pmnt_due" id="pmnt_due" />
+            <input class="srchInp" type="date" name="pmnt_due" id="pmnt_due" name = "payment_due" />
           </div>
         </div>
       </div>
@@ -931,7 +932,7 @@
   </section>
   <section>
     <div class="sec5_main">
-      <button>Save and continue</button>
+      <button type="submit">Save and continue</button>
     </div>
   </section>
 </main>

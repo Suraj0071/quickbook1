@@ -17,7 +17,7 @@ class Invoice(models.Model):
 
 
 class Customer(models.Model):
-    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE,null=True,blank=True)
     name =  models.CharField(max_length=100)
     email = models.EmailField(null=True,blank=True)
     phone = models.CharField(max_length=20,null=True,blank=True)
@@ -26,7 +26,7 @@ class Customer(models.Model):
     
 
 class Item(models.Model):
-    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(null=True,blank=True)
     quantity = models.IntegerField()
@@ -48,7 +48,7 @@ class Business(models.Model):
     mobile   =  models.CharField(max_length=100,null=True,blank=True)
     toll_free =  models.CharField(max_length=100,null=True,blank=True)
     website =  models.CharField(max_length=100,null=True,blank=True)
-    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE,null=True,blank=True)
 
 
 
