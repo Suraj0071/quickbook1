@@ -1,1189 +1,358 @@
-{% extends "base_dashboard.html" %} {% block content %} {% load static %}
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
-  ::-webkit-scrollbar {
-    width: 0;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: transparent;
-  }
-  p {
-    margin: 0;
-  }
-  span {
-    margin: 0;
-    padding: 0;
-  }
-  /* input {
-        margin: 0;
-        padding: 0;
-      } */
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-  ol {
-    margin: 0;
-    padding: 0;
-  }
-  /* .invoice-add-info__section-button.is-open
-        .invoice-add-info__section-button__expand-icon {
-        transform: rotate(180deg);
-        transition: all 0.3s;
-      } */
-  main {
-    font-family: "Nunito";
-  }
-  .sec1_main {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    margin-bottom: 10px;
-  }
-  .prev_edit_btn {
-    border: 2px solid #8f8fde;
-    color: #6464ba;
-    background: transparent;
-    width: 150px;
-    height: 40px;
-    margin: auto;
-    font-weight: 600;
-    font-size: 19px;
-    border-radius: 35px;
-    transition: 0.1s ease-in-out;
-  }
-  .prev_edit_btn:hover {
-    background-color: #dcdcfaa6;
-  }
-  .sec2_main_btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #dcdcfaa6;
-    font-size: 18px;
-    border: 1px solid #8f8fde;
-    width: 100%;
-    padding: 9px 18px;
-    border-radius: 10px;
-    transition: all 0.2s;
-    position: relative;
-    text-align: left;
-  }
-  .sec2_main_btn i {
-    font-size: 32px;
-    transition: all 0.4s;
-  }
-  .sec2_main_btn.on_open i {
-    transform: rotate(180deg);
-  }
-  .sec2_main_ch2 {
-    max-height: 0px;
-    overflow: hidden;
-    transition: all 0.4s;
-    background-color: #ffffff;
-  }
-  .sec2_main_ch2_main {
-    width: 95%;
-    margin: 25px auto;
-    display: flex;
-    justify-content: space-between;
-  }
-  .three_sec {
-    width: 33.3%;
-  }
-  .postPic {
-    width: 100%;
-    margin: auto;
-    height: 180px;
-  }
-  #drop-area {
-    width: 300px;
-    height: 150px;
-    background-color: #ffffff;
-    text-align: center;
-    border-radius: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .img_view {
-    width: 100%;
-    height: 100%;
-    padding-top: 4px;
-    padding-bottom: 8px;
-    border: 2px dashed #bbb5ff;
-    background: #f7f8ff;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-  }
-  .img_view:hover .fr_click {
-    text-decoration: underline;
-  }
-  .img_view img {
-    width: 26%;
-    margin-bottom: 5px;
-  }
-  .img_view p {
-    font-size: 13px;
-  }
-  .img_view span {
-    font-size: 10px;
-    color: #777;
-  }
-  .srchInp_wraper {
-    margin-bottom: 15px;
-  }
-  .srchInp {
-    width: 75%;
-    padding: 7px 10px;
-    border-radius: 8px;
-    color: #68757d;
-    outline: none;
-    border: 0;
-    border: 1px solid #7d7dc7;
-    box-shadow: rgba(61, 46, 101, 0.2) 0px 7px 29px 0px;
-  }
-  .bs_dtl_wrap {
-    margin-bottom: 5px;
-  }
-  .bs_dtl {
-    font-weight: 700;
-  }
-  .bs_dtl h5 {
-    text-align: center;
-  }
-  .bs_dtl_wrap span:nth-child(2) {
-    margin-left: 2px;
-    text-wrap: wrap;
-  }
-  .opener_link {
-    color: #4e4ea4;
-    font-weight: 800;
-    cursor: pointer;
-  }
-  .opener_link:hover {
-    text-decoration: underline;
-  }
-  .sec3_main {
-    width: 85%;
-    margin: auto;
-    margin-top: 30px;
-    background-color: #ffffff;
-    padding: 30px 0;
-  }
-  .sec3_1 {
-    width: 90%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-  }
-  .sec3_1_sub {
-    width: 25%;
-  }
-  .sec3_1_sub .srchInp_wraper {
-    margin-bottom: 5px;
-  }
-  .sec3_1_sub label {
-    font-weight: 800;
-  }
-  .sec3_1_sub .srchInp {
-    padding: 5px 8px;
-  }
-  .sec3_1_left_changer {
-    width: 280px;
-    height: 130px;
-    display: none;
-  }
-  .changeWrap .us_name {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .changeWrap .us_name span:nth-child(1) {
-    font-weight: 800;
-    margin-right: 5px;
-  }
-  .sec3_1_left {
-    width: 280px;
-    display: block;
-  }
-  .sec3_1_left_in {
-    width: 100%;
-    height: 130px;
-    border: 1px dashed #4e4ea4;
-    border-radius: 10px;
-    position: relative;
-  }
-  .sec3_1_left_in button {
-    border: 0;
-    background: transparent;
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    font-weight: 600;
-  }
-  .user_list {
-    position: absolute;
-    max-height: 0px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffff;
-    box-shadow: rgba(61, 46, 101, 0.2) 0px 7px 29px 0px;
-    width: 18.2%;
-    transition: all 0.3s;
-    margin-top: -90px;
-    border-radius: 10px;
-    padding: 0 !important;
-  }
-  .user_list .srchInp_wraper {
-    width: 90%;
-    margin-top: 10px;
-  }
-  .user_list_ul_wrap {
-    width: 100%;
-    margin-top: 5px;
-  }
-  .user_list_ul_wrap li {
-    width: 100%;
-    min-height: 35px;
-    text-align: center;
-    font-size: 17px;
-    color: #393a3a;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .user_list_ul_wrap li:hover {
-    background-color: #eff1ff;
-  }
-  .user_list .create_nw_cus_div {
-    width: 100%;
-    border-top: 1px solid #68757d95;
-  }
-  .create_nw_cus_btn {
-    border: 0;
-    background: transparent;
-    width: 100%;
-    font-weight: 800;
-    font-size: 15px;
-    min-height: 35px;
-    color: #393a3a;
-  }
-  .create_nw_cus_btn:hover {
-    background-color: #6464ba;
-    color: #ffffff;
-  }
-  .user_list .srchInp {
-    width: 100%;
-  }
-  .sec3_1_right div {
-    display: flex;
-    flex-direction: column;
-  }
-  .sec3_2 .opener_link {
-    background-color: #e5e5fa;
-    width: 15%;
-    padding: 5px 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    text-align: center;
-    margin-top: 30px;
-  }
-  .sec3_2 .opener_link i {
-    margin-right: 3px;
-  }
-  .sec3_2_mdl {
-    width: 100%;
-    background-color: #e5e5fa;
-    height: 50px;
-    padding-left: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #393a3a;
-    padding-right: 30px;
-  }
-  .sec3_2_mdl div {
-    font-size: 16px;
-    font-weight: 800;
-    flex: 1;
-  }
-  .sec3_2_mdl div:first-child {
-    flex: 0 0 50%;
-  }
-  .sec3_2_add_item_wrap {
-    width: 100%;
-  }
-  .add_item {
-    height: 50px;
-    width: 100%;
-    border: 0;
-    text-align: left;
-    padding: 10px 40px;
-    background: transparent;
-    font-weight: 800;
-    font-size: 18px;
-    border-bottom: 1px solid #68757d95;
-    color: #4e4ea4;
-    position: relative;
-  }
-  .add_item:hover {
-    background-color: #e5e5fa;
-  }
-  .add_item i {
-    margin-right: 10px;
-  }
-  .add_item_pop {
-    max-height: 0px;
-    overflow: hidden;
-    width: 45%;
-    left: 24.7%;
-    position: absolute;
-    margin-top: -50px;
-    transition: all 0.3s;
-    background-color: #ffffff;
-    box-shadow: rgba(61, 46, 101, 0.2) 0px 7px 29px 0px;
-  }
-  .add_item_pop .srchInp_wraper {
-    width: 90%;
-    margin: 10px auto;
-  }
-  .add_item_pop .srchInp {
-    width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-      rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  }
-  .srch_item_ul_wrap {
-    width: 100%;
-  }
-  .srch_item_ul_wrap li {
-    width: 100%;
-    min-height: 35px;
-    text-align: center;
-    font-size: 17px;
-    color: #393a3a;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 7px 20px;
-  }
-  .srch_item_ul_wrap li:hover {
-    background-color: #eff1ff;
-  }
-  .add_item_pop .create_nw_itm_div {
-    width: 100%;
-    border-top: 1px solid #68757d95;
-  }
-  .create_nw_itm_btn {
-    border: 0;
-    background: transparent;
-    width: 100%;
-    font-weight: 800;
-    font-size: 15px;
-    min-height: 35px;
-    color: #393a3a;
-  }
-  .create_nw_itm_btn:hover {
-    background-color: #6464ba;
-    color: #ffffff;
-  }
+{% extends "base_dashboard.html" %}
+ 
+{% block content %}
+{% load static %}
 
-  /* Extra */
-  .added_items_li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #dcdcfaa6;
-  }
-  .added_items_li input,
-  span {
-    flex: 1; /* This makes the children share the available space equally */
-  }
-  .added_items_li input:first-child {
-    flex: 0 0 47%;
-  }
-  .added_items_li .total_amt_wrap {
-    flex: 0 0 10%;
-    font-size: 18px;
-    font-weight: 800;
-    padding-right: 10px;
-    text-align: right;
-    display: flex;
-    align-items: end;
-    margin-right: 10px;
-  }
-  #addedItemUL .added_items_li .srchInp {
-    margin-right: 15px;
-    width: 70%;
-    box-shadow: none;
-  }
-  .del_btn_div {
-    display: flex;
-    align-items: center;
-  }
-  .added_items_li button {
-    border: 0;
-    background-color: rgba(255, 0, 0, 0.714);
-    color: #ffffff;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-  /* End Extra */
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span> Create Invoice</h4>
+<div class="row">
+                <!-- Basic Layout -->
+                <div class="col-xxl">
+                  <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                     
+                      <!-- <small class="text-muted float-end">Default label</small> -->
+                      <button
+                          type="button"
+                          class="btn btn-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#basicModal"
+                        >
+                        Add Customer   
+                        </button>      
 
-  .sec4_main {
-    width: 85%;
-    margin: 25px auto 20px auto;
-  }
-  .footer_btn_wrap {
-    width: 100%;
-  }
-  .footer_open_btn {
-    width: 100%;
-    background-color: #dcdcfaa6;
-    font-size: 18px;
-    border: 1px solid #8f8fde;
-    text-align: left;
-    padding: 9px 20px;
-    border-radius: 10px;
-    transition: all 0.2s;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .footer_open_btn i {
-    font-size: 32px;
-    transition: all 0.4s;
-  }
-  .footer_open_btn.on_open i {
-    transform: rotate(180deg);
-  }
-  .footer_child {
-    max-height: 0px;
-    overflow: hidden;
-    transition: all 0.3s;
-    background-color: #ffffff;
-  }
-  .footer_child textarea {
-    width: 100%;
-    height: 100px;
-    padding: 8px 20px;
-    border: 1px solid #8f8fde;
-    outline: none;
-  }
-  .sec5_main {
-    width: 85%;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-  }
-  .sec5_main button {
-    color: #ffffff;
-    background-color: #6464ba;
-    padding: 10px 0;
-    width: 200px;
-    border: 0;
-    border-radius: 25px;
-    font-weight: 800;
-    font-size: 18px;
-  }
-  .sec5_main button:hover {
-    background-color: #4e4ea4;
-  }
+        
 
-  /* Forms */
-  .add_cus_form_full {
-    display: none;
-    margin: 0;
-    padding: 0;
-    z-index: 1;
-    position: fixed;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.351);
-  }
-  .add_cus_form_wrap {
-    background-color: #ffffff;
-    width: 40%;
-    margin: auto;
-    border-radius: 20px;
-  }
-  .add_cus_form_wrap .form_head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #dcdcfaa6;
-    padding: 15px 30px;
-  }
-  .form_head h2 {
-    margin: 0;
-    padding: 0;
-  }
-  .form_head i {
-    font-size: 28px;
-    cursor: pointer;
-  }
-  .add_cus_form {
-    padding: 30px 0;
-  }
-  .inp_wraper {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: auto auto 25px auto;
-  }
-  .add_cus_form .inp_wraper .srchInp {
-    width: 100%;
-  }
-  .inp_wraper label {
-    font-weight: 700;
-  }
-  .inp_wraper button {
-    border: 0;
-    border-radius: 10px;
-    background-color: #6464ba;
-    color: #ffffff;
-    font-weight: 800;
-    padding: 8px 0;
-  }
-  .inp_wraper button:hover {
-    background-color: #4e4ea4;
-  }
-</style>
-<main>
-  <div id="addCusFormFull" class="add_cus_form_full">
-    <div id="addCusFormWrap" class="add_cus_form_wrap">
-      <div class="form_head">
-        <h2>New Customer</h2>
-        <i id="addCusFormCLose" class="fa-regular fa-rectangle-xmark"></i>
-      </div>
-      <form id="addCusForm" class="add_cus_form"   method="post"  action="">
-        {% csrf_token %}
-        <div>
-          <div class="inp_wraper">
-            <label for="cusName">Customer </label>
-            <input
-              type="text"
-              name="cusName"
-              id="cusName"
-              class="cus_name srchInp"
-              placeholder="Buisness or Person"
-              required
-            />
-          </div>
-          <div class="inp_wraper">
-            <label for="cusEmail">Email</label>
-            <input
-              type="email"
-              name="cusEmail"
-              id="cusEmail"
-              class="cus_email srchInp"
-              placeholder="Enter Email"
-            />
-          </div>
-          <div class="inp_wraper">
-            <label for="cusPh">Phone</label>
-            <input
-              type="number"
-              name="cusphone"
-              id="cusPh"
-              class="cus_ph srchInp"
-              placeholder="Enter Phone"
-            />
-          </div>
-          <div class="inp_wraper">
-            <label for="cusAdd1">First Name</label>
-            <input
-              type="text"
-              name="fistname"
-              id="cusAdd1"
-              class="cus_add1 srchInp"
-              placeholder="Enter address"
-            />
-          </div>
-          <div class="inp_wraper">
-            <label for="cusAdd2">Last Name</label>
-            <input
-              type="text"
-              name="lastname"
-              id="cusAdd2"
-              class="cus_add2 srchInp"
-              placeholder="Enter address"
-            />
-          </div>
-          <div class="inp_wraper">
-            <button type="submit">Save</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-  <section>
-    <div class="sec1_main">
-      <div class="sec1_ch1">
-        <h2>Create new Invoice</h2>
-      </div>
-      <div class="sec1_ch2">
-        <button class="prev_edit_btn">Preview</button>
-      </div>
-    </div>
-  </section>
-  <section>
-    <div class="sec2_main">
-      <div>
-        <button id="sec2MainBtn" class="sec2_main_btn">
-          <span>
-            Business details (e.g. address contact details, title, summary, and
-            logo)
-          </span>
-          <i class="fa-solid fa-angle-down"></i>
-        </button>
-      </div>
-      <div id="sec2MainCh2" class="sec2_main_ch2">
-        <div class="sec2_main_ch2_main">
-          <div class="three_sec">
-            <div class="postPic">
-              <div class="postPic_hero">
-                <div class="dropArea_div">
-                  <label for="input-file" id="drop-area">
-                    <input
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      name="input-file"
-                      id="input-file"
-                      hidden
-                    />
-                    <div id="img-view" class="img_view">
-                      <img
-                        src="https://scontent.fccu13-1.fna.fbcdn.net/v/t39.30808-6/386744634_6960900540689671_131644099770296562_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=49d041&_nc_ohc=sndwip-nV6gAX9HCJEG&_nc_ht=scontent.fccu13-1.fna&oh=00_AfCPN7BfTaXpU5tPLc7a9gbUyY0LyCZ503qk5462H5GmjQ&oe=65244E71"
-                        alt=""
-                      />
-                      <p>
-                        Drag and drop or <b class="fr_click">click here</b>
-                        <br />
-                        to upload logo
-                      </p>
-                      <span>Upload any image from desktop</span>
+                        <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <form class="modal-content" method="post">
+                              {% csrf_token%}
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Add Customer</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="nameBasic" class="form-label">Customer</label>
+                                    <input type="text" id="nameBasic"  name="cusName" class="form-control" placeholder="Enter Name" required>
+                                  </div>
+                                </div>
+                                <div class="row g-2">
+                                  <div class="col mb-0">
+                                    <label for="emailBasic" class="form-label">Email</label>
+                                    <input type="text" id="emailBasic"name="cusEmail" class="form-control" placeholder="" />
+                                  </div>
+                                  <div class="col mb-0">
+                                    <label for="emailBasic" class="form-label">Phone</label>
+                                    <input type="text" id="emailBasic" name="cusphone" class="form-control" placeholder="" />
+                                  </div>
+                                 
+                              </div>
+
+                              <div class="row g-2">
+                                <div class="col mb-0">
+                                  <label for="emailBasic" class="form-label">First Name</label>
+                                  <input type="text" id="emailBasic"name="fistname" class="form-control" placeholder="" />
+                                </div>
+                                <div class="col mb-0">
+                                  <label for="emailBasic" class="form-label">Last Name</label>
+                                  <input type="text" id="emailBasic"name="lastname" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+
+                
+                                                  <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                  Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                              </div>
+                            </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="invoice_inputs three_sec">
-            <div class="srchInp_wraper">
-              <p class="inp_txt_p">Invoice Title :</p>
-              <input
-                type="text"
-                class="srchInp"
-                placeholder="Invoice Title"
-                id="inv_inp"
-              />
-              <p id="shw"></p>
-            </div>
-            <div class="srchInp_wraper">
-              <p class="inp_txt_p">Invoice Summary :</p>
-              <input
-                type="text"
-                class="srchInp"
-                placeholder="Invoice Summary (Optional)"
-                id="inv_sumry"
-              />
-            </div>
-          </div>
-          <div class="buisness_dtls three_sec">
-            <div class="bs_dtl">
-              <h5>Tristan Taylor Inc.</h5>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Address line 1 :</span>
-                <span
-                  >Test address asbah ho oh hoh oih t8d dtr k[l [l[ kpk[ lpji
-                  guf ydrs rdu bij k ljo hgyf
-                </span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Address line 2 :</span>
-                <span> test</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">City :</span>
-                <span> test city, Alberta</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Postal/ZIP code :</span>
-                <span> 1232</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Country :</span>
-                <span>Canada</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Phone :</span>
-                <span>9090909090</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Fax :</span>
-                <span>90</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Mobile :</span>
-                <span>8080808080</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Toll free :</span>
-                <span>0808</span>
-              </p>
-            </div>
-            <div class="bs_dtl_wrap">
-              <p>
-                <span class="bs_dtl">Website :</span>
-                <span>www.example.com</span>
-              </p>
-            </div>
-            <div class="opener_link">
-              <span>Edit your business address and contact details</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section>
-    <div class="sec3_main">
-      <div class="sec3_1">
-        <div id="sec3LeftChanger" class="sec3_1_left_changer">
-          <div class="changeWrap">
-            <p style="text-align: center; font-weight: 800">Bill to</p>
-            <div class="us_name">
-              <span>Name :</span>
-              <span id="selUserName"></span>
-            </div>
-            <div>
-              <div class="opener_link">
-                <span>Edit user details</span>
-              </div>
-              <div id="chosDffCus" class="opener_link">
-                <span>Choose a different customer</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="sec3Left" class="sec3_1_left sec3_1_sub">
-          <div class="sec3_1_left_in">
-            <button class="add_user_btn" id="addUserBtn">
-              <img
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2Utd2lkdGg9IjIiPjxjaXJjbGUgc3Ryb2tlPSIjQjJDMkNEIiBjeD0iMjYuNjIiIGN5PSIyMCIgcj0iMTIiLz48cGF0aCBkPSJNNDIuMTcgNDYuNzVjLS45My4yNS0zLjgxOSAxLjQ3OC0xNS42IDEuMy0xMS43ODEtLjE3OC0xNC4zMy0xLjA1LTE1LjUxLTEuM0EyLjYwMiAyLjYwMiAwIDAgMSA5IDQ0LjI0di0xLjE4YzAtMi4yNzQgMy42MzgtNC43MiA5LTUuOTUyIDIuNTM4LS41ODMgNS43OS0uNzY4IDguNjItLjc2OCAyLjc3NiAwIDUuMzguMTggNy4zOC43NjgiIHN0cm9rZT0iI0IyQzJDRCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTM5IDM4aDhtLTQtNHY4IiBzdHJva2U9IiMxNjczREUiIGZpbGw9IiNEOEQ4RDgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvZz48L3N2Zz4="
-                alt=""
-              />
-              Add a customer
-            </button>
-          </div>
-          <div class="user_list" id="userList">
-            <div class="srchInp_wraper">
-              <input
-                type="text"
-                class="srchInp"
-                placeholder="Type a customer name"
-              />
-            </div>
-            <div class="user_list_ul_wrap">
-              <ul>
-                <li class="srchd_users">Test</li>
-              </ul>
-            </div>
-            <div class="create_nw_cus_div">
-              <button id="createNwCusBtn" class="create_nw_cus_btn">
-                <i class="fa-solid fa-plus"></i>
-                Create new customer
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="sec3_1_mdl sec3_1_sub">
-          <div class="srchInp_wraper">
-            <label for="inv_num">Invoice Number</label>
-            <input class="srchInp" type="text" id="inv_num" name = "invoice_num" />
-          </div>
-          <div class="srchInp_wraper">
-            <label for="po_so_num">P.O./S.O. number</label>
-            <input class="srchInp" type="text" id="po_so_num" name = "pos_so_num" />
-          </div>
-        </div>
-        <div class="sec3_1_right sec3_1_sub">
-          <div class="srchInp_wraper">
-            <label for="inv_date">Invoice Date</label>
-            <input class="srchInp" type="date" name="inv_date" id="inv_date" name = "invoice_date" />
-          </div>
-          <div>
-            <label for="pmnt_due">Payment Due</label>
-            <input class="srchInp" type="date" name="pmnt_due" id="pmnt_due" name = "payment_due" />
-          </div>
-        </div>
-      </div>
-      <div class="sec3_2">
-        <div class="opener_link">
-          <i class="fa-solid fa-pen"></i>
-          <span>Edit Columns</span>
-        </div>
-        <div class="sec3_2_mdl">
-          <div><span>Items</span></div>
-          <div><span>Quantity</span></div>
-          <div><span>Price</span></div>
-          <div><span>Tax %</span></div>
-          <div><span>Amount</span></div>
-        </div>
-        <div>
-          <ul id="addedItemUL"></ul>
-        </div>
-        <div class="sec3_2_add_item_wrap">
-          <button id="addItem" class="add_item">
-            <i class="fa-solid fa-plus"></i>
-            Add an Item
-          </button>
-        </div>
-        <div class="add_item_pop" id="addItemPop">
-          <div class="add_item_pop_wrap">
-            <div class="srchInp_wraper">
-              <input
-                type="text"
-                class="srchInp"
-                placeholder="Type a customer name"
-              />
-            </div>
-            <div class="srch_item_ul_wrap">
-              <ul>
-                <li class="srchd_items">
-                  <span class="itm_nam">Test</span>
-                  <span class="itm_priz">10.00</span>
-                  <span class="itm_dis">10.00</span>
-                </li>
-              </ul>
-            </div>
-            <div class="create_nw_itm_div">
-              <button id="createNwItmBtn" class="create_nw_itm_btn">
-                <i class="fa-solid fa-plus"></i>
-                Create new item
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sec3_3"></div>
-      <div class="sec3_4"></div>
-      <div class="sec3_5"></div>
-    </div>
-  </section>
-  <section>
-    <div class="sec4_main">
-      <div class="footer_btn_wrap">
-        <button id="footerOpenBtn" class="footer_open_btn">
-          <span>Footer</span>
-          <i class="fa-solid fa-angle-down"></i>
-        </button>
-      </div>
-      <div id="footerChild" class="footer_child">
-        <textarea
-          name=""
-          id=""
-          rows="10"
-          placeholder="Enter a footer for this invoice (e.g. tax information, thank you note)"
-        ></textarea>
-      </div>
-    </div>
-  </section>
-  <section>
-    <div class="sec5_main">
-      <button type="submit">Save and continue</button>
-    </div>
-  </section>
-</main>
-<script>
-  let sec2MainCh2 = document.getElementById("sec2MainCh2");
-  sec2MainCh2.style.maxHeight = "0px";
-  let sec2MainBtn = document.getElementById("sec2MainBtn");
-  let addUserBtn = document.getElementById("addUserBtn");
-  let userList = document.getElementById("userList");
-  userList.style.maxHeight = "0px";
-  let srchInp = document.querySelectorAll(".srchInp");
-  let sec3Left = document.getElementById("sec3Left");
-  let sec3LeftChanger = document.getElementById("sec3LeftChanger");
-  let srchd_users = document.querySelectorAll(".srchd_users");
-  let chosDffCus = document.getElementById("chosDffCus");
-  let addItem = document.getElementById("addItem");
-  let addItemPop = document.getElementById("addItemPop");
-  addItemPop.style.maxHeight = "0px";
-  let srchd_items = document.querySelectorAll(".srchd_items");
-  let addedItemUL = document.getElementById("addedItemUL");
-  let footerOpenBtn = document.getElementById("footerOpenBtn");
-  let footerChild = document.getElementById("footerChild");
-  footerChild.style.maxHeight = "0px";
-  let createNwCusBtn = document.getElementById("createNwCusBtn");
-  let addCusFormCLose = document.getElementById("addCusFormCLose");
-  let addCusFormFull = document.getElementById("addCusFormFull");
-  addCusFormFull.style.display = "none";
+                    </div>
+                
 
-  createNwCusBtn.addEventListener("click", () => {
-    addCusFormFull.style.display = "block";
-  });
 
-  addCusFormCLose.addEventListener("click", () => {
-    addCusFormFull.style.display = "none";
-  });
+                    <div class="row">
+                      <!-- Basic with Icons -->
+                      <div class="col-xxl">
+                        <div class="card mb-4">
+                          <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">Invoice</h5>
+                            <!-- <small class="text-muted float-end">Merged input group</small> -->
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              data-bs-toggle="modal"
+                              data-bs-target="#largeModal"
+                            >
+                            Edit your business address and contact details
+                            </button>
+                            
+                            <div class="modal fade" id="largeModal" tabindex="-1" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel3">Address</h5>
+                                    <button
+                                      type="button"
+                                      class="btn-close"
+                                      data-bs-dismiss="modal"
+                                      aria-label="Close"
+                                    ></button>
+                                  </div>
 
-  footerOpenBtn.addEventListener("click", () => {
-    if (footerChild.style.maxHeight === "0px") {
-      footerOpenBtn.style.borderBottomLeftRadius = "0px";
-      footerOpenBtn.style.borderBottomRightRadius = "0px";
-      footerChild.style.maxHeight = "100px";
-      footerChild.style.minHeight = "100px";
-      footerOpenBtn.classList.add("on_open");
-    } else {
-      footerChild.style.maxHeight = "0px";
-      footerChild.style.minHeight = "0px";
-      footerOpenBtn.style.borderBottomLeftRadius = "10px";
-      footerOpenBtn.style.borderBottomRightRadius = "10px";
-      footerOpenBtn.classList.remove("on_open");
-    }
-  });
+                                  <!-- add -business  details -->
+                                  <div class="modal-body">
+                                    <form  class="modal-content" method="post" >
+                                      {% csrf_token %}
+                                    <div class="row">
+                                      <div class="col mb-3">
+                                        <label for="nameLarge" class="form-label">Company/Business</label>
+                                        <input type="text" id="nameLarge" name="companyname" class="form-control" placeholder="Enter Name" required />
+                                      </div>
+                                    </div>
 
-  // srchd_items.forEach((ele) => {
-  //   ele.addEventListener("click", function () {
-  //     const itemName = this.querySelector(".itm_nam").textContent;
-  //     let itemPrice = this.querySelector(".itm_priz").textContent;
-  //     let itemDiscount = this.querySelector(".itm_dis").textContent;
-  //     let itemQuantity = 1;
-  //     let tax = 18;
+                                    <div class="row g-2">
+                                      <div class="col mb-0">
+                                        <label for="emailBasic" class="form-label">Address</label>
+                                        <input type="text" id="emailBasic"name="address1" class="form-control" placeholder="" />
+                                      </div>
+                                      <div class="col mb-0">
+                                        <label for="emailBasic" class="form-label">Address2</label>
+                                        <input type="text" id="emailBasic"name="address2" class="form-control" placeholder="" />
+                                      </div>
+                                  </div>
 
-  //     console.log(itemPrice, itemName);
+                                  <div class="row g-2">
+                                    <div class="col mb-0">
+                                      <label for="emailBasic" class="form-label">City</label>
+                                      <input type="text" id="emailBasic"name="city" class="form-control" placeholder="" />
+                                    </div>
+                                    <div class="col mb-0">
+                                      <label for="emailBasic" class="form-label">Postal/Zip</label>
+                                      <input type="text" id="emailBasic"name="zip" class="form-control" placeholder="" />
+                                    </div>
+                                </div>
 
-  //     let newLi = document.createElement("li");
-  //     newLi.setAttribute("class", "added_items_li");
+                                <div class="row g-2">
+                                  <div class="col mb-0">
+                                    <label for="emailBasic" class="form-label">Country</label>
+                                    <input type="text" id="emailBasic"name="country" class="form-control"  required/>
+                                  </div>
+                                  <div class="col mb-0">
+                                    <label for="emailBasic" class="form-label">Province/State</label>
+                                    <input type="text" id="emailBasic"name="state" class="form-control" placeholder="" />
+                                  </div>
+                              </div>
+                              <br>
+                              <p>Conatct</p>
+                              <br>
 
-  //     let itNam = document.createElement("span");
-  //     itNam.textContent = itemName;
+                              <div class="row g-2">
+                                <div class="col mb-0">
+                                  <label for="emailBasic" class="form-label">Phone</label>
+                                  <input type="text" id="emailBasic"name="phone" class="form-control"/>
+                                </div>
+                                <div class="col mb-0">
+                                  <label for="emailBasic" class="form-label">Fax</label>
+                                  <input type="text" id="emailBasic"name="fax" class="form-control" placeholder="" />
+                                </div>
+                            </div>
 
-  //     let itQty = document.createElement("input");
-  //     itQty.setAttribute("type", "number");
-  //     itQty.setAttribute("value", itemQuantity);
-  //     itQty.setAttribute("class", "srchInp");
-  //     itQty.addEventListener("change", (e) => {
-  //       itemQuantity = Number(e.target.value);
-  //     });
 
-  //     let itPrz = document.createElement("input");
-  //     itPrz.setAttribute("type", "number");
-  //     itPrz.setAttribute("value", itemPrice);
-  //     itPrz.setAttribute("class", "srchInp");
-  //     itPrz.addEventListener("change", (e) => {
-  //       itemPrice = Number(e.target.value);
-  //     });
+                              <div class="row g-2">
+                                <div class="col mb-0">
+                                  <label for="emailBasic" class="form-label">Mobile</label>
+                                  <input type="text" id="emailBasic"name="mobile" class="form-control"  />
+                                </div>
+                                <div class="col mb-0">
+                                  <label for="emailBasic" class="form-label">Website</label>
+                                  <input type="text" id="emailBasic"name="website" class="form-control" placeholder="" />
+                                </div>
+                            </div>
 
-  //     let amount =
-  //       Number(itemPrice) * itemQuantity +
-  //       ((Number(itemPrice) * itemQuantity) / 100) * 18;
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                      Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                  </div>
+                                </form>
+                                </div>
+                              </div>
+                            </div>
 
-  //     console.log(amount);
 
-  //     newLi.append(itNam, itQty, itPrz);
-  //     addedItemUL.append(newLi);
-  //   });
-  // });
 
-  addItem.addEventListener("click", () => {
-    let itemName = "";
-    let itemQuantity = 1;
-    let itemPrice = 0;
-    let itemTax = 0;
-    let itemAmount = 0;
 
-    let newLi = document.createElement("li");
-    newLi.setAttribute("class", "added_items_li");
 
-    let itAmt = document.createElement("span");
-    let totalAmtWrap = document.createElement("div");
-    totalAmtWrap.setAttribute("class", "total_amt_wrap");
-    totalAmtWrap.append(itAmt);
 
-    let itNam = document.createElement("input");
-    itNam.setAttribute("type", "text");
-    itNam.setAttribute("value", itemName);
-    itNam.setAttribute("class", "srchInp");
-    itNam.setAttribute("placeholder", "Enter item name here");
-    itNam.addEventListener("keyup", (e) => {
-      itemName = e.target.value;
-    });
 
-    let itQty = document.createElement("input");
-    itQty.setAttribute("type", "number");
-    itQty.setAttribute("value", itemQuantity);
-    itQty.setAttribute("class", "srchInp");
-    itQty.setAttribute("placeholder", "Item quantity");
-    itQty.addEventListener("keyup", (e) => {
-      itemQuantity = Number(e.target.value);
-      itemAmount =
-        Number(itemPrice) * itemQuantity +
-        ((Number(itemPrice) * itemQuantity) / 100) * Number(itemTax);
-      itAmt.textContent = itemAmount + " /-";
-    });
+                            
+                            
+                          </div>
 
-    let itPrz = document.createElement("input");
-    itPrz.setAttribute("type", "number");
-    itPrz.setAttribute("value", itemPrice);
-    itPrz.setAttribute("class", "srchInp");
-    itPrz.setAttribute("placeholder", "Item price");
-    itPrz.addEventListener("keyup", (e) => {
-      itemPrice = Number(e.target.value);
-      itemAmount =
-        Number(itemPrice) * itemQuantity +
-        ((Number(itemPrice) * itemQuantity) / 100) * Number(itemTax);
-      itAmt.textContent = itemAmount + " /-";
-    });
+                          
+                          <div class="card-body">
+              
+                            <form method="post">
+                              {% csrf_token%}
 
-    let itTax = document.createElement("input");
-    itTax.setAttribute("type", "number");
-    itTax.setAttribute("value", itemTax);
-    itTax.setAttribute("class", "srchInp");
-    itTax.setAttribute("placeholder", "Tax amount %");
-    itTax.addEventListener("keyup", (e) => {
-      itemTax = Number(e.target.value);
-      itemAmount =
-        Number(itemPrice) * itemQuantity +
-        ((Number(itemPrice) * itemQuantity) / 100) * Number(itemTax);
-      itAmt.textContent = itemAmount + " /-";
-    });
+                              <div class="form-floating custom-form-floating">
+                                <input
+                                  type="text"
+                                  name ="invoice_title"
+                                  class="form-control custom-form-control"
+                                  id="floatingInput"
+                                  placeholder="Enter invoice title"
+                                  aria-describedby="floatingInputHelp"
+                                  style="width: 50%; height: 5%;"
+                                  required
+                                />
+                                <label for="floatingInput">Invoice Title</label>
+                               
+                              </div>
+                              <br>
+                              <div class="form-floating custom-form-floating">
+                                <input
+                                  type="text"
+                                  name ="invoice_description"
+                                  class="form-control custom-form-control"
+                                  id="floatingInput"
+                                  placeholder="Enter invoice description"
+                                  aria-describedby="floatingInputHelp"
+                                  style="width: 50%; height: 20%;"
+                                />
+                               
+                                <label for="floatingInput">Invoice Description</label>
+                              </div>
+                              <br>
 
-    let delBtnDiv = document.createElement("div");
-    delBtnDiv.setAttribute("class", "del_btn_div");
-    let delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.addEventListener("click", () => {
-      addedItemUL.removeChild(newLi);
-    });
-    delBtnDiv.append(delBtn);
 
-    newLi.append(itNam, itQty, itPrz, itTax, totalAmtWrap, delBtnDiv);
-    addedItemUL.appendChild(newLi);
-  });
+                            
+    
+                              
+                              <!-- Name and Contact Fields in one row -->
+                              <div class="row mb-2 mt-2">
 
-  // addItem.addEventListener("click", (e) => {
-  //   e.stopPropagation();
-  //   if (addItemPop.style.maxHeight === "0px") {
-  //     addItemPop.style.maxHeight = "250px";
-  //     addItemPop.style.overflow = "scroll";
-  //   } else {
-  //     addItemPop.style.maxHeight = "0px";
-  //     addItemPop.style.overflow = "hidden";
-  //   }
-  // });
 
-  addItemPop.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
+    
+                                <!-- Contact Field -->
+                                <div class="col mb-0">
+                                  
+                                  <label for="dobBasic" class="form-label">PO/SO Number</label>
+                                  <input type="text" id="dobBasic" name="pos_so_no" class="form-control" placeholder="">
+                                </div>
+                    
+                                <div class="col mb-0">
+                                  <label for="paymentDue" class="form-label">Invoice Date</label>
+                                  <input type="date" id="paymentDue" name="invoice_date" class="form-control" />
+                              </div>
+                              
 
-  chosDffCus.addEventListener("click", () => {
-    sec3Left.style.display = "block";
-    sec3LeftChanger.style.display = "none";
-  });
+                                <div class="col mb-0">
+                                  <label for="paymentDue" class="form-label">Payment Due</label>
+                                  <input type="date" id="paymentDue" name="payment_date" class="form-control" />
+                              </div>
+                              
+                              </div>
+                              <br>
+                    
+                                <!-- Address Field -->
+                                
+                    
+                              <h2> Add items</h2>
+                              <!-- ... -->
 
-  srchd_users.forEach((ele) => {
-    ele.addEventListener("click", () => {
-      sec3Left.style.display = "none";
-      sec3LeftChanger.style.display = "block";
-      document.getElementById("selUserName").textContent = ele.textContent;
-    });
-  });
+                              <div class="col-sm-5">
+                                <div class= "row">
+            
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Item Name</label>
+                                      <input type="name"   class="form-control"  name="itemname"id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Item Description</label>
+                                      <input type="name"   class="form-control"  name="itemdescription"id="inputEmail4" required>
+                                      {{form.errors.description}}
+                                    </div>
 
-  srchInp.forEach((ele) => {
-    ele.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-  });
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Quantity</label>
+                                      <input type="text" name="quantity"  class="form-control" id="inputEmail4" required>
+                                      {{form.errors.quantity}}
+                                    </div>
+                                  </div>
+            
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Price</label>
+                                      <input type="text" name="price"  class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
 
-  userList.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
+                                    <!-- <div class="col-sm-4">
+                                      <div class="mb-3">
+                                        <label for="inputEmail4" class="form-label">Amount</label>
+                                        <input type="text" name="amount"  class="form-control" id="inputEmail4" required>
+                                        {{form.errors.name}}
+                                      </div>
+                                  </div> -->
 
-  document.body.addEventListener("click", () => {
-    closeing();
-  });
+            
+          
+                                 
 
-  function closeing() {
-    if (userList.style.maxHeight === "200px") {
-      userList.style.maxHeight = "0px";
-      userList.style.overflow = "hidden";
-    }
-    if (addItemPop.style.maxHeight === "250px") {
-      addItemPop.style.maxHeight = "0px";
-      addItemPop.style.overflow = "hidden";
-    }
-  }
+                                  <div class="form-floating custom-form-floating">
+                                    <input
+                                      type="text"
+                                      name ="invoice_footer"
+                                      class="form-control custom-form-control"
+                                      id="floatingInput"
+                                      placeholder="Enter invoice description"
+                                      aria-describedby="floatingInputHelp"
+                                      
+                                    />
+                                   
+                                    <label for="floatingInput">Invoice Footer</label>
+                                  </div>
+                                  <br><br><br>
+    
+                                  
+            
+            
+            
 
-  sec2MainBtn.addEventListener("click", () => {
-    if (sec2MainCh2.style.maxHeight === "0px") {
-      sec2MainBtn.style.borderBottomLeftRadius = "0";
-      sec2MainBtn.style.borderBottomRightRadius = "0";
-      sec2MainBtn.style.backgroundColor = "#e8e8fa96";
-      sec2MainBtn.classList.add("on_open");
-      sec2MainCh2.style.maxHeight = "500px";
-      sec2MainCh2.style.overflow = "scroll";
-    } else {
-      sec2MainBtn.style.borderBottomLeftRadius = "10px";
-      sec2MainBtn.style.borderBottomRightRadius = "10px";
-      sec2MainBtn.style.backgroundColor = "";
-      sec2MainCh2.style.maxHeight = "0px";
-      sec2MainCh2.style.overflow = "hidden";
-      sec2MainBtn.classList.remove("on_open");
-    }
-  });
+                              
+                    
+                              <div class="row justify-content-end">
+                                <div class="col-sm-10">
+                                  <button type="submit" class="btn btn-primary">Send Invoice</button>
+                                </div>
+                              </div>
 
-  addUserBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (userList.style.maxHeight === "0px") {
-      userList.style.maxHeight = "200px";
-      userList.style.overflow = "scroll";
-    } else {
-      userList.style.maxHeight = "0px";
-      userList.style.overflow = "hidden";
-    }
-  });
-</script>
+
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                      
+
 {% endblock %}

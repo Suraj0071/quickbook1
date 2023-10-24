@@ -20,7 +20,7 @@ class Invoiceadmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class Customeradmin(admin.ModelAdmin):
-    list_display=["id","invoice",
+    list_display=["id",
                 "name",
                 "email",
                 "phone",
@@ -35,7 +35,7 @@ class Itemadmin(admin.ModelAdmin):
                 "description",
                 "quantity",
                 "price",
-                "amout",
+                "amount",
                 ]
 
 
