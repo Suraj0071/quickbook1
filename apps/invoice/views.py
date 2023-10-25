@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from django.views import View
 from apps.invoice.models import *
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+import os
 # Create your views here.
+from apps.invoice.utils import render_to_pdf
 
 
 class InvoicesView(View):
@@ -11,18 +17,27 @@ class InvoicesView(View):
 
 class create_invoice(View):
     def get(self, request):
-        return render(request, "create_invoice.html")
+        customer = Customer.objects.all()
+        business= Business.objects.all()
+        context = {
+            "customer":customer,
+            "business": business
+
+        }
+
+        return render(request, "create_invoice.html",context)
     
     def post(self, request):
-        print(request)
+        customer = request.POST.get('customer')
+        business = request.POST.get('business')
         name = request.POST.get('cusName')
-        print("-----name---------",name)
+        print("++++++++++++++++++++++++++++",customer ,"00000000000000000" , business)
         email = request.POST.get('cusEmail')
         phone = request.POST.get('cusphone')
         first_name = request.POST.get('firstname')
         last_name =  request.POST.get("lastname")
         companyname = request.POST.get('companyname')
-        print("-----------",companyname)
+      
         address1 = request.POST.get('address1')
         address2 = request.POST.get('address2')
         city = request.POST.get('city')
@@ -42,6 +57,7 @@ class create_invoice(View):
         invoice_description =  request.POST.get("invoice_description")
 
         pos_so_num  = request.POST.get("pos_so_no") 
+        print("-----------+++++++++++++++++=",pos_so_num)
         invoice_date  = request.POST.get("invoice_date")
         payment_due  = request.POST.get("payment_date") 
         footer  = request.POST.get("invoice_footer") 
@@ -56,13 +72,37 @@ class create_invoice(View):
         if invoice_title:
             Invoice.objects.create(title= invoice_title,description=invoice_description, pos_so_no=pos_so_num,invoice_date=invoice_date ,paymnet_due=payment_due,
                                   footer_text= footer )
+            
 
-        for i ,j ,k ,l, in zip(itemname,itemdescription,qty,price):  
-            amount = k*l
+        customer = Customer.objects.all()
+        business= Business.objects.all()
+        context = {
+            "customer":customer,
+            "business": business
 
-            Item.objects.create(name=i,description =j , quantity=k,price=l,amount=amount)
+        }
+        pdf = render_to_pdf('invoice_pdf.html', context)
+        #return HttpResponse(pdf, content_type='application/pdf')
 
-        return render(request, "create_invoice.html")
+        # force download
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            # filename = "Invoice_%s.pdf" %(context['pos_so_num'])
+            filename = f"invoice{pos_so_num}.pdf"
+            content = "inline; filename='%s'" %(filename)
+            #download = request.GET.get("download")
+            #if download:
+            content = "attachment; filename=%s" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        
+
+        # for i ,j ,k ,l, in zip(itemname,itemdescription,qty,price):  
+        #     amount = k*l
+
+        #     Item.objects.create(name=i,description =j , quantity=k,price=l,amount=amount)
+
+        return render(request, "invoice_pdf.html",context)
 
 
 
