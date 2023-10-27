@@ -46,7 +46,7 @@
                                 <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="emailBasic" class="form-label">Email</label>
-                                    <input type="text" id="emailBasic"name="cusEmail" class="form-control" placeholder="" />
+                                    <input type="text" id="emailBasic"name="cusEmail" class="form-control" placeholder="" required />
                                   </div>
                                   <div class="col mb-0">
                                     <label for="emailBasic" class="form-label">Phone</label>
@@ -239,21 +239,12 @@
                                 <label for="floatingInput">Invoice Description</label>
                               </div>
                               <br>
-
-
-                            
-    
-                              
                               <!-- Name and Contact Fields in one row -->
                               <div class="row mb-2 mt-2">
-
-
-    
                                 <!-- Contact Field -->
                                 <div class="col mb-0">
-                                  
-                                  <label for="dobBasic" class="form-label">PO/SO Number</label>
-                                  <input type="text" id="dobBasic" name="pos_so_no" class="form-control" placeholder="">
+                                  <label for="dobBasic" class="form-label">Invoice Number</label>
+                                  <input type="text" id="dobBasic" name="invoice_number" class="form-control" placeholder="" required>
                                 </div>
                     
                                 <div class="col mb-0">
@@ -270,10 +261,10 @@
                               </div>
                               <br> 
                               <br> 
-                             
+    
                               <div class="mb-3">
                                 <label for="defaultSelect" class="form-label">Selcect Customer</label>
-                                <select id="defaultSelect" class="form-select" name="customer">
+                                <select id="defaultSelect" class="form-select" name="customer" required>
                                   <option>Select Customer</option>
                                   {% for cus in customer %}
                                         <option value="{{ cus.id }}">{{ cus.name }}</option>
@@ -284,7 +275,7 @@
                               <br> 
                               <div class="mb-3">
                                 <label for="defaultSelect" class="form-label">Selcect Business</label>
-                                <select id="defaultSelect" class="form-select" name="business">
+                                <select id="defaultSelect" class="form-select" name="business" required>
                                   <option>Select Business</option>
                                   {% for bus in business %}
                                         <option value="{{ bus.id }}">{{ bus.name }}</option>
@@ -293,19 +284,79 @@
                                 </select>
                                
                               <br> 
-                              
-
-                              
-                               
-
-                    
-
-
                                 <!-- Address Field -->
-                                
-                    
+                            
                               <h2> Add items</h2>
+
+                              <div class="col-sm-5">
+                                <div class= "row">
+            
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Item Name</label>
+                                      <input type="name"   class="form-control"  name="itemname"id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
+                                  
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Quantity</label>
+                                      <input type="text" name="quantity"  class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
+                                  
+                                  </div>
+            
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Price</label>
+                                      <input type="text" name="price"  class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
+                                  
+                                  </div>
+            
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Item Name</label>
+                                      <input type="text" name="itemname"  class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
+                                  
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Quantity</label>
+                                      <input type="text" name="quantity"  class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
+                                  
+                                  </div>
+                                  
+                                  <div class="col-sm-4">
+                                    <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Price</label>
+                                      <input type="text" name="price"  class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                    </div>
+                                   
+                                  </div>
+            
+            
+            
+            
+            
+            
+            
+                               
+            
+            
+            
+                                  <!--End -->
+                              
                               <!-- ... -->
+
 
                               
                                 

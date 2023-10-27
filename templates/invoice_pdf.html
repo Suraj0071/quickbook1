@@ -1,199 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="card">
+    <div class="card-body">
+      <div class="container mb-5 mt-3">
+        <div class="row d-flex align-items-baseline">
+          <div class="col-xl-9">
+            <p style="color: #7e8d9f; font-size: 20px; margin-bottom: 15px;">Invoice >> <strong>ID: #{{invoice.invoice_number}}</strong></p>
+          </div>
+          <div class="col-xl-3 text-end">
+            <a class="btn btn-light text-capitalize border-0 mr-2" data-mdb-ripple-color="dark"><i
+                class="fas fa-print text-primary"></i> : </a>
+            <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
+                class="far fa-file-pdf text-danger"></i> {{invoice.description}}</a>
+          </div>
+        </div>
+        <hr>
+        <div class="container mt-3">
+          <div class="col-md-12 mb-4">
+            <div class="text-center">
+              <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
+              <!-- <p class="pt-2" style="align-items: right;;">MDBootstrap.com</p> -->
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-xl-8">
+                
+              <!-- <ul class="list-unstyled mb-0"> -->
+                <li class="text-muted">Name : <span style="color:#5d9fc5 ;">{{customer.name}}</span></li>
+                <li class="text-muted">Email :<span style="color:#5d9fc5 ;">{{customer.email}}</span></li>
+                {% if customer.phone %}
+            <li class="text-muted">Phone : <span style="color:#5d9fc5;">{{ customer.phone }}</span></li>
+            {% endif %}
+            
+            {% if customer.first_name %}
+            <li class="text-muted">First Name : <span style="color:#5d9fc5;">{{ customer.first_name }}</span></li>
+            {% endif %}
+            
+            {% if customer.last_name %}
+            <li class="text-muted">Last Name : <span style="color:#5d9fc5;">{{ customer.last_name }}</span></li>
+            {% endif %}
+                
+              <!-- </ul> -->
+            </div>
+            <div class="col-xl-4">
+              <p class="text-muted">Invoice :</p>
+              <!-- <ul class="list-unstyled mb-0"> -->
 
-<head>
-  <title>Invoice WonderShop</title>
-<style>
-  .clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+               
 
-a {
-  text-decoration: underline;
-}
+                {% if business.name %}
+                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="fw-bold">Name  :</span>{{business.name}}</li>
+                    {% endif %}
 
-body {
-  position: relative;
-  margin: 0 auto; 
-  color: #001028;
-  background: #FFFFFF; 
-  font-family: Arial, sans-serif; 
-  font-size: 14px; 
-  font-family: Arial;
-}
+                {% if business.address1 %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="fw-bold">Address1 : </span>{{business.address1}}</li>
+                    {% endif %}
+                
 
-header {
-  padding: 10px 0;
-  margin-bottom: 30px;
-}
+                {% if business.address2 %}
 
-#logo {
-  text-align: center;
-  margin-bottom: 10px;
-}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                        class="fw-bold">Address2  :</span>{{business.address2}}</li>
+                        {% endif %}
 
-#logo img {
-  width: 90px;
-}
+                {% if business.city %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                            class="fw-bold">city : </span>{{business.city}}</li>
+                            {% endif %}
 
-h1 {
-  
-  color: #5D6975;
-  font-size: 2.4em;
-  line-height: 1.4em;
-  font-weight: normal;
-  text-align: center;
-  margin: 0 0 20px 0;
-}
-
-#project {
-  float: left;
-}
-
-#project span {
-  color: #5D6975;
-  text-align: right;
-  width: 52px;
-  margin-right: 10px;
-  display: inline-block;
-  font-size: 14px;
-}
-
-#company {
-  float: right;
-  text-align: right;
-}
-
-#project div,
-#company div {
-  white-space: nowrap;        
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin-bottom: 20px;
-}
-
+                {% if business.zip_code %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                                class="fw-bold">Zip code  : </span>{{business.zip_code}}</li>
+                {% endif %}
+                {% if business.country %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                                    class="fw-bold">Country  : </span>{{business.country}}</li>
+                {% endif %}
 
 
-table th,
-table td {
-  text-align: center;
-}
+                {% if business.state %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                                        class="fw-bold">State : </span>{{business.state}}</li>
+                {% endif %}
 
-table th {
-  
-  
-  color: #5D6975;
-  border-bottom: 1px solid #C1CED9;
-  white-space: nowrap;        
-  font-weight: normal;
-}
+                {% if business.phone %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                                            class="fw-bold">Phone :  </span>{{business.phone}}</li>
+                {% endif %}
 
-table .service,
-table .desc {
-  text-align: left;
-}
+                {% if business.fax %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="fw-bold">Fax : </span>{{business.fax}}1</li>
+                {% endif %}
 
-table td {
- padding-top:5px;
- padding-bottom:5px;
-  
-}
+                {% if business.website %}
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="fw-bold">Website : </span>{{business.website}}</li>
+                {% endif %}
 
-table tr {
-  border-bottom: 1px solid #C1CED9;
-}
-
-table td.service,
-table td.desc {
-  vertical-align: top;
-}
-
-table td.unit,
-table td.qty,
-table td.total {
-  font-size: 1.2em;
-}
-
-table td.grand {
-  border-top: 1px solid #5D6975;;
-}
-
-#notices .notice {
-  color: #5D6975;
-  font-size: 1.2em;
-}
-
-footer {
-  color: #5D6975;
-  width: 100%;
-  height: 30px;
-  position: absolute;
-  bottom: 0;
-  border-top: 1px solid #C1CED9;
-  padding: 8px 0;
-  text-align: center;
-}
+                
 
 
-  </style>
-</head>
 
-<body>
-  <header class="clearfix">
-    <div id="logo" style="display:flex; justify-content:center; align-items:center;">
-      {#<img src="static/firstapp/images/logo.png" class="brand-logo" width=60 height=60>#} <!--not working-->
-      {#<img src="static/logo.png" class="brand-logo" height="200px">#} <!--not working-->
-      <img src="D:\Mastering Django\firstproject\firstapp\logo.png" class="brand-logo" width=60 height=60>
-      <h1 class="brand-name">WonderShop</h1>
+                
+
+                <!-- <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="fw-bold">ID:</span>#123-456</li>
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="fw-bold">Creation Date: </span>Jun 23,2021</li>
+                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
+                    Unpaid</span></li> -->
+              <!-- </ul> -->
+            </div>
+            <br><br><br>
+          </div>
+          <div class="row my-4 mx-1 justify-content-center">
+            <table class="table table-striped table-borderless">
+              <thead style="background-color:#84B0CA ;" class="text-white">
+
+
+                
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col" style="padding: 0 20px;">Name</th>
+                  <!-- <th scope="col" style="padding: 0 20px;" >Description</th> -->
+                  <th scope="col" style="padding: 0 20px;">Qty</th>
+                  <th scope="col" style="padding: 0 20px;">Unit Price</th>
+                  <th scope="col" style="padding: 0 20px;">Amount</th>
+
+                 
+                </tr>
+
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td style="padding: 0 20px;">{{ item.name }}</td>
+                            <td style="padding: 0 20px;">{{ item.qty }}</td>
+                            <td style="padding: 0 20px;">${{ item.price }}</td>
+                            <td style="padding: 0 20px;">${{ item.amount }}</td>
+                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                
+              
+                <!-- <tr>
+                  <th scope="row">2</th>
+                  <td>Web hosting</td>
+                  <td>1</td>
+                  <td>$10</td>
+                  <td>$10</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Consulting</td>
+                  <td>1 year</td>
+                  <td>$300</td>
+                  <td>$300</td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+          <div class="row mb-3">
+            <div class="col-xl-8">
+               {% if invoice.footer_text %}
+              <p class="ms-3">{{invoice.footer_text}}</p>
+              {% endif %}
+            </div>
+            <div class="col-xl-4">
+              <ul class="list-unstyled mb-0">
+                <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span></li>
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax : </span>$</li>
+              </ul>
+              <p class="text-black ms-3 mt-2"><span class="text-black me-3"> Total Amount</span><span
+                  style="font-size: 25px;">$ {{total}}</span></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xl-10">
+              <!-- <p>Thank you for your purchase</p> -->
+            </div>
+            <!-- <div class="col-xl-2">
+              <button type="button" class="btn btn-primary text-capitalize"
+                style="background-color:#60bdf3 ;">Pay Now</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
     </div>
-    <h1>INVOICE</h1>
-    <div id="company" class="clearfix">
-        
-     
-    </div>
-    
-    <br>
-  </header>
-    <div class="table-container" style="overflow-x:auto">
-      <table class="table" style="width:100%">
-          <thead>
-              <tr>
-                  <th scope="col">PRODUCT</th>
-                  <th scope="col">Descpiptin</th>
-                  <th scope="col">QUANTITY</th>
-                  <th scope="col">PRICE</th>
-                  <th scope="col">PRODUCT</th>
-                  <th scope="col">Descpiptin</th>
-                  <th scope="col">QUANTITY</th>
-                  <th scope="col">PRICE</th>
-              </tr>
-          </thead>
-          <tbody>
-              <!-- {% for i in order.productinorder_set.all %} -->
-              <tr>
-                  <td scope="row">   i.product   </td>
-                  <td>   i.quantity   </td>
-                  <td>   i.price   </td>
-                  
-              </tr>
-              <!-- {% endfor %} -->
-              <tr>
-                  <td scope="row"></td>
-                  <td>TOTAL: </td>
-                  <td>   amount   </td>
-                  
-              </tr>
-          </tbody>
-      </table>
-
-    </div>
-    <p style="text-align:right; font-size:12px;">*All values are in INR<p>
-</body>
-
-</html>
+  </div>

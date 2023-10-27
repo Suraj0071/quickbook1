@@ -4,6 +4,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from io import BytesIO
 import os
+from apps.invoice.models import Item
 def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html  = template.render(context_dict)
@@ -12,3 +13,22 @@ def render_to_pdf(template_src, context_dict={}):
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
+
+
+def save_item(itemname,quantity,price,customer):
+    alltotal = 0
+    amount = []
+    
+    for item_name ,item_qty,item_price in zip(itemname,quantity,price):
+        amount_save = int(item_qty) * int(item_price)
+        amount.append(amount_save)
+        alltotal= amount_save+alltotal
+        Item.objects.create(name=item_name, quantity=int(item_qty),price=int(item_price),amount=amount_save , customer=customer)
+    
+
+    price_data = {
+        "alltotal" :alltotal,
+        "amount" : amount
+    }
+
+    return price_data
