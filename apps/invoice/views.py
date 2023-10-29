@@ -93,6 +93,7 @@ class create_invoice(View):
 
                 context = {'items': items,
                         "total":total["alltotal"],
+                        "amount_paid":total["amount_paid"],
                         "customer":customer,
                         "business": business,
                         "invoice" :invoice

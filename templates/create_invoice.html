@@ -287,8 +287,48 @@
                                 <!-- Address Field -->
                             
                               <h2> Add items</h2>
+                             
+                      <div class="demo-inline-spacing">
+                        <button type="button"  id="add_more_fields"  class="btn btn-primary">Add more items</button>
+                        <button type="button"      id="remove_fields" class="btn btn-secondary">Remove items</button>
+                        </div>
+                        <br> 
 
-                              <div class="col-sm-5">
+                        <div class="col-sm-5" id="item-list">
+                          <div class="row">
+                              <div class="col-sm-4">
+                                  <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Item Name</label>
+                                      <input type="name" class="form-control" name="itemname" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                  </div>
+                              </div>
+                              <div class="col-sm-4">
+                                  <div class="mb-3">
+                                      <label for="inputEmail4" class="form-label">Quantity</label>
+                                      <input type="text" name="quantity" class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                  </div>
+                              </div>
+                              <div class="col-sm-4">
+                                  <div class="mb-3">
+                                      <label for = "inputEmail4" class="form-label">Price</label>
+                                      <input type="text" name="price" class="form-control" id="inputEmail4" required>
+                                      {{form.errors.name}}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                        
+                        
+
+
+
+
+
+
+                              <!-- <div class="col-sm-5" id="item-list">
                                 <div class= "row">
             
                                   <div class="col-sm-4">
@@ -316,8 +356,8 @@
                                     </div>
                                   
                                   </div>
-            
-                                  <div class="col-sm-4">
+             -->
+                                  <!-- <div class="col-sm-4">
                                     <div class="mb-3">
                                       <label for="inputEmail4" class="form-label">Item Name</label>
                                       <input type="text" name="itemname"  class="form-control" id="inputEmail4" required>
@@ -342,7 +382,7 @@
                                     </div>
                                    
                                   </div>
-            
+             -->
             
             
             
@@ -383,8 +423,7 @@
             
             
 
-                              
-                    
+            
                               <div class="row justify-content-end">
                                 <div class="col-sm-10">
                                   <button type="submit" class="btn btn-primary">Send Invoice</button>
@@ -398,6 +437,59 @@
                       </div>
                     </div>
                     
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $("#add_more_fields").click(function () {
+        // Clone the first item row
+        var newItem = $("#item-list .row:first").clone();
+        
+        // Clear input fields in the cloned row
+        newItem.find("input").val("");
+        
+        // Append the cloned row to the item-list
+        $("#item-list").append(newItem);
+    });
+
+    $("#remove_fields").click(function () {
+        // Remove the last item row, but keep at least one row
+        var itemRows = $("#item-list .row");
+        if (itemRows.length > 1) {
+            itemRows.last().remove();
+        }
+    });
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
                       
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+

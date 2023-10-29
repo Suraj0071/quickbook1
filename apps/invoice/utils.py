@@ -19,16 +19,23 @@ def save_item(itemname,quantity,price,customer):
     alltotal = 0
     amount = []
     
+    
     for item_name ,item_qty,item_price in zip(itemname,quantity,price):
         amount_save = int(item_qty) * int(item_price)
         amount.append(amount_save)
         alltotal= amount_save+alltotal
         Item.objects.create(name=item_name, quantity=int(item_qty),price=int(item_price),amount=amount_save , customer=customer)
-    
+    # print(alltotal)
+    tax = int(alltotal * (5 / 100))
+    amount_paid = alltotal+tax
+    print(alltotal , amount_paid)
 
+ 
     price_data = {
+        "amount" : amount,
         "alltotal" :alltotal,
-        "amount" : amount
+        "amount_paid"  : amount_paid
+        
     }
 
     return price_data
