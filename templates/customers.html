@@ -5,4 +5,86 @@
 {% load static %}
 
 
+
+<style>
+  .table th {
+   color: rebeccapurple;
+  }
+</style>
+
+
+<script>
+  function edit(id) {
+    console.log('Edit',id);
+    window.location.href = `/invoice/edit-customer/${id}`
+  }
+</script>
+
+
+
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span> Customers</h4>
+
+<div class="card mb-4">
+    <h5 class="card-header d-flex justify-content-between">
+        Customers
+        <div>
+            <button type="button" class="btn btn-primary">Import From CSV</button>
+          <a href="{% url 'add-customer' %}"><button type="button" class="btn btn-primary" >Add Customer </button></a>
+        </div>
+    </h5>
+</div>
+
+
+
+
+<!-- Responsive Table -->
+<div class="card">
+  <h5 class="card-header">Customers Details</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <tr class="text-nowrap"  >
+          <th >Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Saved Cards</th>
+          <th>Balance|Overdue	</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%  for cus in customer%}
+        <tr>
+          
+         
+          <td>{{cus.name}}</td>
+          <td>{{cus.email}}</td>
+          <td>{{cus.phone}}</td>
+          <td>XXXXXXXX</td>
+
+          <td>{{cus.id}}</td>
+          <td>
+
+            <div class="mb-3">
+              <select class="form-select" aria-label="Default select example" onchange="edit('{{cus.id}}')">
+                <option selected disabled>Select Action</option>
+                <option value="1"   >Edit</option>
+                <!-- <option value="2">Delete</option> -->
+              </select>
+          </div>
+          </td>
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Responsive Table -->
+</div>
 {% endblock %}
+
+
+
+
+

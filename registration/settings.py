@@ -139,3 +139,12 @@ SECRET_KEY = 'your-secret-key-here'
 
 
 CSRF_TRUSTED_ORIGINS = ['https://moneyneely.tech']
+
+
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sajal89304@gmail.com'
+EMAIL_HOST_PASSWORD = 'lpgusqpwjmwlhbnl'

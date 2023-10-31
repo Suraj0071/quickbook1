@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
 from django.views import View
 from apps.invoice.models import *
 from io import BytesIO
-from django.http import HttpResponse
+from django.http import HttpResponse 
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 import os
@@ -10,8 +10,9 @@ import os
 from apps.invoice.utils import render_to_pdf,save_item
 from weasyprint import HTML
 from django.template.loader import render_to_string
+from . email import *
 
-
+from . forms import *
 
 class InvoicesView(View):
     def get(self, request):
@@ -27,14 +28,12 @@ class create_invoice(View):
             "business": business
 
         }
-
         return render(request, "create_invoice.html",context)
-    
     def post(self, request):
         try:
             itemname= request.POST.getlist('itemname')
             quantity= request.POST.getlist('quantity')
-            
+
             price= request.POST.getlist('price')
             customer = request.POST.get('customer')
             business = request.POST.get('business')
@@ -59,7 +58,6 @@ class create_invoice(View):
             invoice_title =  request.POST.get("invoice_title")
             invoice_description =  request.POST.get("invoice_description")
             invoice_number  = request.POST.get("invoice_number") 
-
             invoice_date  = request.POST.get("invoice_date")
             payment_due  = request.POST.get("payment_date") 
             footer  = request.POST.get("invoice_footer") 
@@ -71,7 +69,7 @@ class create_invoice(View):
                                         state = state, phone=phone,fax=fax,mobile=mobile,website=website)
                 
             if invoice_title:
-                invoice = Invoice.objects.create(title= invoice_title,description=invoice_description, invoice_number=invoice_number,invoice_date=invoice_date ,paymnet_due=payment_due,
+                invoice = Invoice.objects.create(title= invoice_title,customer_id=customer,description=invoice_description, invoice_number=invoice_number,invoice_date=invoice_date ,paymnet_due=payment_due,
                                     footer_text= footer )
                 customer = Customer.objects.filter(id = customer).first()
             
@@ -90,7 +88,6 @@ class create_invoice(View):
                             "amount": amount[i]
                         }
                         items.append(item)
-
                 context = {'items': items,
                         "total":total["alltotal"],
                         "amount_paid":total["amount_paid"],
@@ -99,9 +96,6 @@ class create_invoice(View):
                         "invoice" :invoice
 
                         }
-
-                            
-
 
                 html_string = render_to_string('invoice_pdf.html', context)
 
@@ -138,13 +132,104 @@ class create_invoice(View):
 
 class Customer_statementsView(View):
     def get(self, request):
-        return render(request, "customer_statements.html")
+        customer = Customer.objects.all()
+        context = {
+            "customer":customer
+        }
+        return render(request, "customer_statements.html",context)
+    
+    def post(self, request):
+        customer= request.POST.get('customer')
+        type= request.POST.get('type')
+        from_date= request.POST.get('from')
+        to_date= request.POST.get('to')
+        
+        print(f"-------------{customer} {type}  {from_date}   {to_date}")
+
     
 
 class CustomersView(View):
     def get(self, request):
-        return render(request, "customers.html")
+        customer = Customer.objects.all()
+        context = {
+            "customer":customer
+        }
+        return render(request, "customers.html",context)
     
+
+
+class Create_customervew(View):
+    def get(self, request):
+        customer = Customer.objects.all()
+        context = {
+            "customer":customer
+        }
+        return render(request, "customers_add.html",context)
+    def post(self,request):
+        name= request.POST.get('name')
+        first_name= request.POST.get('first_name')
+        last_name= request.POST.get('last_name')
+        email= request.POST.get('email')
+        phone= request.POST.get('phone')
+        account_number= request.POST.get('account_number')
+        notes= request.POST.get('notes')
+        website= request.POST.get('website')
+        currency= request.POST.get('currency')
+        address1= request.POST.get('address1')
+        address2= request.POST.get('address2')
+        country= request.POST.get('country')
+        city= request.POST.get('city')
+        postal= request.POST.get('postal')
+        ship_to= request.POST.get('ship_to')
+        ship_address1= request.POST.get('ship_address1')
+        ship_address2= request.POST.get('ship_address2')
+        ship_country= request.POST.get('ship_country')
+        ship_city= request.POST.get('ship_city')
+        ship_postal= request.POST.get('ship_postal')
+        if name:
+            obj = Customer.objects.create(name=name,first_name=first_name, last_name=last_name,email=email,phone=phone,account_number=account_number,
+                                    notes=notes,website=website)
+        if currency:
+            Billing_Address.objects.create(currency=currency,address1=address1,address2=address2,country=country,city=city,postal=postal,customer=obj)
+
+        if ship_to:
+            Shipping_Address.objects.create(customer=obj,ship_to = ship_to,address1= ship_address1 , address2=ship_address2 ,country=ship_country,city=ship_city,postal=ship_postal)
+
+        return redirect("customers")
+    
+
+def edit_customer(request,id):
+    print("00000000000000000",id)
+    customer = Customer.objects.get(id=id)
+    # billing = Billing_Address.objects.get(customer=id)
+    # shipping = Shipping_Address.objects.get(custome=id)
+
+    # print(shipping.name)
+    # print(billing.name)
+
+
+
+
+
+
+
+
+    context = {
+        "customer":customer,
+        # "billing" : billing,
+        # "shipping" :shipping,
+    }
+
+    # if request.method == "POST":
+    #     response = Customer.objects.get(id=id)
+    #     print("respones",response)
+    #     return HttpResponse("--------------------------")
+
+    
+
+    return render(request, "customers_edit.html",context)
+
+
 
 
 class Products_servicesView(View):

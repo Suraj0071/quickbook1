@@ -15,6 +15,11 @@ class Customer(models.Model):
     phone = models.CharField(max_length=20,null=True,blank=True)
     first_name = models.CharField(max_length=100,null=True,blank=True)
     last_name = models.CharField(max_length=100,null=True,blank=True)
+    saved_cards  = models.CharField(max_length=100,null=True,blank=True)
+    balance     = models.CharField(max_length=100,null=True,blank=True)
+    account_number = models.CharField(max_length=100,null=True,blank=True)
+    notes = models.TextField(null=True,blank=True)
+    website  = models.URLField(null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -33,6 +38,9 @@ class Invoice(models.Model):
     is_send = models.BooleanField(default=True)
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)    
+
+   
+
 
     
 
@@ -68,6 +76,29 @@ class Business(models.Model):
         return self.name
 
 
+class Billing_Address(models.Model):
+    currency  =  models.CharField(max_length=100,null=True,blank=True)
+    address1 =  models.CharField(max_length=100,null=True,blank=True)
+    address2  =  models.CharField(max_length=100,null=True,blank=True)
+    country  =  models.CharField(max_length=100,null=True,blank=True)
+    city =  models.CharField(max_length=100,null=True,blank=True)
+    postal  =  models.CharField(max_length=100,null=True,blank=True)
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
 
 
 
+class Shipping_Address(models.Model):
+    ship_to  = models.CharField(max_length=100,null=True,blank=True)
+    address1 =  models.CharField(max_length=100,null=True,blank=True)
+    address2  =  models.CharField(max_length=100,null=True,blank=True)
+    country  =  models.CharField(max_length=100,null=True,blank=True)
+    city =  models.CharField(max_length=100,null=True,blank=True)
+    postal  =  models.CharField(max_length=100,null=True,blank=True)
+    phone =  models.CharField(max_length=100,null=True,blank=True)
+    delivery_instructions =  models.CharField(max_length=100,null=True,blank=True)
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
+
+
+class Product_Service(models.Model):
+    name = models.CharField(max_length=100)
+    desciption = models.TextField(null=True,blank=True)
