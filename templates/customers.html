@@ -11,14 +11,22 @@
    color: rebeccapurple;
   }
 </style>
-
-
 <script>
-  function edit(id) {
-    console.log('Edit',id);
-    window.location.href = `/invoice/edit-customer/${id}`
+  function edit(selectElement, customerId) {
+    const selectedValue = selectElement.value;
+    console.log('Action:', selectedValue, 'Customer ID:', customerId);
+
+    if (selectedValue === 'edit') {
+      window.location.href = `/invoice/edit-customer/${customerId}`;
+    } else if (selectedValue === 'delete') {
+
+      window.location.href = `/invoice/delete-customer/${customerId}`;
+      // Handle delete action here
+      console.log('Deleting customer with ID:', customerId);
+    }
   }
 </script>
+
 
 
 
@@ -60,19 +68,21 @@
           <td>{{cus.name}}</td>
           <td>{{cus.email}}</td>
           <td>{{cus.phone}}</td>
-          <td>XXXXXXXX</td>
+          <td>XXXXXX7899</td>
 
-          <td>{{cus.id}}</td>
+          <td>$</td>
+
           <td>
-
             <div class="mb-3">
-              <select class="form-select" aria-label="Default select example" onchange="edit('{{cus.id}}')">
+              <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{cus.id}}')">
                 <option selected disabled>Select Action</option>
-                <option value="1"   >Edit</option>
-                <!-- <option value="2">Delete</option> -->
+                <option value="edit">Edit</option>
+                <option value="delete">Delete</option>
               </select>
-          </div>
+            </div>
           </td>
+          
+          
         </tr>
         {% endfor %}
         

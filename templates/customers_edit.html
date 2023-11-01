@@ -5,7 +5,7 @@
 {% load static %}
 
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span> Edit  Customer</h4>
-<h5>Basic information</h5>
+<h5>Edit customer details</h5>
 
 
 <center>
@@ -88,7 +88,7 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Currency</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="currency" id="html5-text-input" />
+              <input class="form-control" type="text"  value= {{billing.currency}}    name="currency" id="html5-text-input" />
             </div>
 
 
@@ -96,11 +96,11 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Billing address</label>
             <div class="col-md-10">
-              <input class="form-control"  style="margin-top: 20px;" type="text" id="html5-text-input" placeholder="Address" name="address1"/>
-              <input class="form-control" style="margin-top: 20px;"  type="text" id="html5-text-input" placeholder="Address2(optional)"  name="address2"/>
-              <input class="form-control" style="margin-top: 20px;" type="text" id="html5-text-input" placeholder="country"name="country" />
-              <input class="form-control" style="margin-top: 20px;" type="text" id="html5-text-input" placeholder="city" name="city" />
-              <input class="form-control" style="margin-top: 20px;" type="text" id="html5-text-input" placeholder="postal" name="postal" />
+              <input class="form-control"  style="margin-top: 20px;" type="text" value= {{billing.address1}}   id="html5-text-input" placeholder="Address" name="address1"/>
+              <input class="form-control" style="margin-top: 20px;"  type="text" value= {{billing.address2}}   id="html5-text-input" placeholder="Address2(optional)"  name="address2"/>
+              <input class="form-control" style="margin-top: 20px;" type="text" value= {{billing.country}}   id="html5-text-input" placeholder="country"name="country" />
+              <input class="form-control" style="margin-top: 20px;" type="text" value= {{billing.city}}   id="html5-text-input" placeholder="city" name="city" />
+              <input class="form-control" style="margin-top: 20px;" type="text" value= {{billing.postal}}   id="html5-text-input" placeholder="postal" name="postal" />
             </div>
             <br><br>
 
@@ -114,30 +114,30 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Ship to </label>
             <div class="col-md-10">
-              <input class="form-control" type="text"  id="html5-text-input"  placeholder="" name="ship_to"  />
+              <input class="form-control" type="text"  value= {{shipping.ship_to}}   id="html5-text-input"  placeholder="" name="ship_to"  />
             </div>
 
             <div class="mb-3 row">
               <label for="html5-text-input" class="col-md-2 col-form-label">Billing address</label>
               <div class="col-md-10">
-                <input class="form-control"   style="margin-top: 20px;" type="text"   id="html5-text-input" placeholder="Address" name="ship_address1"/>
-                <input class="form-control" style="margin-top: 20px;" type="text"   id="html5-text-input" placeholder="Address2(optional)"  name="ship_address2"/>
-                <input class="form-control" style="margin-top: 20px;" type="text"  id="html5-text-input" placeholder="country"name="ship_country" />
-                <input class="form-control" style="margin-top: 20px;" type="text"   id="html5-text-input" placeholder="city" name="ship_city" />
-                <input class="form-control" style="margin-top: 20px;"type="text"   id="html5-text-input" placeholder="postal" name="ship_postal" />
+                <input class="form-control"   style="margin-top: 20px;" type="text"  value= {{shipping.address1}}   id="html5-text-input" placeholder="Address" name="ship_address1"/>
+                <input class="form-control" style="margin-top: 20px;" type="text"  value= {{shipping.address2}}   id="html5-text-input" placeholder="Address2(optional)"  name="ship_address2"/>
+                <input class="form-control" style="margin-top: 20px;" type="text" value= {{shipping.country}}   id="html5-text-input" placeholder="country"name="ship_country" />
+                <input class="form-control" style="margin-top: 20px;" type="text"  value= {{shipping.city}}   id="html5-text-input" placeholder="city" name="ship_city" />
+                <input class="form-control" style="margin-top: 20px;"type="text"  value= {{shipping.postal}}   id="html5-text-input" placeholder="postal" name="ship_postal" />
               </div>
 
               <div class="mb-3 row" style="margin-top: 30px;">
                 <label for="html5-text-input" class="col-md-2 col-form-label">Phone </label>
                 <div class="col-md-10">
-                  <input class="form-control"  style="margin-top: 20px;" type="text" id="html5-text-input"  placeholder="" name="ship_phone"  />
+                  <input class="form-control"  style="margin-top: 20px;" value= {{shipping.phone}}  type="text" id="html5-text-input"  placeholder="" name="ship_phone"  />
                </div>
 
 
                <div class="mb-3 row">
                 <label for="html5-text-input" style="margin-top: 20px;" class="col-md-2 col-form-label">Delivery Instuctions </label>
                 <div class="col-md-10">
-                  <input class="form-control" style="margin-top: 20px;" type="text"  id="html5-text-input"  placeholder="" name="del_instuctions"  />
+                  <input class="form-control" style="margin-top: 20px;" type="text" value= {{shipping.delivery_instructions}}  id="html5-text-input"  placeholder="" name="del_instuctions"  />
                </div>
 </div></div></div></div></div></div></div>
 <button type="submit" class="btn btn-primary">Save changes</button>

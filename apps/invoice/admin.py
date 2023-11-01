@@ -64,7 +64,31 @@ class Itemadmin(admin.ModelAdmin):
                 ]
 
 
+@admin.register(Tax)
+class Itemadmin(admin.ModelAdmin):
+    list_display=["id","abbreviation",
+                "tax_rate",
+                "description",
+                "tax_num",
+                "show_tax_number_on_invoices",
+                "is_this_tax_recoverable",
+                "is_this_a_compound_tax",]
 
+
+
+
+@admin.register(Product_Service)
+class Itemadmin(admin.ModelAdmin):
+    list_display=["id","name",
+                    "description",
+                    "price",
+                    "buy_this",
+                    "sell_this",
+                    "income_account",
+                    "expense_account",
+                    "sales_tax",
+    
+                ]
 
 
 
@@ -83,7 +107,7 @@ class Itemadmin(admin.ModelAdmin):
 
 
 @admin.register(Business)
-class EmailTokenadmin(admin.ModelAdmin):
+class Businessadmin(admin.ModelAdmin):
     list_display=["id","name",
                 "address1",
                 "address2",

@@ -8,7 +8,13 @@ urlpatterns = [
     path("customers/", views.CustomersView.as_view(), name="customers"),
     path("add-customer/", views.Create_customervew.as_view(), name="add-customer"),
     path("edit-customer/<int:id>/", views.edit_customer, name="edit-customer"),
-    # path('update/<int:id>/',views.update,name= "update"),
+    path("delete-customer/<int:id>/", views.delete_customer, name="delete-customer"),
+
+    path("tax-create", views.Tax_create.as_view(), name="tax-create"),
+    path("edit-tax/<int:id>/", views.edit_tax, name="edit-tax"),
+    path("delete-tax/<int:id>/", views.delete_tax, name="edit-tax"),
+  
+  
 
     path("products-services/", views.Products_servicesView.as_view(), name="products-services"),
     path("bills/", views.BillsView.as_view(), name="bills"),

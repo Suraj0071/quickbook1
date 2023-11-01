@@ -63,14 +63,16 @@ class create_invoice(View):
             footer  = request.POST.get("invoice_footer") 
             
             if name:
-                Customer.objects.create(name = name, email=email , phone=phone , first_name= first_name, last_name = last_name)
+                obj =Customer.objects.create(name = name, email=email , phone=phone , first_name= first_name, last_name = last_name)
+                Billing_Address.objects.create(customer=obj)
+                Shipping_Address.objects.create(customer=obj)
+
             if companyname:
                 Business.objects.create( name = companyname , address1=address1 , address2=address2, city=city,zip_code=zip, country=country,
                                         state = state, phone=phone,fax=fax,mobile=mobile,website=website)
-                
             if invoice_title:
                 invoice = Invoice.objects.create(title= invoice_title,customer_id=customer,description=invoice_description, invoice_number=invoice_number,invoice_date=invoice_date ,paymnet_due=payment_due,
-                                    footer_text= footer )
+                                    footer_text= footer)
                 customer = Customer.objects.filter(id = customer).first()
             
                 business= Business.objects.filter(id=business).first()
@@ -146,8 +148,6 @@ class Customer_statementsView(View):
         
         print(f"-------------{customer} {type}  {from_date}   {to_date}")
 
-    
-
 class CustomersView(View):
     def get(self, request):
         customer = Customer.objects.all()
@@ -156,7 +156,6 @@ class CustomersView(View):
         }
         return render(request, "customers.html",context)
     
-
 
 class Create_customervew(View):
     def get(self, request):
@@ -199,43 +198,105 @@ class Create_customervew(View):
     
 
 def edit_customer(request,id):
-    print("00000000000000000",id)
     customer = Customer.objects.get(id=id)
-    # billing = Billing_Address.objects.get(customer=id)
-    # shipping = Shipping_Address.objects.get(custome=id)
-
-    # print(shipping.name)
-    # print(billing.name)
-
-
-
-
-
-
-
-
+    billing = Billing_Address.objects.get(customer=id)
+    shipping = Shipping_Address.objects.get(customer=id)
     context = {
         "customer":customer,
-        # "billing" : billing,
-        # "shipping" :shipping,
+        "billing" : billing,
+        "shipping" :shipping,
     }
+    if request.method == "POST":
+        response = Customer.objects.get(id=id)
+        billing = Billing_Address.objects.get(customer=id)
+        shipping = Shipping_Address.objects.get(customer=id)
+        response.first_name  =  request.POST['first_name']
+        response.last_name  =  request.POST['last_name']
+        response.email  =  request.POST['email']
+        response.phone  =  request.POST['phone']
+        response.account_number  =  request.POST['account_number']
+        response.notes  =  request.POST['notes']
+        response.website  =  request.POST['website']
 
-    # if request.method == "POST":
-    #     response = Customer.objects.get(id=id)
-    #     print("respones",response)
-    #     return HttpResponse("--------------------------")
-
-    
-
+        billing.currency= request.POST.get('currency')
+        billing.address1= request.POST.get('address1')
+        billing.address2= request.POST.get('address2')
+        billing.country= request.POST.get('country')
+        billing.city= request.POST.get('city')
+        billing.postal= request.POST.get('postal')
+        
+        shipping.ship_to= request.POST.get('ship_to')
+        shipping.address1= request.POST.get('ship_address1')
+        shipping.address2= request.POST.get('ship_address2')
+        shipping.country= request.POST.get('ship_country')
+        shipping.city= request.POST.get('ship_city')
+        shipping.postal= request.POST.get('ship_postal')
+        response.save()
+        billing.save()
+        shipping.save()
+        return redirect("customers")
     return render(request, "customers_edit.html",context)
 
 
+def delete_customer(request,id):
+    obj = Customer.objects.filter(id=id).first()
+    print("0----------------------",obj)
+    obj.delete()
+    return redirect("customers")
 
 
 class Products_servicesView(View):
     def get(self, request):
         return render(request, "products_services.html")
     
+
+
+
+class Tax_create(View):
+    def get(self, request):
+        tax = Tax.objects.all()
+        context = {
+            "taxes": tax
+        }
+        return render(request, "products_services_add.html",context)
+    def post(self,request):
+
+
+        
+        return redirect("products-services")
+    
+    
+
+def edit_tax(request,id):
+    customer = Tax.objects.get(id=id)
+  
+    context = {
+        "tax":customer,
+        
+    }
+    if request.method == "POST":
+        response = Tax.objects.get(id=id)
+       
+        response.save()
+        
+        return redirect("products-service")
+    return render(request, "products_services_edit.html",context)
+
+
+
+
+def delete_tax(request,id):
+    obj = Tax.objects.filter(id=id).first()
+    print("0----------------------",obj)
+    obj.delete()
+    return redirect("products-service")
+
+
+
+
+
+
+
 
 
 class BillsView(View):

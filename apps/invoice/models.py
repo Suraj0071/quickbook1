@@ -1,15 +1,21 @@
 from django.db import models
 
 # Create your models here.
-
-
 from django.contrib.auth.models import User
 
+
+class Tax(models.Model):
+    abbreviation =  models.CharField(max_length=200)
+    tax_rate  = models.CharField(max_length=200)
+    description  = models.TextField(null=True,blank=True)
+    tax_num    = models.BooleanField(default=False)
+    show_tax_number_on_invoices =models.BooleanField(default=False)
+    is_this_tax_recoverable   =models.BooleanField(default=False)
+    is_this_a_compound_tax  =models.BooleanField(default=False)
 
 
 
 class Customer(models.Model):
-    
     name =  models.CharField(max_length=100)
     email = models.EmailField(null=True,blank=True)
     phone = models.CharField(max_length=20,null=True,blank=True)
@@ -30,7 +36,7 @@ class Invoice(models.Model):
     description = models.TextField(null=True,blank=True)
     pos_so_no  = models.TextField(null=True,blank=True)
     logo = models.ImageField(upload_to="static/images",null=True,blank=True)
-    invoice_number = models.CharField(max_length=100)
+    invoice_number = models.CharField(max_length=100,null=True,)
     invoice_date = models.DateField()
     paymnet_due = models.DateField()
     footer_text = models.TextField(null=True,blank=True)
@@ -40,6 +46,7 @@ class Invoice(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)    
 
    
+
 
 
     
@@ -101,4 +108,13 @@ class Shipping_Address(models.Model):
 
 class Product_Service(models.Model):
     name = models.CharField(max_length=100)
-    desciption = models.TextField(null=True,blank=True)
+    description = models.TextField(null=True,blank=True)
+    price = models.TextField(null=True,blank=True)
+    buy_this = models.BooleanField(default=False)
+    sell_this = models.BooleanField(default=False)
+    income_account = models.CharField(max_length=100,null=True,blank=True)
+    expense_account  =models.CharField(max_length=100,null=True,blank=True)
+    sales_tax   =  models.ForeignKey(Tax,on_delete=models.CASCADE,null=True,blank=True)
+
+
+    
