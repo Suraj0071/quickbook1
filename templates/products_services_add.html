@@ -4,7 +4,7 @@
 {% block content %}
 {% load static %}
 
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span> Add  Tax</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span>  Add a Product or Service</h4>
 <h5>Products and services that you buy from vendors are used as items on Bills to record those purchases, and the ones that you sell to customers are used as items on Invoices to record those sales.</h5>
 
 
@@ -14,7 +14,7 @@
     {% csrf_token %}
 
     <div class="card mb-4">
-        <h5 class="card-header">Add a new tax</h5>
+        <h5 class="card-header">Product or Service</h5>
         <div class="card-body">
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Name</label>
@@ -37,17 +37,18 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Price</label>
             <div class="col-md-10">
-              <input class="form-control" type="price" name="description" id="html5-text-input" />
+              <input class="form-control" type="text" name="price" id="html5-text-input" required/>
             </div>
           </div>
 
 
           <div class="mb-3 row">
-            <label for="defaultCheck1"  class="col-md-2 col-form-check-label" >Buy this</label>
+            <label for="defaultCheck1" class="col-md-2 col-form-label">Sell this</label>
             <div class="col-md-10">
-                <input class="form-check-input" style=" margin-right: 100%;"  type="checkbox" value="" id="defaultCheck1"  required/>
+                <input class="form-check-input" style="margin-right: 100%;" type="checkbox" name="sell_this" id="defaultCheck1">
             </div>
-          </div>
+        </div>
+        
 
 
           <div class="mb-3 row">
@@ -59,11 +60,11 @@
 
 
           <div class="mb-3 row">
-            <label for="defaultCheck1"  class="col-md-2 col-form-check-label" >Sell this</label>
+            <label for="defaultCheck1" class="col-md-2 col-form-label"> Buy this</label>
             <div class="col-md-10">
-                <input class="form-check-input" style=" margin-right: 100%;" type="checkbox" value="" id="defaultCheck1"  required/>
+                <input class="form-check-input" style="margin-right: 100%;" type="checkbox" name="buy_this" id="defaultCheck1">
             </div>
-          </div>
+        </div>
 
 
           <div class="mb-3 row">
@@ -75,8 +76,8 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Selcect Tax</label>
             <div class="col-md-10">
-              <select id="defaultSelect" class="form-select" name="tax" required>
-                <option >Select Customer</option>
+              <select id="defaultSelect" class="form-select" name="sales_tax" required>
+                <option selected disabled >Select tax</option>
                 {% for tax in taxes %}
                       <option value="{{ tax.id }}">{{ tax.abbreviation }}</option>
                   {% endfor %}

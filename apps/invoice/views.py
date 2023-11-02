@@ -11,8 +11,10 @@ from apps.invoice.utils import render_to_pdf,save_item
 from weasyprint import HTML
 from django.template.loader import render_to_string
 from . email import *
-
 from . forms import *
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
+import pandas as pd
 
 class InvoicesView(View):
     def get(self, request):
@@ -128,25 +130,43 @@ class create_invoice(View):
             
 
 
-
-
-
-
-class Customer_statementsView(View):
-    def get(self, request):
-        customer = Customer.objects.all()
-        context = {
-            "customer":customer
-        }
-        return render(request, "customer_statements.html",context)
+def upload_customercsv(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        print("----------------file",file)
     
-    def post(self, request):
-        customer= request.POST.get('customer')
-        type= request.POST.get('type')
-        from_date= request.POST.get('from')
-        to_date= request.POST.get('to')
-        
-        print(f"-------------{customer} {type}  {from_date}   {to_date}")
+        if not file :
+            messages.error(request, "No file uploaded. Please select a file to upload.")   
+            return render(request, 'uploadfile.html')     
+        filename, file_extension = os.path.splitext(file.name)
+        if file_extension  not in [".xlsx",".csv",]:
+            messages.error(request, "Please upload in one of these vaild file formats -  xlsx or csv ")
+            return render(request, 'uploadfile.html')
+    
+        data = pd.read_excel(file)
+        # Iterate through the rows of the DataFrame
+        for index, row in data.iterrows():
+            # Access data from each column for the current row
+            name = row['name']
+            email = row['email']
+            phone = row['phone']
+            saved_cards = row['saved_cards']
+            balance = row['balance']
+            Customer.objects.create(name=name,email=email,phone=phone,saved_cards= saved_cards,balance=balance)
+
+         
+           
+        # return redirect("showfilesdata")
+        return redirect("customers")
+    
+    return render(request, "customers.html")
+
+
+    
+
+
+
+
 
 class CustomersView(View):
     def get(self, request):
@@ -245,14 +265,36 @@ def delete_customer(request,id):
     return redirect("customers")
 
 
+class Customer_statementsView(View):
+    def get(self, request):
+        customer = Customer.objects.all()
+        context = {
+            "customer":customer
+        }
+        return render(request, "customer_statements.html",context)
+    
+    def post(self, request):
+        customer= request.POST.get('customer')
+        type= request.POST.get('type')
+        from_date= request.POST.get('from')
+        to_date= request.POST.get('to')
+        
+        print(f"-------------{customer} {type}  {from_date}   {to_date}")
+
 class Products_servicesView(View):
     def get(self, request):
-        return render(request, "products_services.html")
+        products=  Product_Service.objects.all()
+        context = {
+        "products":products,
+        
+    }
+
+        return render(request, "products_services.html",context)
     
 
 
 
-class Tax_create(View):
+class product_service_create(View):
     def get(self, request):
         tax = Tax.objects.all()
         context = {
@@ -260,41 +302,63 @@ class Tax_create(View):
         }
         return render(request, "products_services_add.html",context)
     def post(self,request):
-
-
+        form = Product_ServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("products-services")
         
-        return redirect("products-services")
-    
-    
+        return render(request, "products_services_add.html",)
 
-def edit_tax(request,id):
-    customer = Tax.objects.get(id=id)
-  
+
+def products_service_edit(request,id):
+    products = Product_Service.objects.get(id=id)
+    tax = Tax.objects.all()
     context = {
-        "tax":customer,
-        
+        "products":products,
+        "taxes" :tax
     }
     if request.method == "POST":
-        response = Tax.objects.get(id=id)
+      
+        
+
+        response = Product_Service.objects.get(id=id)
+        print(response)
+        buy_this = request.POST.get("buy_this")
+        sell_this = request.POST.get("sell_this")
+        response.name= request.POST.get('name')
+        response.description= request.POST.get('description')
+        response.price= request.POST.get('price')
+        # response.sell_this= request.POST.get('sell_this')
+        # response.buy_this= request.POST.get('buy_this')
+        response.income_account= request.POST.get('income_account')
+        response.expense_account= request.POST.get('expense_account')
        
+
+        if buy_this =="on":
+            response.buy_this = True
+
+        if sell_this =="on":
+            response.sell_this = True
+        # Assign the Tax instance to the sales_tax field
+    
+
+        tax_id = request.POST.get('sales_tax')
+        if tax_id:
+            selected_tax = get_object_or_404(Tax, id=int(tax_id))
+            response.sales_tax = selected_tax
+        else:
+            response.sales_tax = None
+
         response.save()
         
-        return redirect("products-service")
+        return redirect("products-services")
     return render(request, "products_services_edit.html",context)
 
 
-
-
-def delete_tax(request,id):
-    obj = Tax.objects.filter(id=id).first()
-    print("0----------------------",obj)
+def products_service_delete(request,id):
+    obj = Product_Service.objects.filter(id=id).first()
     obj.delete()
-    return redirect("products-service")
-
-
-
-
-
+    return redirect("products-services")
 
 
 

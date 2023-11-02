@@ -109,7 +109,7 @@ class Shipping_Address(models.Model):
 class Product_Service(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True,blank=True)
-    price = models.TextField(null=True,blank=True)
+    price = models.CharField(max_length=200,null=True,blank=True)
     buy_this = models.BooleanField(default=False)
     sell_this = models.BooleanField(default=False)
     income_account = models.CharField(max_length=100,null=True,blank=True)

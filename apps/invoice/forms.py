@@ -14,3 +14,13 @@ class CustomerForm(forms.ModelForm):
         email = self.cleaned_data['email']
         print("Thisis email",email)
         
+
+
+
+class Product_ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Product_Service
+        fields = '__all__'
+
+  
+        

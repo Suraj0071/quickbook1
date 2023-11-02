@@ -12,15 +12,15 @@
 
 </style>
 <script>
-  function edit(selectElement, customerId) {
+  function edit(selectElement, id) {
     const selectedValue = selectElement.value;
-    console.log('Action:', selectedValue, 'Customer ID:', customerId);
+    console.log('Action:', selectedValue, 'Customer ID:', id);
 
     if (selectedValue === 'edit') {
-      window.location.href = `/invoice/edit-customer/${customerId}`;
+      window.location.href = `/invoice/products-service-edit/${id}`;
     } else if (selectedValue === 'delete') {
 
-      window.location.href = `/invoice/delete-customer/${customerId}`;
+      window.location.href = `/invoice/products-service-delete/${id}`;
       // Handle delete action here
       console.log('Deleting customer with ID:', customerId);
     }
@@ -29,14 +29,14 @@
 
 
 
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product &/</span> Services</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product &/</span> Services(sales)</h4>
 
 <div class="card mb-4">
     <h5 class="card-header d-flex justify-content-between">
     
         <div>
             
-          <a href="{% url 'tax-create' %}"><button type="button" class="btn btn-primary" >Add Tax </button></a>
+          <a href="{% url 'products-service-create' %}"><button type="button" class="btn btn-primary" >Add a product or service </button></a>
         </div>
     </h5>
 </div>
@@ -57,16 +57,15 @@
         </tr>
       </thead>
       <tbody>
-        {%  for cus in customer%}
+        {%  for cus in products%}
         <tr>
           
          
           <td>{{cus.name}}</td>
-          <td>{{cus.email}}</td>
-          <td>{{cus.phone}}</td>
-          <td>XXXXXXXX</td>
+          <td>{{cus.price}}</td>
+        
 
-          <td>{{cus.id}}</td>
+      
           <td>
             <div class="mb-3">
               <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{cus.id}}')">
