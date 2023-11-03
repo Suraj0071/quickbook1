@@ -4,5 +4,89 @@
 {% block content %}
 {% load static %}
 
+<style>
+  .table th {
+   color: rebeccapurple;
+  }
+</style>
 
+</style>
+<script>
+  function edit(selectElement, id) {
+    const selectedValue = selectElement.value;
+    console.log('Action:', selectedValue, 'Customer ID:', id);
+
+    if (selectedValue === 'edit') {
+      window.location.href = `/invoice/products-service-edit/${id}`;
+    } else if (selectedValue === 'delete') {
+
+      window.location.href = `/invoice/products-service-delete/${id}`;
+      // Handle delete action here
+      console.log('Deleting customer with ID:', customerId);
+    }
+  }
+</script>
+
+
+
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product &/</span> Services(sales)</h4>
+
+<div class="card mb-4">
+    <h5 class="card-header d-flex justify-content-between">
+    
+        <div>
+            
+          <a href="{% url 'products-service-create' %}"><button type="button" class="btn btn-primary" >Add a product or service </button></a>
+        </div>
+    </h5>
+</div>
+
+
+
+<!-- Responsive Table -->
+<div class="card">
+  <h5 class="card-header">Products & Services (Sales)</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <tr class="text-nowrap"  >
+          <th >Name</th>
+          <th>Price</th>
+          <th>Action</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        {%  for cus in products%}
+        <tr>
+          
+         
+          <td>{{cus.name}}</td>
+          <td>{{cus.price}}</td>
+        
+
+      
+          <td>
+            <div class="mb-3">
+              <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{cus.id}}')">
+                <option selected disabled>Select Action</option>
+                <option value="edit">Edit</option>
+                <option value="delete">Delete</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Responsive Table -->
+</div>
 {% endblock %}
+
+
+
+
+

@@ -2,6 +2,73 @@
  
 {% block content %}
 {% load static %}
+<center><h1 class="mb-0" style="margin-top: 30px;">Customer Statements</h1></center>
+<br>
+<form method="post">
+    {% csrf_token %}
+<div class="row mb-2 mt-2">
+    <!-- Contact Field -->
+    <div class="col mb-0">
+        <label for="defaultSelect" class="form-label">Selcect Customer</label>
+        <select id="defaultSelect" class="form-select" name="customer" required>
+            <option>Select Customer</option>
+            {% for cus in customer %}
+                  <option value="{{ cus.id }}">{{ cus.name }}</option>
+              {% endfor %}
+
+          </select>
+    </div>
+    <div class="col mb-0">
+        <label for="defaultSelect" class="form-label">Selcect Type</label>
+        <select id="defaultSelect" class="form-select" name="type">
+            <option value="1">Account Activity</option>
+            <option value="2">Outstanding Invoice</option>
+        </select>
+     
+        
+        <!-- <input type="text" id="additionalField" name="additional_field" class="form-control" placeholder="" required> -->
+    </div>
+
+    <div class="col mb-0">
+        <label for="invoiceDate" class="form-label">From </label>
+        <input type="date" id="invoiceDate" name="from" class="form-control" required/>
+    </div>
+
+    <div class="col mb-0">
+        <label for="paymentDue" class="form-label">To</label>
+        <input type="date" id="paymentDue" name="to" class="form-control" required/>
+    </div>
+
+    <!-- Add one more field here -->
+  
+    
+
+    <!-- Submit Button -->
+    <div class="col mb-0">
+        <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+</form>
+
+  <br> 
+  <br> 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 {% endblock %}

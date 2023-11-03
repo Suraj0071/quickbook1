@@ -7,7 +7,7 @@ from django.contrib import messages
 from .forms import *
 from. models import File,EmailToken
 import pandas as pd
-from django.contrib import messages
+
 import os
 from django.core.paginator import Paginator
 from django.views import View
@@ -78,38 +78,46 @@ def uploadfile(request):
         if file_extension  not in [".xlsx",".csv",]:
             messages.error(request, "Please upload in one of these vaild file formats -  xlsx or csv ")
             return render(request, 'uploadfile.html')
-    
-        data = pd.read_excel(file)
-        # Iterate through the rows of the DataFrame
-        for index, row in data.iterrows():
-            # Access data from each column for the current row
-            journal = row['Journal']
-            date = row['Date']
-            reference = row['Reference']
-            description = row['Description']
-            account = row['Account']
-            account_name = row['Account Name']
-            debit_amount = row['Debit Amount']
-            credit_amount = row['Credit Amount']
-            offset_account = row['Offset Account']
-            memo = row['Memo']
-            department = row['Department']
-            File.objects.create(
-               
-                journal=journal,
-                date=date,
-                reference=reference,
-                description=description,
-                account=account,
-                account_name=account_name,
-                debit_amount=debit_amount,
-                credit_amount=credit_amount,
-                offset_account=offset_account,
-                memo=memo,
-                department=department,
-                user = request.user
-            )
-        return redirect("showfilesdata")
+        
+
+        try:
+            data = pd.read_excel(file)
+            # Iterate through the rows of the DataFrame
+            for index, row in data.iterrows():
+                # Access data from each column for the current row
+                journal = row['Journal']
+                date = row['Date']
+                reference = row['Reference']
+                description = row['Description']
+                account = row['Account']
+                account_name = row['Account Name']
+                debit_amount = row['Debit Amount']
+                credit_amount = row['Credit Amount']
+                offset_account = row['Offset Account']
+                memo = row['Memo']
+                department = row['Department']
+                File.objects.create(
+                
+                    journal=journal,
+                    date=date,
+                    reference=reference,
+                    description=description,
+                    account=account,
+                    account_name=account_name,
+                    debit_amount=debit_amount,
+                    credit_amount=credit_amount,
+                    offset_account=offset_account,
+                    memo=memo,
+                    department=department,
+                    user = request.user
+                )
+        
+                return redirect("showfilesdata")
+
+        except Exception as e:
+            messages.error(request, "Please upload in one of these vaild file formats -  xlsx or csv ")
+            print(e)
+            return render(request, 'uploadfile.html')
     return render(request,"uploadfile.html",)
 
 
