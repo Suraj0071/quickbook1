@@ -134,7 +134,6 @@ def upload_customercsv(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         print("----------------file",file)
-    
         if not file :
             messages.error(request, "No file uploaded. Please select a file to upload.")   
             return render(request, 'uploadfile.html')     
@@ -154,8 +153,6 @@ def upload_customercsv(request):
             balance = row['balance']
             Customer.objects.create(name=name,email=email,phone=phone,saved_cards= saved_cards,balance=balance)
 
-         
-           
         # return redirect("showfilesdata")
         return redirect("customers")
     
@@ -363,10 +360,6 @@ def products_service_delete(request,id):
 
 
 
-class BillsView(View):
-    def get(self, request):
-        return render(request, "bills.html")
-    
 
 
 class VendorsView(View):

@@ -1,8 +1,153 @@
-
 {% extends "base_dashboard.html" %}
  
 {% block content %}
 {% load static %}
 
 
+
+<style>
+    .table th {
+     color: rebeccapurple;
+    }
+  </style>
+  <script>
+    function edit(selectElement, customerId) {
+      const selectedValue = selectElement.value;
+      console.log('Action:', selectedValue, 'Customer ID:', customerId);
+  
+      if (selectedValue === 'edit') {
+        window.location.href = `/invoice/edit-customer/${customerId}`;
+      } else if (selectedValue === 'delete') {
+  
+        window.location.href = `/invoice/delete-customer/${customerId}`;
+        // Handle delete action here
+        console.log('Deleting customer with ID:', customerId);
+      }
+    }
+  </script>
+
+  
+
+
+<center><h1 class="mb-0" style="margin-top: 30px;">Bills</h1>
+    
+
+</center>
+<br>
+
+<a href="{% url 'create-bill' %}"><button type="submit" style="margin-left: 90%;" class="btn btn-primary">Create a Bill </button></a>
+<form method="post">
+
+    
+    {% csrf_token %}
+<div class="row mb-2 mt-2">
+    <!-- Contact Field -->
+    <div class="col mb-0">
+        <label for="defaultSelect" class="form-label">Vendor </label>
+        <select id="defaultSelect" class="form-select" name="venndor" required>
+            <option>Select Vendor</option>
+            {% for ven in vendor %}
+                  <option value="{{ ven.id }}">{{ ven.name }}</option>
+              {% endfor %}
+
+          </select>
+    </div>
+
+    <div class="col mb-0">
+        <label for="invoiceDate" class="form-label">From </label>
+        <input type="date" id="invoiceDate" name="from" class="form-control" required/>
+    </div>
+
+    <div class="col mb-0">
+        <label for="paymentDue" class="form-label">To</label>
+        <input type="date" id="paymentDue" name="to" class="form-control" required/>
+    </div>
+
+    <!-- Add one more field here -->
+  
+    
+
+    <!-- Submit Button -->
+    <div class="col mb-0">
+        <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Submit</button>
+        
+    </div>
+</div>
+</form>
+
+
+
+  <br> 
+  <br> 
+
+
+
+  
+<!-- Responsive Table -->
+<div class="card">
+    
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr class="text-nowrap"  >
+            <th >Status</th>
+            <th>Date</th>
+            <th>Number</th>
+            <th>Vendor </th>
+            <th>Due date 	</th>
+            <th>Amount Due</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%  for cus in customer%}
+          <tr>
+            
+           
+            <td>{{cus.name}}</td>
+            <td>{{cus.email}}</td>
+            <td>{{cus.phone}}</td>
+            <td>XXXXXX7899</td>
+  
+            <td>$</td>
+  
+            <td>
+              <div class="mb-3">
+                <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{cus.id}}')">
+                  <option selected disabled>Select Action</option>
+                  <option value="edit">Edit</option>
+                  <option value="delete">Delete</option>
+                </select>
+              </div>
+            </td>
+            
+            
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  
 {% endblock %}
+
+
+<style>
+    .pdf {
+        border: solid purple 4px;
+        width: 200px; /* Set the width to 200 pixels */
+        height: 300px; /* Set the height to 300 pixels */
+    }
+</style>

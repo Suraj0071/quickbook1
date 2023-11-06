@@ -4,40 +4,44 @@
 {% block content %}
 {% load static %}
 
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span>  Add a Product or Service</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span>  Edit a Product or Service</h4>
 <h5>Products and services that you buy from vendors are used as items on Bills to record those purchases, and the ones that you sell to customers are used as items on Invoices to record those sales.</h5>
 
 
 <center>
 
-  <form method="post">
+   <form method="post">
     {% csrf_token %}
-
+{% if products %}
     <div class="card mb-4">
-        <h5 class="card-header">Product or Service</h5>
+        <h5 class="card-header"> Edit Product or Service</h5>
         <div class="card-body">
+
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Name</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="name" id="html5-text-input" required />
+              <input class="form-control" type="text"  value= {{products.name}} name="name" id="html5-text-input" required />
             </div>
           </div>
-
-          
-
-
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Description</label>
             <div class="col-md-10">
-                <textarea class="form-control" name="description" id="html5-text-input" rows="3"></textarea>
+              <input class="form-control" type="text"  value= {{products.description}} name="description" id="html5-text-input" required />
             </div>
           </div>
+
+          <!-- <div class="mb-3 row">
+            <label for="html5-text-input" class="col-md-2 col-form-label">Description</label>
+            <div class="col-md-10">
+                <textarea class="form-control"   value= {{products.description}}   name="description" id="html5-text-input" rows="3"></textarea>
+            </div>
+          </div> -->
 
 
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Price</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="price" id="html5-text-input" required/>
+              <input class="form-control"    value= {{products.price}} type="price" name="price" id="html5-text-input" required/>
             </div>
           </div>
 
@@ -48,29 +52,28 @@
                 <input class="form-check-input" style="margin-right: 100%;" type="checkbox" name="sell_this" id="defaultCheck1">
             </div>
         </div>
-        
-
 
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Expense account</label>
             <div class="col-md-10">
-              <input class="form-control" type="price" name="expense_account" id="html5-text-input" />
+              <input class="form-control"   value= {{products.expense_account}} type="price" name="expense_account" id="html5-text-input" />
             </div>
           </div>
 
 
-          <div class="mb-3 row">
+
+
+        <div class="mb-3 row">
             <label for="defaultCheck1" class="col-md-2 col-form-label"> Buy this</label>
             <div class="col-md-10">
                 <input class="form-check-input" style="margin-right: 100%;" type="checkbox" name="buy_this" id="defaultCheck1">
             </div>
         </div>
-
-
+        
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Income account</label>
             <div class="col-md-10">
-              <input class="form-control" type="price" name="income_account" id="html5-text-input" />
+              <input class="form-control" type="price"   value= {{products.income_account}} name="income_account" id="html5-text-input" />
             </div>
           </div>
           <div class="mb-3 row">
@@ -87,59 +90,11 @@
           </div>
 
 
-          
+        
+<button type="submit" class="btn btn-primary">Save changes</button>\
+{% endif%}
 
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-          <!-- <div class="form-check mt-3">
-            <label class="form-check-label" for="defaultCheck1"> Unchecked </label>
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-           
-          </div> -->
-
-
-
-
-
-
-
-
-
-
-
-          
-
-<button type="submit" class="btn btn-primary">Save changes</button>
-  
-
-
-
-
-
-
-   
-</form>
-
-    
+        </form>
 
 </center>
 

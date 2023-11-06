@@ -4,28 +4,25 @@
 {% block content %}
 {% load static %}
 
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span>  Add a Product or Service</h4>
-<h5>Products and services that you buy from vendors are used as items on Bills to record those purchases, and the ones that you sell to customers are used as items on Invoices to record those sales.</h5>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span>  Add Bill </h4>
 
 
 <center>
 
-  <form method="post">
+   <form method="post">
     {% csrf_token %}
 
     <div class="card mb-4">
-        <h5 class="card-header">Product or Service</h5>
+        <h5 class="card-header">Create Bill</h5>
         <div class="card-body">
+            
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Name</label>
             <div class="col-md-10">
               <input class="form-control" type="text" name="name" id="html5-text-input" required />
             </div>
           </div>
-
-          
-
-
+        
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Description</label>
             <div class="col-md-10">
