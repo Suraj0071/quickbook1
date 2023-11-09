@@ -12,17 +12,17 @@
   }
 </style>
 <script>
-  function edit(selectElement, customerId) {
+  function edit(selectElement, vendorId) {
     const selectedValue = selectElement.value;
-    console.log('Action:', selectedValue, 'Customer ID:', customerId);
+    console.log('Action:', selectedValue, 'Customer ID:', vendorId);
 
     if (selectedValue === 'edit') {
-      window.location.href = `/invoice/edit-customer/${customerId}`;
+      window.location.href = `/bills/ediit-vendors/${vendorId}`;
     } else if (selectedValue === 'delete') {
 
-      window.location.href = `/invoice/delete-customer/${customerId}`;
+      window.location.href = `/bills/delete-vendors/${vendorId}`;
       // Handle delete action here
-      console.log('Deleting customer with ID:', customerId);
+      console.log('Deleting customer with ID:', vendorId);
     }
   }
 </script>
@@ -40,7 +40,7 @@
           data-bs-toggle="modal"
           data-bs-target="#basicModal"
         >
-          Import Customers
+          Import Vendor
         </button>
 
         <!-- Modal -->
@@ -107,20 +107,17 @@
         </tr>
       </thead>
       <tbody>
-        {%  for cus in customer%}
+        {%  for ven in vendor%}
         <tr>
           
          
-          <td>{{cus.name}}</td>
-          <td>{{cus.email}}</td>
-          <td>{{cus.phone}}</td>
-        
-
-          <td>$</td>
+          <td>{{ven.name}}</td>
+          <td>{{ven.email}}</td>
+          <td>{{ven.phone}}</td>
 
           <td>
             <div class="mb-3">
-              <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{cus.id}}')">
+              <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{ven.id}}')">
                 <option selected disabled>Select Action</option>
                 <option value="edit">Edit</option>
                 <option value="delete">Delete</option>
