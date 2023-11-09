@@ -4,6 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
+
 class Tax(models.Model):
     abbreviation =  models.CharField(max_length=200)
     tax_rate  = models.CharField(max_length=200)
@@ -45,11 +47,7 @@ class Invoice(models.Model):
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)    
 
-   
 
-
-
-    
 
 class Item(models.Model):
     invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE,null=True,blank=True)
@@ -59,7 +57,8 @@ class Item(models.Model):
     price = models.IntegerField()
     amount = models.IntegerField()
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)    
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True) 
+   
 
 
 

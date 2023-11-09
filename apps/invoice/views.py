@@ -257,7 +257,6 @@ def edit_customer(request,id):
 
 def delete_customer(request,id):
     obj = Customer.objects.filter(id=id).first()
-    print("0----------------------",obj)
     obj.delete()
     return redirect("customers")
 
@@ -269,7 +268,6 @@ class Customer_statementsView(View):
             "customer":customer
         }
         return render(request, "customer_statements.html",context)
-    
     def post(self, request):
         customer= request.POST.get('customer')
         type= request.POST.get('type')
@@ -285,11 +283,8 @@ class Products_servicesView(View):
         "products":products,
         
     }
-
         return render(request, "products_services.html",context)
     
-
-
 
 class product_service_create(View):
     def get(self, request):
@@ -315,29 +310,20 @@ def products_service_edit(request,id):
         "taxes" :tax
     }
     if request.method == "POST":
-      
-        
-
         response = Product_Service.objects.get(id=id)
-        print(response)
         buy_this = request.POST.get("buy_this")
         sell_this = request.POST.get("sell_this")
         response.name= request.POST.get('name')
         response.description= request.POST.get('description')
         response.price= request.POST.get('price')
-        # response.sell_this= request.POST.get('sell_this')
-        # response.buy_this= request.POST.get('buy_this')
         response.income_account= request.POST.get('income_account')
         response.expense_account= request.POST.get('expense_account')
-       
-
         if buy_this =="on":
             response.buy_this = True
 
         if sell_this =="on":
             response.sell_this = True
         # Assign the Tax instance to the sales_tax field
-    
 
         tax_id = request.POST.get('sales_tax')
         if tax_id:
@@ -362,9 +348,6 @@ def products_service_delete(request,id):
 
 
 
-class VendorsView(View):
-    def get(self, request):
-        return render(request, "vendors.html")
 
 
 

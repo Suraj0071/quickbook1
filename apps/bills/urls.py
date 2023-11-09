@@ -7,4 +7,8 @@ urlpatterns = [
     path("bills/", views.BillsView.as_view(), name="bills"),
     path("create-bill/", views.CreateBill.as_view(), name="create-bill"),
     path("edit-bill/", views.EditBill.as_view(), name="edit-bill"),
+    path("vendors/", views.VendorsView.as_view(), name="vendors"),
+    path("add-vendors/", views.VendorCreate.as_view(), name="add-vendors"),
+    path("ediit-vendors/", views.VendorEdit.as_view(), name="edit-vendors"),
+
 ]

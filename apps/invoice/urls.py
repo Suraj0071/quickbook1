@@ -13,11 +13,11 @@ urlpatterns = [
 
     path("products-services/", views.Products_servicesView.as_view(), name="products-services"),
 
-    path("products-service-create", views.product_service_create.as_view(), name="products-service-create"),
+    path("products-service-create/", views.product_service_create.as_view(), name="products-service-create"),
     path("products-service-edit/<int:id>/", views.products_service_edit, name="products-service-edit"),
     path("products-service-delete/<int:id>/", views. products_service_delete, name="products-service-delete"),
 
-    path("vendors/", views.VendorsView.as_view(), name="vendors"),
+   
     path("transactions/", views.TransactionsView.as_view(), name="transactions"),
     
     path("reconciliation/", views.ReconciliationView.as_view(), name="reconciliation"),

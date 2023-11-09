@@ -5,4 +5,142 @@
 {% load static %}
 
 
+
+<style>
+  .table th {
+   color: rebeccapurple;
+  }
+</style>
+<script>
+  function edit(selectElement, customerId) {
+    const selectedValue = selectElement.value;
+    console.log('Action:', selectedValue, 'Customer ID:', customerId);
+
+    if (selectedValue === 'edit') {
+      window.location.href = `/invoice/edit-customer/${customerId}`;
+    } else if (selectedValue === 'delete') {
+
+      window.location.href = `/invoice/delete-customer/${customerId}`;
+      // Handle delete action here
+      console.log('Deleting customer with ID:', customerId);
+    }
+  }
+</script>
+
+
+
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Vendor </span> </h4>
+
+<div class="card mb-4">
+    <h5 class="card-header d-flex justify-content-between">
+        <div>
+          <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#basicModal"
+        >
+          Import Customers
+        </button>
+
+        <!-- Modal -->
+        
+        <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+
+              
+                <form action="{% url 'customer-upload' %}"  method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                               
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="formFile" class="form-label">Default file input example</label>
+                    <input class="form-control" type="file" id="formFile" name="file">
+                    
+                  </div>
+                </div>
+               
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      
+
+          <a href="{% url 'add-vendors' %}"><button type="button" class="btn btn-primary" >Add Vendor </button></a>
+        </div>
+    </h5>
+</div>
+
+
+
+
+<!-- Responsive Table -->
+<div class="card">
+  <h5 class="card-header">Vendors Details</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <tr class="text-nowrap"  >
+          <th >Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%  for cus in customer%}
+        <tr>
+          
+         
+          <td>{{cus.name}}</td>
+          <td>{{cus.email}}</td>
+          <td>{{cus.phone}}</td>
+        
+
+          <td>$</td>
+
+          <td>
+            <div class="mb-3">
+              <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{cus.id}}')">
+                <option selected disabled>Select Action</option>
+                <option value="edit">Edit</option>
+                <option value="delete">Delete</option>
+              </select>
+            </div>
+          </td>
+          
+          
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--/ Responsive Table -->
+</div>
 {% endblock %}
+
+
+
+
+

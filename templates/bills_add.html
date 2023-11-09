@@ -1,144 +1,225 @@
-
 {% extends "base_dashboard.html" %}
  
 {% block content %}
 {% load static %}
-
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Invoice /</span>  Add Bill </h4>
-
-
-<center>
-
-   <form method="post">
-    {% csrf_token %}
-
-    <div class="card mb-4">
-        <h5 class="card-header">Create Bill</h5>
-        <div class="card-body">
-            
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Name</label>
-            <div class="col-md-10">
-              <input class="form-control" type="text" name="name" id="html5-text-input" required />
-            </div>
-          </div>
-        
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Description</label>
-            <div class="col-md-10">
-                <textarea class="form-control" name="description" id="html5-text-input" rows="3"></textarea>
-            </div>
-          </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Price</label>
-            <div class="col-md-10">
-              <input class="form-control" type="text" name="price" id="html5-text-input" required/>
-            </div>
-          </div>
-
-
-          <div class="mb-3 row">
-            <label for="defaultCheck1" class="col-md-2 col-form-label">Sell this</label>
-            <div class="col-md-10">
-                <input class="form-check-input" style="margin-right: 100%;" type="checkbox" name="sell_this" id="defaultCheck1">
-            </div>
-        </div>
-        
-
-
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Expense account</label>
-            <div class="col-md-10">
-              <input class="form-control" type="price" name="expense_account" id="html5-text-input" />
-            </div>
-          </div>
-
-
-          <div class="mb-3 row">
-            <label for="defaultCheck1" class="col-md-2 col-form-label"> Buy this</label>
-            <div class="col-md-10">
-                <input class="form-check-input" style="margin-right: 100%;" type="checkbox" name="buy_this" id="defaultCheck1">
-            </div>
-        </div>
-
-
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Income account</label>
-            <div class="col-md-10">
-              <input class="form-control" type="price" name="income_account" id="html5-text-input" />
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Selcect Tax</label>
-            <div class="col-md-10">
-              <select id="defaultSelect" class="form-select" name="sales_tax" required>
-                <option selected disabled >Select tax</option>
-                {% for tax in taxes %}
-                      <option value="{{ tax.id }}">{{ tax.abbreviation }}</option>
-                  {% endfor %}
-  
-              </select>
-            </div>
-          </div>
-
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
+<h1 class="mb-0" style="margin-top: 30px;">Add bill</h1>
     
 
 
+<br>
+
+
+<form method="post">
+
+  {% csrf_token %}
+<div class="row mb-2 mt-2">
+    <!-- Contact Field -->
+    <div class="col mb-0">
+        <label for="defaultSelect" class="form-label">Vendor </label>
+        <select id="defaultSelect" class="form-select" name="venndor" required>
+            <option>Select Vendor</option>
+            {% for ven in vendor %}
+                  <option value="{{ ven.id }}">{{ ven.name }}</option>
+              {% endfor %}
+
+          </select>
+    </div>
+
+
+    <div class="col mb-0">
+      <label for="defaultSelect" class="form-label">Currency </label>
+      <select id="defaultSelect" class="form-select" name="currency" required>
+          <option>Select Vendor</option>
+          {% for cur in currency %}
+                <option value="{{ cur.id }}">{{ cur.currency }}</option>
+            {% endfor %}
+
+        </select>
+  </div>
+
+
+
+  
+  
+    <div class="col mb-0">
+        <label for="invoiceDate" class="form-label">Bill Date        </label>
+        <input type="date" id="invoiceDate" name="bill_date" class="form-control" required/>
+    </div>
+
+    <div class="col mb-0">
+        <label for="paymentDue" class="form-label">Due Date</label>
+        <input type="date" id="paymentDue" name="due_date" class="form-control" required/>
+    </div>
+  
+   
+</div>
+
+<br>
+
+
+<div class="row mb-2 mt-2">
+    <!-- Contact Field -->
+    <div class="col mb-0">
+      <label for="dobBasic" class="form-label">P.O./S.O.
+      </label>
+      <input type="text" id="dobBasic" name="po_so_no" class="form-control" placeholder="" required>
+    </div>
+
+
+    <div class="col mb-0">
+      <label for="dobBasic" class="form-label">Bill #</label>
+      <input type="text" id="dobBasic" name="bill_number" class="form-control" placeholder="" required>
+      
+  </div>
+
+
+  
+    <div class="col mb-0">
+      <label for="dobBasic" class="form-label">Notes #</label>
+      <textarea id="dobBasic" name="notes" class="form-control" placeholder="" rows="2"></textarea>
+    </div>
+
+  
+</div>
+
+<div class="demo-inline-spacing">
+  <button type="button" id="add_more_fields" class="btn btn-primary">Add more items</button>
+  <button type="button" id="remove_fields" class="btn btn-secondary">Remove items</button>
+</div>
 
 
 
 
 
+<div class="row mb-2 mt-2" id="item-list">
+  <div class="row">
+  <!-- Contact Field -->
+  <div class="col mb-0">
+      <label for="defaultSelect" class="form-label">Product  </label>
+      <select id="defaultSelect" class="form-select" name="item" required>
+          <option>Select Item</option>
+          {% for i in product %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+            {% endfor %}
+
+        </select>
+  </div>
 
 
-          <!-- <div class="form-check mt-3">
-            <label class="form-check-label" for="defaultCheck1"> Unchecked </label>
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-           
-          </div> -->
+  <div class="col mb-0">
+    <label for="defaultSelect" class="form-label">expence </label>
+    <select id="defaultSelect" class="form-select" name="expence" required>
+        <option>Select Currency</option>
+        {% for exp in expence %}
+              <option value="{{ exp.id }}">{{ exp.name }}</option>
+          {% endfor %}
+
+      </select>
+</div>
+
+  <div class="col mb-0">
+    <label for="itemname" class="form-label">	Description</label>
+    <input type="text" class="form-control" name="description" >
+  </div>
+
+  <div class="col mb-0">
+    <label for="quantity" class="form-label">Quantity</label>
+              <input type="text" name="quantity" class="form-control" required>
+       </div>
 
 
+  <div class="col mb-0">
+    <label for="price" class="form-label">Price</label>
+    <input type="text" name="price" class="form-control" required>
+    
+</div>
+
+<div class="col mb-0">
+  <label for="defaultSelect" class="form-label">Tax </label>
+  <select id="defaultSelect" class="form-select" name="tax" required>
+      <option>Select Tax</option>
+      {% for t in tax %}
+            <option value="{{ t.id }}">{{ t.abbreviation }}</option>
+        {% endfor %}
+
+    </select>
+</div>
 
 
+ 
+</div>
+</div>
 
 
-
-
-
-
-
-          
-
-<button type="submit" class="btn btn-primary">Save changes</button>
   
 
 
 
 
+<!-- <div class="col-sm-5" id="item-list">
+  <div class="row">
+      <div class="col-sm-4">
+          <div class="mb-3">
+              <label for="itemname" class="form-label">Item Name</label>
+              <input type="text" class="form-control" name="itemname" required>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="mb-3">
+              <label for="quantity" class="form-label">Quantity</label>
+              <input type="text" name="quantity" class="form-control" required>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input type="text" name="price" class="form-control" required>
+          </div>
+      </div>
+
+      
+  </div>
+</div> -->
 
 
-   
+
+
+  <div class="col mb-0">
+    <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Submit</button>
+    
+  </div>
+
 </form>
 
-    
-
-</center>
 
 
+
+<script>
+  $(document).ready(function () {
+      $("#add_more_fields").click(function () {
+          // Clone the first item row
+          var newItem = $("#item-list .row:first").clone();
+
+          // Clear input fields in the cloned row
+          newItem.find("input").val("");
+
+          // Append the cloned row to the item-list
+          $("#item-list").append(newItem);
+      });
+
+      $("#remove_fields").click(function () {
+          // Remove the last item row, but keep at least one row
+          var itemRows = $("#item-list .row");
+          if (itemRows.length > 1) {
+              itemRows.last().remove();
+          }
+      });
+  });
+</script>
+  
 {% endblock %}
+
+

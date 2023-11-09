@@ -31,6 +31,5 @@ class Billsadmin(admin.ModelAdmin):
             "bill_number",
             "po_so_no",
             "notes",
-            "expence",
             "currency",
     ]
