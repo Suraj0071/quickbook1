@@ -8,10 +8,14 @@ from apps.invoice.models import Item , Tax ,Product_Service
 
 class ExpenseCategory(models.Model):
     name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
 
 
 class Currency(models.Model):
     currency  = models.CharField(max_length=200)
+    def __str__(self):
+        return self.currency
 
 
 
@@ -27,6 +31,9 @@ class Vendor(models.Model):
     postal  =  models.CharField(max_length=100,null=True,blank=True)
     phone =  models.CharField(max_length=100,null=True,blank=True)
 
+    def __str__(self):
+        return self.name
+
   
 
 class Bills(models.Model):
@@ -38,12 +45,14 @@ class Bills(models.Model):
     po_so_no     = models.CharField(max_length=200)
     notes      = models.TextField(null=True ,blank=True)
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
-    
 
+    def __str__(self) -> str:
+        return self.bill_number  
+   
 
 
 class  Bills_item(models.Model):
-    description = models.TextField(null=True ,blank=True)
+    description = models.TextField(default="")
     quantity  = models.CharField(max_length=200,null=True ,blank=True)
     price   =  models.CharField(max_length=50,null=True ,blank=True)
     product =  models.ForeignKey(Product_Service,on_delete=models.CASCADE,null=True, blank=True) 

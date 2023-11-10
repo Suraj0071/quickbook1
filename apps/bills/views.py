@@ -1,15 +1,28 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect 
+from django.http import HttpResponse
 from django.views import View
 from . models import *
-
+from apps.bills.utils import bill_items
 # Create your views here.
+from django.core.paginator import Paginator
 
 from apps.invoice.models import Product_Service ,Tax
+
+
+from django.contrib import messages
+import pandas as pd
+import os
 class BillsView(View):
     def get(self, request):
         vendor = Vendor.objects.all()
+        bills = Bills.objects.all()
+        paginator = Paginator(bills,8)
+        pagenumber =request.GET.get('page')
+        bills= paginator.get_page(pagenumber)
+
         context = {
-            "vendor" : vendor
+            "vendor" : vendor,
+            "bills"  :bills
         }
         return render(request, "bills.html",context)
     
@@ -33,20 +46,29 @@ class CreateBill(View):
         return render(request, "bills_add.html",context)
     
     def post(self,request):
-        venndor  = request.POST.get("venndor")
-        currency  = request.POST.get("currency")
-        bill_date  = request.POST.get("bill_date")
-        due_date  = request.POST.get("due_date")
-        po_so_no  = request.POST.get("po_so_no")
-        bill_number  = request.POST.get("bill_number")
-        notes  = request.POST.get("notes")
-        expence  = request.POST.get("expence")
-        description  = request.POST.get("description")
-        quantity  = request.POST.getlist("quantity")
-        quantity  = request.POST.getlist("e")
+        try:
+            venndor  = request.POST.get("venndor")
+            currency  = request.POST.get("currency")
+            bill_date  = request.POST.get("bill_date")
+            due_date  = request.POST.get("due_date")
+            po_so_no  = request.POST.get("po_so_no")
+            bill_number  = request.POST.get("bill_number")
+            notes  = request.POST.get("notes")
+            product  = request.POST.getlist("product")
+            expence  = request.POST.getlist("expence")
+            description  = request.POST.getlist("description")
+            quantity  = request.POST.getlist("quantity")
+            price  = request.POST.getlist("price")
+            tax  = request.POST.getlist("tax")
 
-
-
+            obj = Bills.objects.create(vandor_id = venndor, currency_id=currency, bill_date=bill_date,due_date=due_date,bill_number=bill_number,
+                                    po_so_no=po_so_no,notes=notes)
+            bill_items(obj,product, expence, description, quantity, price, tax)
+            return redirect("bills")
+        except Exception as e:
+            print("This is  exceptiopn",e)
+            return  redirect("add-vendors")
+         
 
 
 
@@ -59,6 +81,9 @@ class EditBill(View):
 class VendorsView(View):
     def get(self, request):
         vendor = Vendor.objects.all()
+        paginator = Paginator(vendor,8)
+        pagenumber =request.GET.get('page')
+        vendor= paginator.get_page(pagenumber)
         context = {
             "vendor":vendor
         }
@@ -124,3 +149,28 @@ def vendor_delete(request,id):
     return redirect("vendors")
 
     
+
+def upload_vendor_csv(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        print("----------------file",file)
+        if not file :
+            messages.error(request, "No file uploaded. Please select a file to upload.")   
+            return render(request, 'uploadfile.html')     
+        filename, file_extension = os.path.splitext(file.name)
+        if file_extension  not in [".xlsx",".csv",]:
+            messages.error(request, "Please upload in one of these vaild file formats -  xlsx or csv ")
+            return render(request, 'uploadfile.html')
+    
+        data = pd.read_excel(file)
+        # Iterate through the rows of the DataFrame
+        for index, row in data.iterrows():
+            # Access data from each column for the current row
+            name = row['name']
+            email = row['email']
+            phone = row['phone']
+            
+            Vendor.objects.create(name=name,email=email,phone=phone,)
+        return redirect("vendors")
+    
+    return render(request, "vendors.html")

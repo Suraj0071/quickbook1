@@ -11,8 +11,7 @@ urlpatterns = [
     path("add-vendors/", views.VendorCreate.as_view(), name="add-vendors"),
     path("ediit-vendors/<int:id>/", views.VendorEdit.as_view(), name="edit-vendors"),
     path("delete-vendors/<int:id>/", views.vendor_delete, name="delete-vendors"),
-
-
+    path("upload-vendors/", views.   upload_vendor_csv, name="upload-vendors"),
     
 
 ]

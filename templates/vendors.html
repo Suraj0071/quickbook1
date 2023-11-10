@@ -60,7 +60,7 @@
               <div class="modal-body">
 
               
-                <form action="{% url 'customer-upload' %}"  method="POST" enctype="multipart/form-data">
+                <form action="{% url 'upload-vendors' %}"  method="POST" enctype="multipart/form-data">
                   {% csrf_token %}
 
                                
@@ -135,6 +135,57 @@
 </div>
 <!--/ Responsive Table -->
 </div>
+
+
+
+
+
+
+
+<style>
+  .pagination {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+  }
+  .pagination ul {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+  }
+  .pagination ul li {
+      background-color: #696cff;
+      border-color: #696cff;
+      color: white;
+      list-style: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+
+  }
+  .pagination ul li a {
+      color: white;
+  }
+</style>
+<center>
+    <div class="pagination">
+        <ul>
+            {% if bills.has_previous %}
+                <li><a href="?page={{ files.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+            <li><a href="?page=1">1</a></li>
+            <li><a href="?page=2">2</a></li>
+            <li><a href="?page=3">3</a></li>
+            
+
+            {% if files.has_next %}
+                <li><a href="page={{ bills.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</center>
+
 {% endblock %}
 
 

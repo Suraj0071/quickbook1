@@ -33,3 +33,19 @@ class Billsadmin(admin.ModelAdmin):
             "notes",
             "currency",
     ]
+
+
+
+@admin.register(Bills_item)
+class Bills_itemadmin(admin.ModelAdmin):
+    list_display=["id",
+                  "description",
+                "quantity",
+                "price",
+                "product",
+                "expence",
+                "tax",
+                "bills",
+    ]
+
+

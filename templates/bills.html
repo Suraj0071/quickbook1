@@ -5,21 +5,45 @@
 
 
 
+
+
 <style>
-    .table th {
-     color: rebeccapurple;
-    }
-  </style>
+  .pagination {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+  }
+  .pagination ul {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+  }
+  .pagination ul li {
+      background-color: #696cff;
+      border-color: #696cff;
+      color: white;
+      list-style: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+
+  }
+  .pagination ul li a {
+      color: white;
+  }
+</style>
+
+ 
   <script>
     function edit(selectElement, customerId) {
       const selectedValue = selectElement.value;
       console.log('Action:', selectedValue, 'Customer ID:', customerId);
   
       if (selectedValue === 'edit') {
-        window.location.href = `/invoice/edit-customer/${customerId}`;
+        window.location.href = `/bills/edit-customer/${customerId}`;
       } else if (selectedValue === 'delete') {
   
-        window.location.href = `/invoice/delete-customer/${customerId}`;
+        window.location.href = `/bills/delete-customer/${customerId}`;
         // Handle delete action here
         console.log('Deleting customer with ID:', customerId);
       }
@@ -100,20 +124,18 @@
           </tr>
         </thead>
         <tbody>
-          {%  for cus in customer%}
+          {%  for bill in bills%}
           <tr>
-            
-           
-            <td>{{cus.name}}</td>
-            <td>{{cus.email}}</td>
-            <td>{{cus.phone}}</td>
-            <td>XXXXXX7899</td>
-  
-            <td>$</td>
-  
+            <td>{{bill.status}}</td>
+            <td>{{bill.bill_date}}</td>
+            <td>{{bill.bill_number}}</td>
+            <td>{{bill.vandor}}</td>
+            <td>{{bill.due_date}}</td>
+            <td>{{bill.status}}</td>
+            <td>Amount-</td>
             <td>
               <div class="mb-3">
-                <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{cus.id}}')">
+                <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{bill.id}}')">
                   <option selected disabled>Select Action</option>
                   <option value="edit">Edit</option>
                   <option value="delete">Delete</option>
@@ -132,6 +154,25 @@
 
 
 
+
+  <center>
+    <div class="pagination">
+        <ul>
+            {% if bills.has_previous %}
+                <li><a href="?page={{ files.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+            <li><a href="?page=1">1</a></li>
+            <li><a href="?page=2">2</a></li>
+            <li><a href="?page=3">3</a></li>
+            
+
+            {% if files.has_next %}
+                <li><a href="page={{ bills.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</center>
 
 
 

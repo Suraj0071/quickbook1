@@ -15,7 +15,7 @@ from . forms import *
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 import pandas as pd
-
+from django.core.paginator import Paginator
 class InvoicesView(View):
     def get(self, request):
         return render(request, "Invoices.html")
@@ -158,13 +158,6 @@ def upload_customercsv(request):
     
     return render(request, "customers.html")
 
-
-    
-
-
-
-
-
 class CustomersView(View):
     def get(self, request):
         customer = Customer.objects.all()
@@ -173,7 +166,6 @@ class CustomersView(View):
         }
         return render(request, "customers.html",context)
     
-
 class Create_customervew(View):
     def get(self, request):
         customer = Customer.objects.all()
@@ -255,11 +247,11 @@ def edit_customer(request,id):
     return render(request, "customers_edit.html",context)
 
 
+
 def delete_customer(request,id):
     obj = Customer.objects.filter(id=id).first()
     obj.delete()
     return redirect("customers")
-
 
 class Customer_statementsView(View):
     def get(self, request):
