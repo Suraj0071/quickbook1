@@ -9,22 +9,13 @@ class Vendoradmin(admin.ModelAdmin):
     list_display=["id","name",
     ]
 
-@admin.register(ExpenseCategory)
-class ExpenseCategoryadmin(admin.ModelAdmin):
-    list_display=["id","name",
-                  
-    ]
 
-@admin.register(Currency)
-class Currencyadmin(admin.ModelAdmin):
-    list_display=["id","currency",
-    ]
 
 
 @admin.register(Bills)
 class Billsadmin(admin.ModelAdmin):
     list_display=["id",
-            "vandor",
+            "vendor",
             "status",
             "bill_date",
             "due_date",

@@ -35,17 +35,17 @@
 
  
   <script>
-    function edit(selectElement, customerId) {
+    function edit(selectElement, billId) {
       const selectedValue = selectElement.value;
-      console.log('Action:', selectedValue, 'Customer ID:', customerId);
+      console.log('Action:', selectedValue, 'Customer ID:', billId);
   
       if (selectedValue === 'edit') {
-        window.location.href = `/bills/edit-customer/${customerId}`;
+        window.location.href = `/bills/edit-bill/${billId}`;
       } else if (selectedValue === 'delete') {
   
-        window.location.href = `/bills/delete-customer/${customerId}`;
+        window.location.href = `/bills/delete-bill/${billId}`;
         // Handle delete action here
-        console.log('Deleting customer with ID:', customerId);
+        console.log('Deleting bill with ID:', billId);
       }
     }
   </script>
@@ -69,7 +69,7 @@
     <div class="col mb-0">
         <label for="defaultSelect" class="form-label">Vendor </label>
         <select id="defaultSelect" class="form-select" name="venndor" required>
-            <option>Select Vendor</option>
+            <option selected disabled>Select Vendor</option>
             {% for ven in vendor %}
                   <option value="{{ ven.id }}">{{ ven.name }}</option>
               {% endfor %}
@@ -104,8 +104,6 @@
   <br> 
   <br> 
 
-
-
   
 <!-- Responsive Table -->
 <div class="card">
@@ -120,6 +118,7 @@
             <th>Vendor </th>
             <th>Due date 	</th>
             <th>Amount Due</th>
+            <th>Amount </th>
             <th>Action</th>
           </tr>
         </thead>
@@ -129,7 +128,7 @@
             <td>{{bill.status}}</td>
             <td>{{bill.bill_date}}</td>
             <td>{{bill.bill_number}}</td>
-            <td>{{bill.vandor}}</td>
+            <td>{{bill.vendor.name}}</td>
             <td>{{bill.due_date}}</td>
             <td>{{bill.status}}</td>
             <td>Amount-</td>

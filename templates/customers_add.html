@@ -84,10 +84,29 @@
           <h5 class="card-header">Billing</h5> 
 
 
+
+
+
+
+
+         
+
+
+
+
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Currency</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="currency" id="html5-text-input" />
+              <!-- <input class="form-control" type="text" name="currency" id="html5-text-input" /> -->
+
+              <select id="defaultSelect" class="form-select" name="currency" required>
+                <option selected disabled >Select Currency</option>
+                {% for cur in currency %}
+                      <option value="{{ cur.id }}">{{ cur.currency }}</option>
+                  {% endfor %}
+      
+              </select>
+
             </div>
 
 

@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from django.contrib.auth.models import User
 
+from apps.users.models import Currency,ExpenseCategory
+
 
 
 
@@ -14,9 +16,6 @@ class Tax(models.Model):
     show_tax_number_on_invoices =models.BooleanField(default=False)
     is_this_tax_recoverable   =models.BooleanField(default=False)
     is_this_a_compound_tax  =models.BooleanField(default=False)
-
-    def __str__(self) -> str:
-        return self.abbreviation
 
 
 
@@ -48,10 +47,7 @@ class Invoice(models.Model):
     is_draft = models.BooleanField(default=True)
     is_send = models.BooleanField(default=True)
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)  
-
-    def __str__(self) -> str:
-        return self.title  
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)    
 
 
 
@@ -64,9 +60,6 @@ class Item(models.Model):
     amount = models.IntegerField()
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True) 
-
-    def __str__(self) -> str:
-        return self.name  
    
 
 
@@ -92,16 +85,14 @@ class Business(models.Model):
 
 
 class Billing_Address(models.Model):
-    currency  =  models.CharField(max_length=100,null=True,blank=True)
+    # currency  =  models.CharField(max_length=100,null=True,blank=True)
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE , null=True, blank=True)
     address1 =  models.CharField(max_length=100,null=True,blank=True)
     address2  =  models.CharField(max_length=100,null=True,blank=True)
     country  =  models.CharField(max_length=100,null=True,blank=True)
     city =  models.CharField(max_length=100,null=True,blank=True)
     postal  =  models.CharField(max_length=100,null=True,blank=True)
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
-
-    def __str__(self) -> str:
-        return self.address1  
 
 
 
@@ -117,13 +108,6 @@ class Shipping_Address(models.Model):
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
 
 
-    def __str__(self) -> str:
-        return self.ship_to  
-
-
-    
-
-
 class Product_Service(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True,blank=True)
@@ -133,9 +117,6 @@ class Product_Service(models.Model):
     income_account = models.CharField(max_length=100,null=True,blank=True)
     expense_account  =models.CharField(max_length=100,null=True,blank=True)
     sales_tax   =  models.ForeignKey(Tax,on_delete=models.CASCADE,null=True,blank=True)
-
-    def __str__(self) -> str:
-        return self.name  
 
 
     

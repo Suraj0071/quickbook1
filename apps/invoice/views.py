@@ -16,6 +16,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 import pandas as pd
 from django.core.paginator import Paginator
+
+from apps.bills.models import Currency
 class InvoicesView(View):
     def get(self, request):
         return render(request, "Invoices.html")
@@ -166,11 +168,13 @@ class CustomersView(View):
         }
         return render(request, "customers.html",context)
     
-class Create_customervew(View):
+class Create_customerview(View):
     def get(self, request):
         customer = Customer.objects.all()
+        currency = Currency.objects.all()
         context = {
-            "customer":customer
+            "customer":customer,
+            "currency" : currency,
         }
         return render(request, "customers_add.html",context)
     def post(self,request):
@@ -198,7 +202,7 @@ class Create_customervew(View):
             obj = Customer.objects.create(name=name,first_name=first_name, last_name=last_name,email=email,phone=phone,account_number=account_number,
                                     notes=notes,website=website)
         if currency:
-            Billing_Address.objects.create(currency=currency,address1=address1,address2=address2,country=country,city=city,postal=postal,customer=obj)
+            Billing_Address.objects.create(currency_id=currency,address1=address1,address2=address2,country=country,city=city,postal=postal,customer=obj)
 
         if ship_to:
             Shipping_Address.objects.create(customer=obj,ship_to = ship_to,address1= ship_address1 , address2=ship_address2 ,country=ship_country,city=ship_city,postal=ship_postal)

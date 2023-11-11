@@ -10,3 +10,13 @@ class FileAdmin(admin.ModelAdmin):
 
 
 
+@admin.register(ExpenseCategory)
+class ExpenseCategoryadmin(admin.ModelAdmin):
+    list_display=["id","name",
+                  
+    ]
+
+@admin.register(Currency)
+class Currencyadmin(admin.ModelAdmin):
+    list_display=["id","currency",
+    ]

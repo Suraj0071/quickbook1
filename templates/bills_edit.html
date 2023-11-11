@@ -15,16 +15,20 @@
 <form method="post">
 
   {% csrf_token %}
+
+  {% if response  %}
 <div class="row mb-2 mt-2">
     <!-- Contact Field -->
     <div class="col mb-0">
         <label for="defaultSelect" class="form-label">Vendor </label>
         <select id="defaultSelect" class="form-select" name="venndor" required>
-            <option selected disabled >Select Vendor</option>
-            {% for ven in vendor %}
-                  <option value="{{ ven.id }}">{{ ven.name }}</option>
-              {% endfor %}
-
+            <option value="{{ response.vendor.id }}" selected>{{ response.vendor.name }}</option>
+            {% for ven in vendors %}
+                    <!-- Skip the current vendor to avoid duplication -->
+                    {% if ven.id != response.vendor.id %}
+                        <option value="{{ ven.id }}">{{ ven.name }}</option>
+                    {% endif %}
+            {% endfor %}
           </select>
     </div>
 
@@ -33,25 +37,28 @@
       <label for="defaultSelect" class="form-label">Currency </label>
       <select id="defaultSelect" class="form-select" name="currency" required>
           <option selected disabled >Select Currency</option>
-          {% for cur in currency %}
+          <!-- {% for cur in currency %}
                 <option value="{{ cur.id }}">{{ cur.currency }}</option>
+            {% endfor %} -->
+            {% for cur in currency %}
+                    <!-- Skip the current vendor to avoid duplication -->
+                    {% if cur.id != response.currency.id %}
+                        <option value="{{ ven.id }}">{{ cur.name }}</option>
+                    {% endif %}
             {% endfor %}
 
         </select>
   </div>
 
 
-
-  
-  
     <div class="col mb-0">
         <label for="invoiceDate" class="form-label">Bill Date        </label>
-        <input type="date" id="invoiceDate" name="bill_date" class="form-control" required/>
+        <input type="date" id="invoiceDate"   value="{{ response.bill_date}}"     name="bill_date" class="form-control" required/>
     </div>
 
     <div class="col mb-0">
         <label for="paymentDue" class="form-label">Due Date</label>
-        <input type="date" id="paymentDue" name="due_date" class="form-control" required/>
+        <input type="date" id="paymentDue"   value="{{ response.due_date}}"  name="due_date" class="form-control" required/>
     </div>
   
    
@@ -65,13 +72,13 @@
     <div class="col mb-0">
       <label for="dobBasic" class="form-label">P.O./S.O.
       </label>
-      <input type="text" id="dobBasic" name="po_so_no" class="form-control" placeholder="" required>
+      <input type="text" id="dobBasic" value="{{ response.po_so_no}}"    name="po_so_no" class="form-control" placeholder="" required>
     </div>
 
 
     <div class="col mb-0">
       <label for="dobBasic" class="form-label">Bill #</label>
-      <input type="text" id="dobBasic" name="bill_number" class="form-control" placeholder="" required>
+      <input type="text" id="dobBasic"  value="{{ response.bill_number}}"   name="bill_number" class="form-control" placeholder="" required>
       
   </div>
 
@@ -79,7 +86,7 @@
   
     <div class="col mb-0">
       <label for="dobBasic" class="form-label">Notes #</label>
-      <textarea id="dobBasic" name="notes" class="form-control" placeholder="" rows="2"></textarea>
+      <textarea id="dobBasic"value="{{ response.notes}}"    name="notes" class="form-control" placeholder="" rows="2"></textarea>
     </div>
 
   
@@ -127,7 +134,7 @@
 
   <div class="col mb-0">
     <label for="quantity" class="form-label">Quantity</label>
-              <input type="number" name="quantity" class="form-control" required>
+              <input type="number"  name="quantity" class="form-control" required>
        </div>
 
 
@@ -149,18 +156,19 @@
 </div>
 
 
- 
 </div>
 </div>
 
 
   
 
-
+{% endif %}
   <div class="col mb-0">
     <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Submit</button>
     
   </div>
+
+
 
 </form>
 

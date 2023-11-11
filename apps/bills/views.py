@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
 from django.views import View
-from . models import *
+from apps.bills.models import Vendor,Bills
+from apps.users.models import Currency,ExpenseCategory
 from apps.bills.utils import bill_items
 # Create your views here.
 from django.core.paginator import Paginator
@@ -34,8 +35,6 @@ class CreateBill(View):
         expence = ExpenseCategory.objects.all()
         product   = Product_Service.objects.all()
         tax     = Tax.objects.all()
-
-        print(currency)
         context = {
             "vendor" : vendor,
             "currency" :currency,
@@ -61,20 +60,50 @@ class CreateBill(View):
             price  = request.POST.getlist("price")
             tax  = request.POST.getlist("tax")
 
-            obj = Bills.objects.create(vandor_id = venndor, currency_id=currency, bill_date=bill_date,due_date=due_date,bill_number=bill_number,
+            for i ,j in zip(product,tax):
+                if len(tax) <len(product):
+                    tax.append(None)
+                
+
+            print(product)
+
+            print("tax",tax)
+
+            obj = Bills.objects.create(vendor_id = venndor, currency_id=currency, bill_date=bill_date,due_date=due_date,bill_number=bill_number,
                                     po_so_no=po_so_no,notes=notes)
-            bill_items(obj,product, expence, description, quantity, price, tax)
+            bill_items(product, expence, description, quantity, price, tax,obj)
             return redirect("bills")
         except Exception as e:
             print("This is  exceptiopn",e)
-            return  redirect("add-vendors")
+            return  redirect("bills")
          
 
 
 
 class EditBill(View):
-    def get(self, request):
-        return render(request, "bills_edit.html",)
+    def get(self, request,id):
+        response = Bills.objects.get(id=id)
+
+        ven = Vendor.objects.all()
+        currency = Currency.objects.all()
+        expence = ExpenseCategory.objects.all()
+        product   = Product_Service.objects.all()
+        tax     = Tax.objects.all()
+        context = {
+            "vendors" : ven,
+            "currency" :currency,
+            "expence" :expence,
+            "product"   : product,
+            "tax"   : tax,
+            "response":response
+        }
+        print("0000000000000000000000000",response.vendor.name)
+
+
+       
+        return render(request, "bills_edit.html",context)
+    
+    
     
 
 
