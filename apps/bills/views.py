@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
 from django.views import View
-from apps.bills.models import Vendor,Bills
+from apps.bills.models import Vendor,Bills,Bills_item
 from apps.users.models import Currency,ExpenseCategory
 from apps.bills.utils import bill_items
 # Create your views here.
@@ -46,7 +46,7 @@ class CreateBill(View):
     
     def post(self,request):
         try:
-            venndor  = request.POST.get("venndor")
+            vendor  = request.POST.get("venndor")
             currency  = request.POST.get("currency")
             bill_date  = request.POST.get("bill_date")
             due_date  = request.POST.get("due_date")
@@ -69,7 +69,7 @@ class CreateBill(View):
 
             print("tax",tax)
 
-            obj = Bills.objects.create(vendor_id = venndor, currency_id=currency, bill_date=bill_date,due_date=due_date,bill_number=bill_number,
+            obj = Bills.objects.create(vendor_id = vendor, currency_id=currency, bill_date=bill_date,due_date=due_date,bill_number=bill_number,
                                     po_so_no=po_so_no,notes=notes)
             bill_items(product, expence, description, quantity, price, tax,obj)
             return redirect("bills")
@@ -83,7 +83,7 @@ class CreateBill(View):
 class EditBill(View):
     def get(self, request,id):
         response = Bills.objects.get(id=id)
-
+        obj =Bills_item.objects.filter(bills=response.id)
         ven = Vendor.objects.all()
         currency = Currency.objects.all()
         expence = ExpenseCategory.objects.all()
@@ -95,13 +95,55 @@ class EditBill(View):
             "expence" :expence,
             "product"   : product,
             "tax"   : tax,
-            "response":response
+            "response":response,
+            "bill_items"   : obj
         }
-        print("0000000000000000000000000",response.vendor.name)
-
-
-       
         return render(request, "bills_edit.html",context)
+
+    def post(self,request,id):
+        response = Bills.objects.get(id=id)
+        print("---------------------------------------------")
+        try:
+            print("==========================",request.POST.getlist("product"))
+            response.vendor_id  = request.POST.get("venndor")
+            response.currency_id  = request.POST.get("currency")
+            response.bill_date  = request.POST.get("bill_date")
+            response.due_date  = request.POST.get("due_date")
+            response.po_so_no  = request.POST.get("po_so_no")
+            response.bill_number  = request.POST.get("bill_number")
+            response.notes  = request.POST.get("notes")
+            response.save()
+            obj =Bills_item.objects.filter(bills=response.id)
+            product  = request.POST.getlist("product")
+            expence  = request.POST.getlist("expence")
+            description  = request.POST.getlist("description")
+            quantity  = request.POST.getlist("quantity")
+            price  = request.POST.getlist("price")
+            tax  = request.POST.getlist("tax")
+            for p, e, d, q, pr, t in zip(product, expence, description, quantity, price, tax):
+                if len(tax) < len(product):
+                    tax.append(None)
+
+                # Find the corresponding Bills_item object
+                item = Bills_item.objects.get(bills=response.id, product=p, tax=t)
+
+                # Update all fields
+                item.product_id = p
+                item.expence_id = e
+                item.description = d
+                item.quantity = q
+                item.price = pr
+                item.tax_id = t
+
+                item.save()
+
+            return redirect("bills")
+        except Exception as e:
+            print("This is  exceptiopn",e)
+            return  redirect("bills")
+         
+
+
     
     
     
@@ -203,3 +245,11 @@ def upload_vendor_csv(request):
         return redirect("vendors")
     
     return render(request, "vendors.html")
+
+
+
+def bill_delete(request,id):
+    print("This is  vill rin ")
+    obj = Bills.objects.get(id=id)
+    obj.delete()
+    return redirect("bills")
