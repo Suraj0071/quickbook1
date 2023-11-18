@@ -280,29 +280,43 @@
 
                         <div class="col-sm-5" id="item-list">
                           <div class="row">
-                              <div class="col-sm-4">
+                              <div class="col-sm-3">
                                   <div class="mb-3">
                                       <label for="inputEmail4" class="form-label">Item Name</label>
                                       <input type="name" class="form-control" name="itemname" id="inputEmail4" required>
                                       {{form.errors.name}}
                                   </div>
                               </div>
-                              <div class="col-sm-4">
+                              <div class="col-sm-3">
                                   <div class="mb-3">
                                       <label for="inputEmail4" class="form-label">Quantity</label>
                                       <input type="text" name="quantity" class="form-control" id="inputEmail4" required>
                                       {{form.errors.name}}
                                   </div>
                               </div>
-                              <div class="col-sm-4">
+                              <div class="col-sm-3">
                                   <div class="mb-3">
-                                      <label for = "inputEmail4" class="form-label">Price</label>
+                                      <label for="inputEmail4" class="form-label">Price</label>
                                       <input type="text" name="price" class="form-control" id="inputEmail4" required>
                                       {{form.errors.name}}
                                   </div>
                               </div>
+                              <div class="col-sm-3">
+                                  <div class="mb-3">
+                                      <label for="tax" class="form-label">Itme Tax</label>
+                                      <select id="defaultSelect" class="form-select"  value="{{ t.id }}" name="tax"  >
+                                        <option selected desabled value=""> Tax</option>
+                                        {% for t in tax %} 
+                                         
+                                                <option value="{{ t.id }}">{{ t.abbreviation }}</option>
+                                            {% endfor %}
+                                    
+                                        </select>
+                                  </div>
+                              </div>
                           </div>
                       </div>
+                      <br>
                               
                               
                                   <div class="form-floating custom-form-floating">

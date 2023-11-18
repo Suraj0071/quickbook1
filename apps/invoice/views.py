@@ -27,16 +27,21 @@ class create_invoice(View):
     def get(self, request):
         customer = Customer.objects.all()
         business= Business.objects.all()
+        tax = Tax.objects.all()
+
         context = {
             "customer":customer,
-            "business": business
+            "business": business,
+            "tax" :tax
 
         }
         return render(request, "create_invoice.html",context)
     def post(self, request):
         try:
+           
             itemname= request.POST.getlist('itemname')
             quantity= request.POST.getlist('quantity')
+            tax= request.POST.getlist('tax')
 
             price= request.POST.getlist('price')
             customer = request.POST.get('customer')
@@ -81,7 +86,7 @@ class create_invoice(View):
             
                 business= Business.objects.filter(id=business).first()
                 
-                total = save_item(itemname,quantity,price,customer)
+                total = save_item(itemname,quantity,price,tax,customer,invoice)
                 amount = total["amount"]
 
                 items = []
@@ -99,7 +104,8 @@ class create_invoice(View):
                         "amount_paid":total["amount_paid"],
                         "customer":customer,
                         "business": business,
-                        "invoice" :invoice
+                        "invoice" :invoice,
+                        
 
                         }
 

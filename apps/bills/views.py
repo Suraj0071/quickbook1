@@ -62,11 +62,9 @@ class CreateBill(View):
             quantity  = request.POST.getlist("quantity")
             price  = request.POST.getlist("price")
             tax  = request.POST.getlist("tax") 
-
             obj = Bills.objects.create(vendor_id = vendor, currency_id=currency, bill_date=bill_date,due_date=due_date,bill_number=bill_number,
                                     po_so_no=po_so_no,notes=notes)
             output = bill_items(product, expence, description, quantity, price, tax,obj)
-            print(output)
             record = Record_Payment.objects.create(amount = output,)
             obj.amount = record
             obj.save()
@@ -160,7 +158,6 @@ class PaidBill(View):
         paymet_account = request.POST.get("payment_account")
         payment_date = request.POST.get("payment_date")
         notes = request.POST.get("notes")
-
         response = Bills.objects.get(id= id)
         response.amount.payment_method = payment_method
         response.amount.payment_account = paymet_account
