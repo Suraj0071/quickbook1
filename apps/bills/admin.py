@@ -40,3 +40,16 @@ class Bills_itemadmin(admin.ModelAdmin):
     ]
 
 
+
+
+@admin.register(Record_Payment)
+class Record_Paymentadmin(admin.ModelAdmin):
+    list_display=["id",
+        "payment_method",
+        "amount",
+        "payment_date",
+        "payment_account",
+        "notes",
+        "bills",
+        "bills_item",
+    ]

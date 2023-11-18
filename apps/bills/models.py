@@ -2,6 +2,7 @@ from django.db import models
 from apps.invoice.models import  Tax ,Product_Service
 from apps.users.models import Currency,ExpenseCategory
 
+
 # Create your models here.
 
 
@@ -49,3 +50,20 @@ class  Bills_item(models.Model):
     expence = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE)
     tax   = models.ForeignKey(Tax,on_delete=models.CASCADE,null=True, blank=True) 
     bills = models.ForeignKey(Bills,on_delete=models.CASCADE,null=True, blank=True) 
+
+
+
+
+
+
+
+from apps.bills.utils import PaymentMothod   #dont'chage this give import error
+
+class Record_Payment(models.Model):
+    payment_method = models.CharField(max_length=100,choices=PaymentMothod.choices())
+    amount = models.CharField(max_length=200,null=True, blank=True)
+    payment_date = models.DateField(null=True, blank=True)
+    payment_account = models.CharField(max_length=200,null=True, blank=True)
+    notes           = models.TextField(null=True,blank=True)
+    bills = models.ForeignKey(Bills,on_delete=models.CASCADE,null=True, blank=True) 
+    bills_item = models.ForeignKey(Bills_item,on_delete=models.CASCADE,null=True, blank=True) 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
 from django.views import View
-from apps.bills.models import Vendor,Bills,Bills_item
+from apps.bills.models import Vendor,Bills,Bills_item,Record_Payment
 from apps.users.models import Currency,ExpenseCategory
 from apps.bills.utils import bill_items
 # Create your views here.
@@ -102,9 +102,7 @@ class EditBill(View):
 
     def post(self,request,id):
         response = Bills.objects.get(id=id)
-        print("---------------------------------------------")
         try:
-            print("==========================",request.POST.getlist("product"))
             response.vendor_id  = request.POST.get("venndor")
             response.currency_id  = request.POST.get("currency")
             response.bill_date  = request.POST.get("bill_date")
@@ -123,18 +121,13 @@ class EditBill(View):
             for p, e, d, q, pr, t in zip(product, expence, description, quantity, price, tax):
                 if len(tax) < len(product):
                     tax.append(None)
-
-                # Find the corresponding Bills_item object
                 item = Bills_item.objects.get(bills=response.id, product=p, tax=t)
-
-                # Update all fields
                 item.product_id = p
                 item.expence_id = e
                 item.description = d
                 item.quantity = q
                 item.price = pr
                 item.tax_id = t
-
                 item.save()
 
             return redirect("bills")
@@ -143,10 +136,22 @@ class EditBill(View):
             return  redirect("bills")
          
 
+def bill_delete(request,id):
+    print("This is  vill rin ")
+    obj = Bills.objects.get(id=id)
+    obj.delete()
+    return redirect("bills")
 
+
+
+class PaidBill(View):
+    def get(self,request,id):
+        payment = Record_Payment.objects.all()
+        
+
+        return render(request ,"bills_paid.html" )
     
-    
-    
+
 
 
 class VendorsView(View):
@@ -248,8 +253,3 @@ def upload_vendor_csv(request):
 
 
 
-def bill_delete(request,id):
-    print("This is  vill rin ")
-    obj = Bills.objects.get(id=id)
-    obj.delete()
-    return redirect("bills")

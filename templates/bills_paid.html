@@ -4,20 +4,19 @@
 {% block content %}
 {% load static %}
 
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> Add Vendor</h4>
-<h5>Vendor information</h5>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> Payments</h4>
+<h5>Record  payment</h5>
 
 
 <center>
-
    <form method="post">
     {% csrf_token %}
 
     <div class="card mb-4">
-        <h5 class="card-header">Add  Vendor</h5>
+        <h5 class="card-header">Record a manual payment</h5>
         <div class="card-body">
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Name</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Payment method</label>
             <div class="col-md-10">
               <input class="form-control" type="text" name="name" id="html5-text-input" required />
             </div>
@@ -25,7 +24,7 @@
 
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Email</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Amount</label>
             <div class="col-md-10">
               <input class="form-control" type="text" name="email" id="html5-text-input" />
             </div>
@@ -36,7 +35,7 @@
 
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Currency</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">date</label>
             <div class="col-md-10">
                 <select id="defaultSelect" class="form-select" name="currency" required>
                     <option  selected disabled >Select Currency</option>
@@ -51,20 +50,10 @@
 
 
 
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label"> Address</label>
-            <div class="col-md-10">
-              <input class="form-control"  style="margin-top: 20px;" type="text" id="html5-text-input" placeholder="Address" name="address1"/>
-              <input class="form-control" style="margin-top: 20px;"  type="text" id="html5-text-input" placeholder="Address2(optional)"  name="address2"/>
-              
-            </div>
-            <br><br>
-
-          </div>
-
+  
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">City</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Payment Account </label>
             <div class="col-md-10">
               <input class="form-control" type="text" name="city" id="html5-text-input" />
             </div>
@@ -73,19 +62,14 @@
 
 
           <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Postal</label>
+            <label for="html5-text-input" class="col-md-2 col-form-label">Notes/Memo(optional)</label>
             <div class="col-md-10">
               <input class="form-control" type="text" name="postal" id="html5-text-input" />
             </div>
           </div>
 
 
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">Phone</label>
-            <div class="col-md-10">
-              <input class="form-control" type="text" name="phone" id="html5-text-input" />
-            </div>
-          </div>
+     
 
           
 

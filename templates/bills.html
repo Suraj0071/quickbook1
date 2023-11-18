@@ -118,22 +118,29 @@
             <th>Vendor </th>
             <th>Due date 	</th>
             <th>Amount Due</th>
-            <th>Amount </th>
+    
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {%  for bill in bills%}
           <tr>
-            <td>{{bill.status}}</td>
+           
+            <td>
+              {% if bill.status %}       Paid      {% else %}     Unpaid    </td>  {% endif %}
             <td>{{bill.bill_date}}</td>
             <td>{{bill.bill_number}}</td>
             <td>{{bill.vendor.name}}</td>
             <td>{{bill.due_date}}</td>
-            <td>{{bill.status}}</td>
-            <td>Amount-</td>
+            <td>$$</td>
+            
+           
             <td>
-              <div class="mb-3">
+              <a href="{% url 'payed-bill'  bill.id %}"><button type="button" class="btn btn-primary">Record a manual payment</button></a>
+              <br><br>
+              
+
+
                 <select class="form-select" aria-label="Default select example" onchange="edit(this, '{{bill.id}}')">
                   <option selected disabled>Select Action</option>
                   <option value="edit">Edit</option>
