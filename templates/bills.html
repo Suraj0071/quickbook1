@@ -132,8 +132,12 @@
             <td>{{bill.bill_number}}</td>
             <td>{{bill.vendor.name}}</td>
             <td>{{bill.due_date}}</td>
-            <td>$$</td>
             
+            
+              <td>{{bill.amount.amount}}</td>
+
+
+    
            
             <td>
               <a href="{% url 'payed-bill'  bill.id %}"><button type="button" class="btn btn-primary">Record a manual payment</button></a>
@@ -151,6 +155,7 @@
             
             
           </tr>
+          
           {% endfor %}
           
         </tbody>

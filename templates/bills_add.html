@@ -19,8 +19,8 @@
     <!-- Contact Field -->
     <div class="col mb-0">
         <label for="defaultSelect" class="form-label">Vendor </label>
-        <select id="defaultSelect" class="form-select" name="venndor" required>
-            <option selected disabled >Select Vendor</option>
+        <select id="defaultSelect" class="form-select" value="{{ ven.id }}"  name="venndor" required>
+            <option selected disabled  value=""  >Select Vendor</option>
             {% for ven in vendor %}
                   <option value="{{ ven.id }}">{{ ven.name }}</option>
               {% endfor %}
@@ -31,8 +31,8 @@
 
     <div class="col mb-0">
       <label for="defaultSelect" class="form-label">Currency </label>
-      <select id="defaultSelect" class="form-select" name="currency" required>
-          <option selected disabled >Select Currency</option>
+      <select id="defaultSelect" class="form-select" value="{{ cur.id }}"  name="currency" required>
+          <option selected disabled   value=""  >Select Currency</option>
           {% for cur in currency %}
                 <option value="{{ cur.id }}">{{ cur.currency }}</option>
             {% endfor %}
@@ -99,8 +99,8 @@
   <!-- Contact Field -->
   <div class="col mb-0">
       <label for="defaultSelect" class="form-label">Product  </label>
-      <select id="defaultSelect" class="form-select" name="product" required>
-          <option selected disabled >Select Product</option>
+      <select id="defaultSelect" class="form-select" value="{{ i.id }}"  name="product" required>
+          <option selected disabled  value=""  >Select Product</option>
           {% for i in product %}
                 <option value="{{ i.id }}">{{ i.name }}</option>
             {% endfor %}
@@ -111,8 +111,8 @@
 
   <div class="col mb-0">
     <label for="defaultSelect" class="form-label">expence </label>
-    <select id="defaultSelect" class="form-select" name="expence" required>
-        <option selected disabled >Select Expence</option>
+    <select id="defaultSelect" class="form-select" value="{{ exp.id }}"   name="expence" required>
+        <option selected disabled  value=""  >Select Expence</option>
         {% for exp in expence %}
               <option value="{{ exp.id }}">{{ exp.name }}</option>
           {% endfor %}
@@ -139,9 +139,12 @@
 
 <div class="col mb-0">
   <label for="defaultSelect" class="form-label">Tax </label>
-  <select id="defaultSelect" class="form-select" name="tax" required>
-      <option selected disabled >Select Tax</option>
-      {% for t in tax %}
+  
+  
+  <select id="defaultSelect" class="form-select"  value="{{ t.id }}" name="tax"  >
+    <option selected desabled value="">Select Tax</option>
+    {% for t in tax %} 
+     
             <option value="{{ t.id }}">{{ t.abbreviation }}</option>
         {% endfor %}
 

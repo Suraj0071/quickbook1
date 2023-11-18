@@ -9,7 +9,9 @@
 
 
 <center>
+
    <form method="post">
+    
     {% csrf_token %}
 
     <div class="card mb-4">
@@ -18,15 +20,21 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Payment method</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="name" id="html5-text-input" required />
-            </div>
+              <select id="defaultSelect" class="form-select"  value="{{ c }}" name="payment_method"  required></select>
+              <option selected desabled value="">Select Tax</option>
+              {% for c in choice %} 
+               
+                      <option value="{{ c }}">{{ c}}</option>
+                  {% endfor %}
+              </select>
+          </div>
           </div>
 
 
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Amount</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="email" id="html5-text-input" />
+              <input class="form-control" type="text"  value="{{response.amount.amount}}" name="email" id="html5-text-input" />
             </div>
           </div>
 
@@ -78,7 +86,7 @@
   
 
 
-   
+
 </form>
 
     

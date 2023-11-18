@@ -20,10 +20,13 @@ class BillsView(View):
         paginator = Paginator(bills,8)
         pagenumber =request.GET.get('page')
         bills= paginator.get_page(pagenumber)
+    
+
 
         context = {
             "vendor" : vendor,
-            "bills"  :bills
+            "bills"  :bills,
+           
         }
         return render(request, "bills.html",context)
     
@@ -58,20 +61,17 @@ class CreateBill(View):
             description  = request.POST.getlist("description")
             quantity  = request.POST.getlist("quantity")
             price  = request.POST.getlist("price")
-            tax  = request.POST.getlist("tax")
-
-            for i ,j in zip(product,tax):
-                if len(tax) <len(product):
-                    tax.append(None)
-                
-
-            print(product)
-
-            print("tax",tax)
+            tax  = request.POST.getlist("tax") 
 
             obj = Bills.objects.create(vendor_id = vendor, currency_id=currency, bill_date=bill_date,due_date=due_date,bill_number=bill_number,
                                     po_so_no=po_so_no,notes=notes)
-            bill_items(product, expence, description, quantity, price, tax,obj)
+            output = bill_items(product, expence, description, quantity, price, tax,obj)
+            print(output)
+            record = Record_Payment.objects.create(amount = output,)
+            obj.amount = record
+            obj.save()
+
+            
             return redirect("bills")
         except Exception as e:
             print("This is  exceptiopn",e)
@@ -146,10 +146,19 @@ def bill_delete(request,id):
 
 class PaidBill(View):
     def get(self,request,id):
-        payment = Record_Payment.objects.all()
-        
+        response = Bills.objects.get(id= id)
+        choice = ["Bank payment","Cash","Cheque","Credit card","PayPal","Others"]        
 
-        return render(request ,"bills_paid.html" )
+        context= {
+            "response" :response,
+            "choice"  : choice
+        }
+        return render(request ,"bills_paid.html",context )
+    
+
+    def post(self,request,id):
+        paymet = request.POST.get("payment_method")
+        print("=-----------------=",paymet)
     
 
 

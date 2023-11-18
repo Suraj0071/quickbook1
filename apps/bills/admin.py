@@ -50,6 +50,6 @@ class Record_Paymentadmin(admin.ModelAdmin):
         "payment_date",
         "payment_account",
         "notes",
-        "bills",
-        "bills_item",
+        
+        
     ]

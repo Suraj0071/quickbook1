@@ -1,11 +1,10 @@
 from django.db import models
 from apps.invoice.models import  Tax ,Product_Service
 from apps.users.models import Currency,ExpenseCategory
+from enum import Enum
 
 
 # Create your models here.
-
-
 
 
 
@@ -26,6 +25,28 @@ class Vendor(models.Model):
     # def __str__(self):
     #     return self.name
 
+
+#dont'change this give import error
+
+
+class PaymentMothod(Enum):
+    Bank_payment = "Bank payment"
+    Cash         = "Cash"
+    Cheque         = "Cheque"
+    Credit_card   = "Credit_card"
+    PayPal         = "PayPal"
+    Others         = "Others"
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
+
+class Record_Payment(models.Model):
+    payment_method = models.CharField(max_length=100,choices=PaymentMothod.choices())
+    amount = models.CharField(max_length=200,null=True, blank=True)
+    payment_date = models.DateField(null=True,blank=True)
+    payment_account = models.CharField(max_length=200,null=True, blank=True)
+    notes           = models.TextField(null=True,blank=True)
   
 
 class Bills(models.Model):
@@ -37,6 +58,7 @@ class Bills(models.Model):
     po_so_no     = models.CharField(max_length=200)
     notes      = models.TextField(null=True ,blank=True)
     currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
+    amount = models.ForeignKey(Record_Payment,on_delete=models.CASCADE,null=True, blank=True)
 
 
    
@@ -56,14 +78,4 @@ class  Bills_item(models.Model):
 
 
 
-
-from apps.bills.utils import PaymentMothod   #dont'chage this give import error
-
-class Record_Payment(models.Model):
-    payment_method = models.CharField(max_length=100,choices=PaymentMothod.choices())
-    amount = models.CharField(max_length=200,null=True, blank=True)
-    payment_date = models.DateField(null=True, blank=True)
-    payment_account = models.CharField(max_length=200,null=True, blank=True)
-    notes           = models.TextField(null=True,blank=True)
-    bills = models.ForeignKey(Bills,on_delete=models.CASCADE,null=True, blank=True) 
-    bills_item = models.ForeignKey(Bills_item,on_delete=models.CASCADE,null=True, blank=True) 
+ 
