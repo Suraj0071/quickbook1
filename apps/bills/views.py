@@ -154,12 +154,22 @@ class PaidBill(View):
             "choice"  : choice
         }
         return render(request ,"bills_paid.html",context )
-    
-
     def post(self,request,id):
-        paymet = request.POST.get("payment_method")
-        print("=-----------------=",paymet)
-    
+        payment_method = request.POST.get("payment_method")
+        payment_method = payment_method.replace(" ", "_")
+        paymet_account = request.POST.get("payment_account")
+        payment_date = request.POST.get("payment_date")
+        notes = request.POST.get("notes")
+
+        response = Bills.objects.get(id= id)
+        response.amount.payment_method = payment_method
+        response.amount.payment_account = paymet_account
+        response.amount.payment_date = payment_date
+        response.amount.notes = notes
+        response.amount.save()
+        response.status = True
+        response.save()      
+        return redirect("bills")
 
 
 

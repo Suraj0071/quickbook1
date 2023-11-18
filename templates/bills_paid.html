@@ -20,12 +20,12 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Payment method</label>
             <div class="col-md-10">
-              <select id="defaultSelect" class="form-select"  value="{{ c }}" name="payment_method"  required></select>
-              <option selected desabled value="">Select Tax</option>
-              {% for c in choice %} 
-               
-                      <option value="{{ c }}">{{ c}}</option>
-                  {% endfor %}
+              <select class="form-select" id="payment-method"  value="{{ c}}" name="payment_method" required>
+
+                <option value="" desabled> Select method</option>
+                {% for c  in choice %}
+                <option value="{{ c}}">{{ c}}</option>
+            {% endfor %}
               </select>
           </div>
           </div>
@@ -34,7 +34,17 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Amount</label>
             <div class="col-md-10">
-              <input class="form-control" type="text"  value="{{response.amount.amount}}" name="email" id="html5-text-input" />
+              <input class="form-control" type="text"  value="{{response.amount.amount}}" name="email" id="html5-text-input"  disabled/>
+            </div>
+          </div>
+
+         
+
+
+          <div class="mb-3 row">
+            <label for="html5-text-input" class="col-md-2 col-form-label">Date </label>
+            <div class="col-md-10">
+              <input type="date" id="invoiceDate" name="payment_date" class="form-control" required/>
             </div>
           </div>
 
@@ -42,28 +52,11 @@
     
 
 
-          <div class="mb-3 row">
-            <label for="html5-text-input" class="col-md-2 col-form-label">date</label>
-            <div class="col-md-10">
-                <select id="defaultSelect" class="form-select" name="currency" required>
-                    <option  selected disabled >Select Currency</option>
-                    {% for cur in currency %}
-                          <option value="{{ cur.id }}">{{ cur.currency }}</option>
-                      {% endfor %}
-          
-                  </select>
-            </div>
-          </div>
-
-
-
-
   
-
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Payment Account </label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="city" id="html5-text-input" />
+              <input class="form-control" type="text" name="payment_account" id="html5-text-input"  required />
             </div>
           </div>
 
@@ -72,7 +65,7 @@
           <div class="mb-3 row">
             <label for="html5-text-input" class="col-md-2 col-form-label">Notes/Memo(optional)</label>
             <div class="col-md-10">
-              <input class="form-control" type="text" name="postal" id="html5-text-input" />
+              <textarea class="form-control" type="text" name="notes" id="html5-text-input" > </textarea>
             </div>
           </div>
 
