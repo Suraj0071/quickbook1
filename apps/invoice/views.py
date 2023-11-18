@@ -88,6 +88,7 @@ class create_invoice(View):
                 
                 total = save_item(itemname,quantity,price,tax,customer,invoice)
                 amount = total["amount"]
+                tax_list = total["tax_list"]
 
                 items = []
 
@@ -96,12 +97,15 @@ class create_invoice(View):
                             "name": itemname[i],
                             "qty": quantity[i],
                             "price": price[i],
-                            "amount": amount[i]
+                            "tax_list"  :tax_list[i],
+                            "amount": amount[i],
+                            
+                            # "tax": amount_tax[i]
                         }
                         items.append(item)
                 context = {'items': items,
                         "total":total["alltotal"],
-                        "amount_paid":total["amount_paid"],
+                        "amount_paid":total["alltotal"],
                         "customer":customer,
                         "business": business,
                         "invoice" :invoice,

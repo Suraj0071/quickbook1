@@ -127,6 +127,7 @@
                   <!-- <th scope="col" style="padding: 0 20px;" >Description</th> -->
                   <th scope="col" style="padding: 0 20px;">Qty</th>
                   <th scope="col" style="padding: 0 20px;">Unit Price</th>
+                  <th scope="col" style="padding: 0 20px;">Tax</th>
                   <th scope="col" style="padding: 0 20px;">Amount</th>
 
                  
@@ -139,6 +140,7 @@
                             <td style="padding: 0 20px;">{{ item.name }}</td>
                             <td style="padding: 0 20px;">{{ item.qty }}</td>
                             <td style="padding: 0 20px;">${{ item.price }}</td>
+                            <td style="padding: 0 20px;">${{ item.tax_list }}</td>
                             <td style="padding: 0 20px;">${{ item.amount }}</td>
                             
                         </tr>
@@ -170,15 +172,16 @@
               {% endif %}
             </div>
             <div class="col-xl-4">
-              <ul class="list-unstyled mb-0">
+              <!-- <ul class="list-unstyled mb-0">
                 <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span> $ {{total}}</li>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax : 5% </span>$</li>
-              </ul>
+              </ul> -->
+              <hr>
               <p class="text-black ms-3 mt-2"><span class="text-black me-3"> Total Amount</span><span
                   style="font-size: 25px;">$ {{amount_paid}}</span></p>
             </div>
           </div>
-          <hr>
+         
           <div class="row">
             <div class="col-xl-10">
               <!-- <p>Thank you for your purchase</p> -->
