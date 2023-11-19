@@ -87,9 +87,7 @@ class create_invoice(View):
                 business= Business.objects.filter(id=business).first()
                 
                 total = save_item(itemname,quantity,price,tax,customer,invoice)
-                Invoice_Item_Amount.objects.create(invoice=invoice,total =total["alltotal"] , customer= customer,form_date=invoice.invoice_date)
-
-
+                Invoice_Item_Amount.objects.create(invoice=invoice,total =total["alltotal"] , customer= customer,form_date=invoice.invoice_date,to_date = invoice.paymnet_due)
                 amount = total["amount"]
                 tax_list = total["tax_list"]
 
@@ -279,17 +277,44 @@ class Customer_statementsView(View):
             "customer":customer
         }
         return render(request, "customer_statements.html",context)
+   
     def post(self, request):
-        print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         customer =  request.POST.get("customer")
         from_date =  request.POST.get("from_date")
         to_date =  request.POST.get("to_date")
-        obj = Invoice_Item_Amount.objects.filter(customer=customer,form_date__gte=from_date, form_date__lte=to_date  )
+        customer_obj = Invoice_Item_Amount.objects.filter(customer=customer).first()
 
+
+        obj = Invoice_Item_Amount.objects.filter(customer=customer,form_date__gte=from_date, form_date__lte=to_date)
+        
+
+
+        outstanding_balance = 0
         for i in obj:
-            print("_________________",i.total)
-
-        return redirect("customer-statements")
+            outstanding_balance = outstanding_balance+int(i.total)
+       
+        context = {
+            "obj" : obj,
+            "customer_name" : customer_obj.customer.name,
+            "from_date" : from_date,
+            "to_date"   : to_date,
+            "outstanding_balance" : outstanding_balance
+        }
+        
+        
+        # return redirect("customer-statements",context)
+        return render(request, "customer_statements.html",context)
+    
+    #  for i in range(len(itemname)):
+    #                     item = {
+    #                         "name": itemname[i],
+    #                         "qty": quantity[i],
+    #                         "price": price[i],
+    #                         "tax_list"  :tax_list[i],
+    #                         "amount": amount[i],
+                            
+    #                         # "tax": amount_tax[i]
+    #                     }
        
        
         # customer= request.POST.get('customer')

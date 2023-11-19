@@ -46,27 +46,106 @@
   <br> 
 
 
+  <title>Statement of Account</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+  }
+  .header {
+    text-align: center;
+    padding: 10px;
+  }
+  .company-info, .billing-info {
+    padding: 10px;
+  }
+  .statement-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .statement-table, .statement-table th, .statement-table td {
+    border: 1px solid black;
+  }
+  .statement-table th, .statement-table td {
+    padding: 10px;
+    text-align: left;
+  }
+  .total-amount {
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<!-- <div class="header">
+  <h1>Tristan Taylor Inc.</h1>
+  <address>
+    test add<br>
+    test 2<br>
+    test city, Alberta 1232<br>
+    Canada
+  </address>
+</div> -->
 
-  
-<div class="pdf">
-    <p >Hello </p>
-
-
+<div class="billing-info">
+    {% if customer_name %}
+  <p>Bill to: {{customer_name}}</p>
+  {% else %}
+  <p>Customer Name </p>
+  {% endif%}
 </div>
 
+<section class="statement-details">
+  <h2>Statement of Account</h2>
+  <p>Outstanding invoices</p>
+  <p><strong>United States dollar (USD)</strong></p>
+  {% if  from_date %}
+  <p>{{from_date}}  to  {{to_date}} </p>  
+  {% else %}
+  <p> Date </p>
+  {% endif %}
+  <table class="statement-table">
+    <thead>
+      <tr>
+        <th>Invoice #</th>
+        <th>Invoice date</th>
+        <th>Due date</th>
+        <th>Total</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in obj %}
+      <tr>
+        <td>{{i.invoice.invoice_number}}</td>
+        <td>{{i.invoice.invoice_date}}</td>
+        <td>{{i.invoice.paymnet_due}}</td> 
+        <td>{{i.total}}</td>
+        <!-- <td>$0.00</td>
+        <td>$10.00</td> -->
+      </tr>
+      {% endfor %}
+      <!-- Add more rows as needed -->
+    </tbody>
+  </table>
+  <div class="total-amount">
+    <!-- <p>Overdue: $60.00</p>
+    <p>Not yet due: $0.00</p> -->
+    <br>
+    {%if  outstanding_balance %}
+    <p><strong>Outstanding balance (USD): ${{outstanding_balance}}</strong></p>
+    {% else %}
+    <p><strong>Outstanding balance (USD): </strong></p>
 
+    {% endif %}
 
-
-
-
-
-
+  </div>
+</section>
 
 
 
 
   
 {% endblock %}
+
 
 
 <style>

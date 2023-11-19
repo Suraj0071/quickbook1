@@ -20,9 +20,6 @@ class BillsView(View):
         paginator = Paginator(bills,8)
         pagenumber =request.GET.get('page')
         bills= paginator.get_page(pagenumber)
-    
-
-
         context = {
             "vendor" : vendor,
             "bills"  :bills,
@@ -68,8 +65,6 @@ class CreateBill(View):
             record = Record_Payment.objects.create(amount = output,)
             obj.amount = record
             obj.save()
-
-            
             return redirect("bills")
         except Exception as e:
             print("This is  exceptiopn",e)
