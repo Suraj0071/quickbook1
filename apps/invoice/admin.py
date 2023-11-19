@@ -120,3 +120,12 @@ class Businessadmin(admin.ModelAdmin):
                 "toll_free",
                 "website",
                 "invoice",]
+Invoice_Item_Amount
+
+@admin.register(Invoice_Item_Amount)
+class Invoice_Item_Amountadmin(admin.ModelAdmin):
+    list_display=["id","total",
+                  "customer",
+                "invoice",
+                "form_date",
+                "to_date",]

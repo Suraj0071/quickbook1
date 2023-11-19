@@ -34,6 +34,13 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+ 
+
+
+
+
+
+
 
 class Invoice(models.Model):
     title = models.CharField(max_length=100,null=True,blank=True,default="Invoice")
@@ -48,6 +55,18 @@ class Invoice(models.Model):
     is_send = models.BooleanField(default=True)
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)    
+ 
+
+
+
+
+class Invoice_Item_Amount(models.Model):
+    total = models.CharField(max_length=200)
+    invoice = models.ForeignKey(Invoice,on_delete=models.CASCADE,null=True,blank=True)
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE,null=True,blank=True)
+    form_date = models.DateField(null=True,blank=True)
+    to_date  =  models.DateField(null=True,blank=True)
+
 
 
 

@@ -87,6 +87,9 @@ class create_invoice(View):
                 business= Business.objects.filter(id=business).first()
                 
                 total = save_item(itemname,quantity,price,tax,customer,invoice)
+                Invoice_Item_Amount.objects.create(invoice=invoice,total =total["alltotal"] , customer= customer,form_date=invoice.invoice_date)
+
+
                 amount = total["amount"]
                 tax_list = total["tax_list"]
 
