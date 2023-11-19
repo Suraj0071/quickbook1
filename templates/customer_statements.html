@@ -10,8 +10,9 @@
     <!-- Contact Field -->
     <div class="col mb-0">
         <label for="defaultSelect" class="form-label">Selcect Customer</label>
-        <select id="defaultSelect" class="form-select" name="customer" required>
-            <option>Select Customer</option>
+        <select id="defaultSelect" class="form-select" value="{{ cus.id }}" name="customer" required>
+            <option value="" >Select Customer</option>
+            
             {% for cus in customer %}
                   <option value="{{ cus.id }}">{{ cus.name }}</option>
               {% endfor %}
@@ -22,12 +23,12 @@
 
     <div class="col mb-0">
         <label for="invoiceDate" class="form-label">From </label>
-        <input type="date" id="invoiceDate" name="from" class="form-control" required/>
+        <input type="date" id="invoiceDate" name="from_date" class="form-control" required/>
     </div>
 
     <div class="col mb-0">
         <label for="paymentDue" class="form-label">To</label>
-        <input type="date" id="paymentDue" name="to" class="form-control" required/>
+        <input type="date" id="paymentDue" name="to_date" class="form-control" required/>
     </div>
 
     <!-- Add one more field here -->

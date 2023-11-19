@@ -148,7 +148,6 @@ class create_invoice(View):
 def upload_customercsv(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
-        print("----------------file",file)
         if not file :
             messages.error(request, "No file uploaded. Please select a file to upload.")   
             return render(request, 'uploadfile.html')     
@@ -180,6 +179,9 @@ class CustomersView(View):
             "customer":customer
         }
         return render(request, "customers.html",context)
+
+
+    
     
 class Create_customerview(View):
     def get(self, request):
@@ -278,12 +280,24 @@ class Customer_statementsView(View):
         }
         return render(request, "customer_statements.html",context)
     def post(self, request):
-        customer= request.POST.get('customer')
-        type= request.POST.get('type')
-        from_date= request.POST.get('from')
-        to_date= request.POST.get('to')
+        print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        customer =  request.POST.get("customer")
+        from_date =  request.POST.get("from_date")
+        to_date =  request.POST.get("to_date")
+        obj = Invoice_Item_Amount.objects.filter(customer=customer,form_date__gte=from_date, form_date__lte=to_date  )
+
+        for i in obj:
+            print("_________________",i.total)
+
+        return render("customer-statements")
+       
+       
+        # customer= request.POST.get('customer')
+        # type= request.POST.get('type')
+        # from_date= request.POST.get('from')
+        # to_date= request.POST.get('to')
         
-        print(f"-------------{customer} {type}  {from_date}   {to_date}")
+        # print(f"-------------{customer} {type}  {from_date}   {to_date}")
 
 class Products_servicesView(View):
     def get(self, request):
