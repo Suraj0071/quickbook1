@@ -289,7 +289,7 @@ class Customer_statementsView(View):
         for i in obj:
             print("_________________",i.total)
 
-        return render("customer-statements")
+        return redirect("customer-statements")
        
        
         # customer= request.POST.get('customer')
